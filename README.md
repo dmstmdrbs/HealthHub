@@ -1,4 +1,4 @@
-# vuetify-practice
+# HealthHub
 
 ## Project setup
 ```
