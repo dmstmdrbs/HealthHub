@@ -13,10 +13,19 @@
                 mdi-trash-can-outline
               </v-icon>
               {{exercise.target}} |
-              {{exercise.kinds}}
+              {{exercise.kinds}} 
+              <div>
+                <v-btn rounded outlined text @click ="addSet(i)">세트 추가</v-btn>
+                <v-btn rounded outlined text @click ="deleteSet(i)">세트 삭제</v-btn>
+              </div>  
             </v-card-title>
-            <v-btn @click ="addSet()">세트 추가</v-btn>
-            <v-btn @click ="deleteSet()">세트 삭제</v-btn>
+            <v-col v-for="set in exercise.sets" :key="set">
+              <v-card>
+                {{set.weight}}kg {{set.reps}}회
+              </v-card>
+            </v-col>
+
+            
           </v-card>
         </v-col>
       </v-col>
@@ -159,9 +168,10 @@
               selected: [],
               model: [0,1],
               dialog: false,
-               exercises: [
+              exercises: [
                  
                 ],
+              
               customs:[
                 {
                   target: '하체',
@@ -208,44 +218,32 @@
             }
         },
         methods:{
-          addSet() {
-            
+          addSet(index) {
+            this.exercises[index].sets.push({weight : 70, reps :10 })
+          
           },
-          deleteSet() {
-
+          deleteSet(index) {
+            this.exercises[index].sets.pop()
           },
           deleteExercise(index){
             this.exercises.splice(index,1);
-          },
-          addExercise(){
-            // this.dialog = true
-            this.exercises.push({
-              target:'상체',
-              kinds: '풀업'
-            })
           },
           showDialog(){
             this.dialog=true
           },
           addChip(targetName, item){
-            if(this.selected.includes(item)){
-              
-            }
-            else{
-              //alert(targetName)
+            if(!(this.selected.includes(item))){
               this.selected.push({
                 target: targetName,
-                kinds: item
+                kinds: item,
+                sets:[]
               })
-              
-          
             }
           },
-         
           saveDialog(){
             this.dialog=false
             for(let i=0;i<this.selected.length;i++){
-              this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds})
+              this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
             }
             
             this.selected = [];
