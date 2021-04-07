@@ -145,10 +145,10 @@
 </template>
 
 <script>
-import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
+//import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
  export default{
         components:{
-            ExerciseTemplate
+            //ExerciseTemplate
         },
         data(){
             return{
