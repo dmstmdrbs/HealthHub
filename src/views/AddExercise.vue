@@ -33,110 +33,104 @@
       <v-row>
         <v-col>
           <v-app>
-      <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          운동 추가
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">라이브러리</span>
-        </v-card-title>
-        <v-tabs
-          v-model="tab"
-          background-color="transparent"
-          color="basil"
-          grow
-        >
-          <v-tab
-            v-for="custom in customs"
-            :key="custom"
-          >
-            {{ custom.target }}
-          </v-tab>
-        </v-tabs>
-
-        <v-tabs-items v-model="tab">
-          <v-tab-item
-            v-for="custom in customs"
-            :key="custom"
-          >
-          <v-list>
-            <v-list-item-group
-              color="indigo"
+            <v-dialog
+              v-model="dialog"
+              persistent
+              max-width="600px"
             >
-              <v-list-item
-                v-for="item in custom.list"
-                :key="item"
-                @click ="addChip(custom.target, item)"
-              >
-                <v-list-item-content>
-                  <v-list-item-title 
-                  v-text="item"
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="primary"
+                  dark
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  운동 추가
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline">라이브러리</span>
+                </v-card-title>
+                <v-tabs
+                  v-model="tab"
+                  background-color="transparent"
+                  color="basil"
+                  grow
+                >
+                  <v-tab
+                    v-for="custom in customs"
+                    :key="custom"
+                  >
+                    {{ custom.target }}
+                  </v-tab>
+                </v-tabs>
+                <v-tabs-items v-model="tab">
+                  <v-tab-item
+                    v-for="custom in customs"
+                    :key="custom"
+                  >
+                  <v-list>
+                    <v-list-item-group
+                      color="indigo"
+                    >
+                      <v-list-item
+                        v-for="item in custom.list"
+                        :key="item"
+                        @click ="addChip(custom.target, item)"
+                      >
+                        <v-list-item-content>
+                          <v-list-item-title 
+                          v-text="item"
+                          
+                          ></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                  </v-tab-item>
                   
-                  ></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-          </v-tab-item>
-          
-        </v-tabs-items>
-        
-        <v-row
-        align="center"
-        justify="start"
-      >
-        <v-col
-          v-for="select in selected"
-          :key="select"
-          
-        >
-          <v-chip
-            :disabled="loading"
-            close
-            @click:close="selected.splice(i, 1)"
-          >
-          
-            {{ select.kinds }}
-          </v-chip>
-        </v-col>
-
-        
-      </v-row>
-
-        
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="saveDialog()"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-
-      </v-dialog>
-    </v-app>
+                </v-tabs-items>
+                <v-row
+                  align="center"
+                  justify="start"
+                >
+                  <v-col
+                    v-for="select in selected"
+                    :key="select"
+                    
+                  >
+                    <v-chip
+                      :disabled="loading"
+                      close
+                      @click:close="selected.splice(i, 1)"
+                    >
+                    
+                      {{ select.kinds }}
+                    </v-chip>
+                  </v-col>
+                </v-row>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="dialog = false"
+                  >
+                    Close
+                  </v-btn>
+                  <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="saveDialog()"
+                  >
+                    Save
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-app>
         </v-col>
         <v-col>
           <v-btn
@@ -146,11 +140,20 @@
             v-on:click = "loadExercise">
             불러오기
           </v-btn>
-        </v-col> 
+        </v-col>
+        <v-col>
+          <v-btn
+          elevation="2"
+            small
+            block>
+            저장
+          </v-btn>
+        </v-col>
       </v-row>
-  
     </v-container>
     
+    
+     
   </div>
   
 </template>
