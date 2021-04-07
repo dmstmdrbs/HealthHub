@@ -1,12 +1,13 @@
 <template>
-    <div class = " wrapper">
+    <div class = "wrapper">
           <!-- 라우터가 주소를 받아 주소에 맞는 컴포넌트를 찾아 결과물을 뿌려주기 위한 장소를 선언 -->
           <!-- router-view -->
-          <h1>HealthHub</h1>
+          <h1 class="title">HealthHub</h1>
           <v-divider></v-divider>
           <router-view>
             
           </router-view>
+          <!-- <NaviBar v-if="$vueRouter.name !== 'Login'"></NaviBar> -->
           <NaviBar></NaviBar>
     </div>
 </template>
@@ -14,13 +15,15 @@
 import NaviBar from '@/components/NaviBar'
   export default{
     components:{
-   NaviBar
+    NaviBar
   },
   data(){
       return{
-      
+        loginCheck : false
       }
-    }
+    },
+  methods:{
+  }
   }
 </script>
 <style>

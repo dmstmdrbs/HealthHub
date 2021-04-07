@@ -1,7 +1,7 @@
 <template>
     <!-- <h1>Home page</h1> -->
     <div max-width="500">
-        <h1>Calendar자리</h1>
+        <Calendar></Calendar>   
         <AddExercise></AddExercise>
         <h2></h2>
         
@@ -9,9 +9,11 @@
 </template>
 <script>
 import AddExercise from './AddExercise.vue'
+import Calendar from '@/components/Calendar'
     export default{
         components:{
-            AddExercise
+            AddExercise,
+            Calendar
         },
         data(){
             

@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router/index.js'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import NaviBarComponents from './components/NaviBar.vue'
 import VeeValidate from 'vee-validate';
 import VueRouter from 'vue-router'
 

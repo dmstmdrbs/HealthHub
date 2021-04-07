@@ -2,30 +2,93 @@
   <div>
     <v-container>
       <v-col>
-        <v-col v-for="(exercise, i) in exercises" :key="i">
+        <v-col v-for="(exercise,index) in exercises" :key="index">
           <v-card>
             <v-card-title>
               <v-icon
                 medium
                 left
-                @click ="deleteExercise(i)"
+                @click ="deleteExercise(index)"
               >
                 mdi-trash-can-outline
               </v-icon>
-              {{exercise.target}} |
-              {{exercise.kinds}} 
+              {{exercise.target}} | {{exercise.kinds}}
+
+              <v-dialog 
+                persistent
+                max-width="600px"
+                v-model="setDialog">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn 
+                    rounded outlined text 
+                    v-bind="attrs"
+                    v-on="on"
+                    >세트 추가</v-btn>
+                </template>
+                <v-dialog
+                  v-model = "setDialog"
+                  persistent
+                  max-width="600px">
+                  <v-card>
+                  <v-card-title>
+                    <span class="headline set">세트 추가</span>
+                  </v-card-title>
+                  <v-form>
+                    <v-container>
+                      <v-row>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                        >
+                          <v-text-field
+                            v-model="weight"
+                            label="무게"
+                            filled
+                          ></v-text-field>
+                        </v-col>
+                        <v-col
+                          cols="12"
+                          sm="6"
+                        >
+                          <v-text-field
+                            v-model="reps"
+                            label="횟수"
+                            filled
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-form>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="setDialog = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="addSet(index)"
+                    >
+                      Add
+                    </v-btn>
+                  </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-dialog>
+              
               <div>
-                <v-btn rounded outlined text @click ="addSet(i)">세트 추가</v-btn>
-                <v-btn rounded outlined text @click ="deleteSet(i)">세트 삭제</v-btn>
+                <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
               </div>  
             </v-card-title>
-            <v-col v-for="set in exercise.sets" :key="set">
+            <v-col v-for="set,idx in exercise.sets" :key="idx">
               <v-card>
                 {{set.weight}}kg {{set.reps}}회
               </v-card>
-            </v-col>
-
-            
+            </v-col>           
           </v-card>
         </v-col>
       </v-col>
@@ -60,8 +123,8 @@
                   grow
                 >
                   <v-tab
-                    v-for="custom in customs"
-                    :key="custom"
+                    v-for="custom in customs" 
+                    :key="custom.kinds"
                   >
                     {{ custom.target }}
                   </v-tab>
@@ -69,7 +132,7 @@
                 <v-tabs-items v-model="tab">
                   <v-tab-item
                     v-for="custom in customs"
-                    :key="custom"
+                    :key="custom.kinds"
                   >
                   <v-list>
                     <v-list-item-group
@@ -77,7 +140,7 @@
                     >
                       <v-list-item
                         v-for="item in custom.list"
-                        :key="item"
+                        :key="item.kinds"
                         @click ="addChip(custom.target, item)"
                       >
                         <v-list-item-content>
@@ -98,7 +161,7 @@
                 >
                   <v-col
                     v-for="select in selected"
-                    :key="select"
+                    :key="select.kinds"
                     
                   >
                     <v-chip
@@ -151,11 +214,7 @@
         </v-col>
       </v-row>
     </v-container>
-    
-    
-     
   </div>
-  
 </template>
 
 <script>
@@ -166,14 +225,15 @@
         },
         data(){
             return{
+              weight:null,reps:null,
+              sets :[],
               tab: null,
               loading: false,
               selected: [],
               model: [0,1],
               dialog: false,
-              exercises: [
-                 
-                ],
+              setDialog:false,
+              exercises: [],
               
               customs:[
                 {
@@ -221,9 +281,14 @@
             }
         },
         methods:{
+          loadExercise(){
+            console.log('load exercise!')
+          },
           addSet(index) {
-            this.exercises[index].sets.push({weight : 70, reps :10 })
-          
+            this.exercises[index].sets.push({weight : this.weight, reps : this.reps})
+            this.weight=null
+            this.reps=null
+            this.setDialog=false
           },
           deleteSet(index) {
             this.exercises[index].sets.pop()
@@ -246,11 +311,13 @@
           saveDialog(){
             this.dialog=false
             for(let i=0;i<this.selected.length;i++){
+              
               this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
             }
             
             this.selected = [];
           }
-        }
+        },
+        
     }
 </script>
