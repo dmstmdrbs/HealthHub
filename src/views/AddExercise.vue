@@ -15,6 +15,8 @@
               {{exercise.target}} |
               {{exercise.kinds}}
             </v-card-title>
+            <v-btn @click ="addSet()">세트 추가</v-btn>
+            <v-btn @click ="deleteSet()">세트 삭제</v-btn>
           </v-card>
         </v-col>
       </v-col>
@@ -206,6 +208,12 @@
             }
         },
         methods:{
+          addSet() {
+            
+          },
+          deleteSet() {
+
+          },
           deleteExercise(index){
             this.exercises.splice(index,1);
           },
