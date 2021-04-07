@@ -6,10 +6,11 @@
           <v-card>
             <v-card-title>
               <v-icon
-                large
+                medium
                 left
+                @click ="deleteExercise(i)"
               >
-                mdi-alert-circle-outline 
+                mdi-trash-can-outline
               </v-icon>
               {{exercise.target}} |
               {{exercise.kinds}}
@@ -205,6 +206,9 @@ import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
             }
         },
         methods:{
+          deleteExercise(index){
+            this.exercises.splice(index,1);
+          },
           addExercise(){
             // this.dialog = true
             this.exercises.push({
@@ -233,7 +237,6 @@ import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
           saveDialog(){
             this.dialog=false
             for(let i=0;i<this.selected.length;i++){
-              // var a = {target: item.target, kinds:item.kinds}
               this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds})
             }
             
