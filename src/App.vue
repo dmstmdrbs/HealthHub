@@ -15,15 +15,15 @@
 import NaviBar from '@/components/NaviBar'
   export default{
     components:{
-    NaviBar
-  },
-  data(){
-      return{
-        loginCheck : false
-      }
+      NaviBar
     },
-  methods:{
-  }
+    data(){
+        return{
+          loginCheck : false
+        }
+    },
+    methods:{
+    }
   }
 </script>
 <style>

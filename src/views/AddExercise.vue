@@ -12,7 +12,10 @@
               >
                 mdi-trash-can-outline
               </v-icon>
-              {{exercise.target}} | {{exercise.kinds}}
+              {{exercise.target}} | {{exercise.kinds}} |
+              <v-col>
+                총 볼륨 {{calVolume(exercise.sets)}}
+                </v-col>
 
               <v-dialog 
                 persistent
@@ -281,6 +284,13 @@
             }
         },
         methods:{
+          calVolume(sets){
+            let sum = 0
+            for(let i =0;i<sets.length;i++){
+              sum+= sets[i].weight * sets[i].reps
+            }
+            return sum
+          },
           loadExercise(){
             console.log('load exercise!')
           },
