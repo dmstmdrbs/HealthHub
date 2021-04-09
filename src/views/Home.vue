@@ -1,9 +1,12 @@
 <template>
     <!-- <h1>Home page</h1> -->
     <div max-width="500">
-        <Calendar></Calendar>   
-        <AddExercise></AddExercise>
-        <h2></h2>
+        <v-app>
+            <v-content>
+                <Calendar></Calendar>   
+                <AddExercise></AddExercise>
+            </v-content>
+        </v-app>
         
     </div>
 </template>
