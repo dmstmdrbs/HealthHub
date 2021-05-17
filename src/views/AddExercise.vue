@@ -14,7 +14,7 @@
               </v-icon>
               {{exercise.target}} | {{exercise.kinds}} |
               <v-col>
-                총 볼륨 {{calVolume(exercise.sets)}}
+                총 볼륨 : {{calVolume(exercise.sets)}}
               </v-col>
               <div>
                 <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
@@ -31,8 +31,8 @@
                           <v-col >
                             <v-btn @click="minusReps"> - </v-btn>
                           </v-col>
-                          <v-col >
-                            <p>{{reps}}</p>
+                          <v-col>
+                            <span>{{reps}}</span>
                           </v-col>
                           <v-col >
                             <v-btn @click="plusReps"> + </v-btn>
@@ -94,7 +94,20 @@
           </v-dialog>
         </v-col>
         <v-col>
-          <v-btn elevation="2" small block v-on:click = "loadExercise" color ="green">불러오기</v-btn>
+          <v-btn elevation="2" small block v-on:click ="loadExercise()" color ="green">불러오기</v-btn>
+          <v-dialog max-width="350px" v-model="calendarDialog">
+            <template>
+              <v-row justify="center">
+                <v-date-picker
+                  v-model="picker"
+                  year-icon="mdi-calendar-blank"
+                  prev-icon="mdi-skip-previous"
+                  next-icon="mdi-skip-next"
+                ></v-date-picker>
+              </v-row>
+            </template>
+          </v-dialog>
+          
         </v-col>
         <v-col>
           <v-btn elevation="2" small block color="red">저장</v-btn>
@@ -108,13 +121,15 @@
 //import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
 
 import Dialog from '@/components/Dialog.vue'
+import CalendarView from '@/components/CalendarView.vue'
  export default{
         components:{
             //ExerciseTemplate
-            Dialog,
+            Dialog,CalendarView
         },
         data(){
             return{
+              picker: new Date().toISOString().substr(0, 10),
               setIndex:0,
               weight:null,reps:0,
               sets :[],
@@ -124,6 +139,7 @@ import Dialog from '@/components/Dialog.vue'
               model: [0,1],
               exerciseDialog:false,
               setDialog:false,
+              calendarDialog:false,
               exercises: [],
               
               customs:[
@@ -187,13 +203,13 @@ import Dialog from '@/components/Dialog.vue'
           },
           loadExercise(){
             console.log('load exercise!')
+            this.showCalendarDialog();
           },
           addSet() {
             console.log(this.weight,this.reps,this.setIndex);
             this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps});
             this.setIndex=0;
-            this.weight=null
-            this.reps=0
+            
           },
           deleteSet(index) {
             this.exercises[index].sets.pop()
@@ -220,11 +236,14 @@ import Dialog from '@/components/Dialog.vue'
             this.setIndex=index;
           },
           hideSetDialog(){
+            this.weight=null
+            this.reps=0
             this.setDialog=false;
           },
           submitSetDialog(){
-            this.hideSetDialog();
             this.addSet();
+            this.hideSetDialog();
+              
           },
           addChip(targetName, item){
             if(!(this.selected.includes(item))){
@@ -234,6 +253,16 @@ import Dialog from '@/components/Dialog.vue'
                 sets:[]
               })
             }
+          },
+          showCalendarDialog(){
+            this.calendarDialog=true;
+          },
+          hideCalendar(){
+            this.calendarDialog=false;
+          },
+          submitCalendar(){
+
+            this.hideCalendar();
           },
         } 
         
