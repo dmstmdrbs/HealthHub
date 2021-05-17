@@ -7,7 +7,6 @@
           <router-view>
             
           </router-view>
-          <!-- <NaviBar v-if="$vueRouter.name !== 'Login'"></NaviBar> -->
           <NaviBar></NaviBar>
     </div>
 </template>

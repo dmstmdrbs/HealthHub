@@ -15,74 +15,34 @@
               {{exercise.target}} | {{exercise.kinds}} |
               <v-col>
                 총 볼륨 {{calVolume(exercise.sets)}}
-                </v-col>
-
-              <v-dialog 
-                persistent
-                max-width="600px"
-                v-model="setDialog">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn 
-                    rounded outlined text 
-                    v-bind="attrs"
-                    v-on="on"
-                    >세트 추가</v-btn>
-                </template>
-                <v-dialog
-                  v-model = "setDialog"
-                  persistent
-                  max-width="600px">
-                  <v-card>
-                  <v-card-title>
-                    <span class="headline set">세트 추가</span>
-                  </v-card-title>
-                  <v-form>
-                    <v-container>
-                      <v-row>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                        >
-                          <v-text-field
-                            v-model="weight"
-                            label="무게"
-                            filled
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                        >
-                          <v-text-field
-                            v-model="reps"
-                            label="횟수"
-                            filled
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-form>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      @click="setDialog = false"
-                    >
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      @click="addSet(index)"
-                    >
-                      Add
-                    </v-btn>
-                  </v-card-actions>
-                  </v-card>
+              </v-col>
+              <div>
+                <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
+                <v-dialog max-width="300" v-model="setDialog">
+                  <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
+                    <template v-slot:body>
+                     <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6">
+                            <v-text-field v-model="weight" label="무게"></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col >
+                            <v-btn @click="minusReps"> - </v-btn>
+                          </v-col>
+                          <v-col >
+                            <p>{{reps}}</p>
+                          </v-col>
+                          <v-col >
+                            <v-btn @click="plusReps"> + </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </template>
+                  </Dialog>
                 </v-dialog>
-              </v-dialog>
-              
+              </div>
               <div>
                 <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
               </div>  
@@ -98,122 +58,46 @@
       
       <v-row>
         <v-col>
-          <v-app>
-            <v-dialog
-              v-model="dialog"
-              persistent
-              max-width="600px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  small
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  운동 추가
-                </v-btn>
+          <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
+          <v-dialog max-width="600" v-model="exerciseDialog">
+            <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
+              <template v-slot:body>
+                <v-card>
+                  <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+                    <v-tab v-for="custom in customs" :key="custom.kinds">
+                      {{ custom.target }}
+                    </v-tab>
+                  </v-tabs>
+                  <v-tabs-items v-model="tab">
+                    <v-tab-item v-for="custom in customs" :key="custom.kinds">
+                      <v-list>
+                        <v-list-item-group color="indigo">
+                          <v-list-item v-for="item in custom.list" :key="item.kinds" @click ="addChip(custom.target, item)">
+                            <v-list-item-content>
+                              <v-list-item-title v-text="item"></v-list-item-title>
+                            </v-list-item-content>
+                          </v-list-item>
+                        </v-list-item-group>
+                      </v-list>
+                    </v-tab-item>
+                  </v-tabs-items>
+                  <v-row align="center" justify="start">
+                    <v-col v-for="select in selected" :key="select.kinds">
+                      <v-chip :disabled="loading" close @click:close="selected.splice(i, 1)">
+                        {{ select.kinds }}
+                      </v-chip>
+                    </v-col>
+                  </v-row>
+                </v-card>
               </template>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">라이브러리</span>
-                </v-card-title>
-                <v-tabs
-                  v-model="tab"
-                  background-color="transparent"
-                  color="basil"
-                  grow
-                >
-                  <v-tab
-                    v-for="custom in customs" 
-                    :key="custom.kinds"
-                  >
-                    {{ custom.target }}
-                  </v-tab>
-                </v-tabs>
-                <v-tabs-items v-model="tab">
-                  <v-tab-item
-                    v-for="custom in customs"
-                    :key="custom.kinds"
-                  >
-                  <v-list>
-                    <v-list-item-group
-                      color="indigo"
-                    >
-                      <v-list-item
-                        v-for="item in custom.list"
-                        :key="item.kinds"
-                        @click ="addChip(custom.target, item)"
-                      >
-                        <v-list-item-content>
-                          <v-list-item-title 
-                          v-text="item"
-                          
-                          ></v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
-                  </v-tab-item>
-                  
-                </v-tabs-items>
-                <v-row
-                  align="center"
-                  justify="start"
-                >
-                  <v-col
-                    v-for="select in selected"
-                    :key="select.kinds"
-                    
-                  >
-                    <v-chip
-                      :disabled="loading"
-                      close
-                      @click:close="selected.splice(i, 1)"
-                    >
-                    
-                      {{ select.kinds }}
-                    </v-chip>
-                  </v-col>
-                </v-row>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="dialog = false"
-                  >
-                    Close
-                  </v-btn>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="saveDialog()"
-                  >
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-app>
+            </Dialog>
+          </v-dialog>
         </v-col>
         <v-col>
-          <v-btn
-            elevation="2"
-            small
-            block
-            v-on:click = "loadExercise">
-            불러오기
-          </v-btn>
+          <v-btn elevation="2" small block v-on:click = "loadExercise" color ="green">불러오기</v-btn>
         </v-col>
         <v-col>
-          <v-btn
-          elevation="2"
-            small
-            block>
-            저장
-          </v-btn>
+          <v-btn elevation="2" small block color="red">저장</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -222,19 +106,23 @@
 
 <script>
 //import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
+
+import Dialog from '@/components/Dialog.vue'
  export default{
         components:{
             //ExerciseTemplate
+            Dialog,
         },
         data(){
             return{
-              weight:null,reps:null,
+              setIndex:0,
+              weight:null,reps:0,
               sets :[],
               tab: null,
               loading: false,
               selected: [],
               model: [0,1],
-              dialog: false,
+              exerciseDialog:false,
               setDialog:false,
               exercises: [],
               
@@ -284,6 +172,12 @@
             }
         },
         methods:{
+          plusReps(){
+            this.reps++;
+          },
+          minusReps(){
+            this.reps--;
+          },
           calVolume(sets){
             let sum = 0
             for(let i =0;i<sets.length;i++){
@@ -294,11 +188,12 @@
           loadExercise(){
             console.log('load exercise!')
           },
-          addSet(index) {
-            this.exercises[index].sets.push({weight : this.weight, reps : this.reps})
+          addSet() {
+            console.log(this.weight,this.reps,this.setIndex);
+            this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps});
+            this.setIndex=0;
             this.weight=null
-            this.reps=null
-            this.setDialog=false
+            this.reps=0
           },
           deleteSet(index) {
             this.exercises[index].sets.pop()
@@ -306,8 +201,30 @@
           deleteExercise(index){
             this.exercises.splice(index,1);
           },
-          showDialog(){
-            this.dialog=true
+          showExDialog(){
+            this.exerciseDialog = true;
+          },
+          hideExDialog(){
+            this.exerciseDialog=false;
+          },
+          submitExDialog(){
+            for(let i=0;i<this.selected.length;i++){
+              this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
+            }
+            
+            this.selected = [];
+            this.hideExDialog();
+          },
+          showSetDialog(index){
+            this.setDialog=true;
+            this.setIndex=index;
+          },
+          hideSetDialog(){
+            this.setDialog=false;
+          },
+          submitSetDialog(){
+            this.hideSetDialog();
+            this.addSet();
           },
           addChip(targetName, item){
             if(!(this.selected.includes(item))){
@@ -318,16 +235,7 @@
               })
             }
           },
-          saveDialog(){
-            this.dialog=false
-            for(let i=0;i<this.selected.length;i++){
-              
-              this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
-            }
-            
-            this.selected = [];
-          }
-        },
+        } 
         
     }
 </script>

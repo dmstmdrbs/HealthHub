@@ -16,20 +16,7 @@
                 <v-btn @click="$router.push({name : 'today'})">
                     <span>Today</span>
                     <v-icon>fas fa-dumbbell</v-icon>
-                </v-btn>
-                <v-btn @click="$router.push({name : 'today'})">
-                    <span>보관함</span>
-                    <v-icon>fas fa-database</v-icon>
-                </v-btn>
-            
-                <v-btn @click="$router.push({name : 'today'})">
-                    <span>게시판</span>
-                    <v-icon>fas fa-list</v-icon>
-                </v-btn>
-                <v-btn @click="$router.push({name : 'today'})">
-                    <span>식단</span>
-                    <v-icon>fas fa-utensils</v-icon>
-                </v-btn>
+                </v-btn>              
                 <v-btn @click="$router.push({name : 'today'})">
                     <span>내 정보</span>
                     <v-icon>fas fa-user</v-icon>

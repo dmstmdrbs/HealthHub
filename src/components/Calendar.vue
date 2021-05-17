@@ -12,13 +12,15 @@
       >
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
-      <v-spacer></v-spacer>
+      <v-spacer>
+
+      </v-spacer>
       <v-btn
         icon
         class="ma-2"
         @click="$refs.calendar.next()"
       >
-        <v-icon>mdi-chevron-right</v-icon>
+      <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
     </v-sheet>
     <v-sheet height="80">
@@ -32,40 +34,21 @@
     </v-sheet>
   </div>
 </template>
-<script>
-  export default {
-    data: () => ({
-      type: 'week',
-      weekday: [0, 1, 2, 3, 4, 5, 6],
-      value: '',
-    }),
-    methods: {
-      open : function(event) { console.log(event.date);},
-    },
-  }
-</script>
-<script>
-  export default {
-    data: () => ({
-      type: 'week',
-      weekday: [0, 1, 2, 3, 4, 5, 6],
-      value: '',
-    }),
-    methods: {
-      open : function(event) { console.log(event.date);},
-    },
-  }
-</script>
 
 <script>
   export default {
-    data: () => ({
-      type: 'week',
-      weekday: [0, 1, 2, 3, 4, 5, 6],
-      value: '',
-    }),
-    methods: {
-      open : function(event) { console.log(event.date);},
+    data () {
+      return{
+        month:'',
+        type: 'week',
+        weekday: [0, 1, 2, 3, 4, 5, 6],
+        value: '',
+      }
+    },
+    methods:{
+      open(event){ 
+        console.log(event.date);
+      },
     },
   }
 </script>
