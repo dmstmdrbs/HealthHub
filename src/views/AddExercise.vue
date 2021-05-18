@@ -103,46 +103,17 @@
             width="290px"
             v-model="calendarDialog">
             <template>
-                <v-container fluid class="pa-0">
-                  <!-- <v-date-picker
-                    v-model="picker"
-                    year-icon="mdi-calendar-blank"
-                    prev-icon="mdi-skip-previous"
-                    next-icon="mdi-skip-next"
-                  ></v-date-picker> -->
-                   <v-date-picker 
-                      v-model="picker" 
-                      year-icon="mdi-calendar-blank"
-                      prev-icon="mdi-skip-previous"
-                      next-icon="mdi-skip-next">
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
-                    <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
-                  </v-date-picker>
-                </v-container>
-                <!-- <v-row >
-                    <v-col>
-                      <v-btn 
-                          rounded
-                          small
-                          @click="hideCalendar()"
-                      >
-                          취소
-                      </v-btn>
-                    </v-col>
-                    <v-col>
-                      <v-btn
-                          color="success"
-                          rounded
-                          small
-                          @click="submitCalendar()"
-                      >
-                          확인
-                      </v-btn>
-                    </v-col>
-                </v-row> -->
-              
-              
+              <v-container fluid class="pa-0">
+                <v-date-picker 
+                  v-model="picker" 
+                  year-icon="mdi-calendar-blank"
+                  prev-icon="mdi-skip-previous"
+                  next-icon="mdi-skip-next">
+                  <v-spacer></v-spacer>
+                  <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
+                  <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
+                </v-date-picker>
+              </v-container>
             </template>
           </v-dialog>
           </template>
@@ -168,7 +139,6 @@ import CalendarView from '@/components/CalendarView.vue'
         data(){
             return{
               picker:new Date().toISOString().substr(0, 10),
-              date:"",
               setIndex:0,
               weight:null,reps:0,
               sets :[],

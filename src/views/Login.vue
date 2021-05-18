@@ -1,45 +1,47 @@
 <template>
-    <div id="login-container">
-        <h1> LOGIN </h1>
-        <form id = "login-form" > 
-            <div>
-                <label>ID</label>
-                <input type ="text" placeholder = "Enter your ID" v-model="input.uid" maxlength="20">
-            </div>
-            <div>
-                <label>PW</label>
-                <input type = "password" placeholder="Enter your PW" v-model="input.password" maxlength="20">
-            </div>
-            <v-btn
-                id="btn_login"
-                v-on:click = "onSubmit"
-                block
-                color="primary"
-                elevation="2"
-                rounded
-                outlined
-                text>LOGIN</v-btn>
-            <div>
-                <v-btn id="btn_findPW" 
-                    v-on:click="$router.push({name:'find_pw'})"
-                    rounded
-                    outlined
-                    small
-                    text>비밀번호 찾기 </v-btn>
-                <span>||</span>
-                <v-btn id="btn_join" 
-                v-on:click="$router.push({name:'join'})"
-                rounded
-                outlined
-                small
-                text> 회원 가입</v-btn>
-            </div>
-            <div>
-                <p>소셜 로그인 기능 자리</p>
-            </div>
-            
-        </form>
-    </div>
+	<v-container class="login">
+		<v-card> 
+			<h2>Login</h2>
+			<v-form class="login-form">
+				<div>
+					<v-icon>fas fa-user</v-icon>
+					<input type ="text" placeholder = "Enter your ID" v-model="input.uid">
+				</div>
+				<v-spacer></v-spacer>
+				<div>
+					<v-icon>fas fa-lock</v-icon>
+					<input type = "password" placeholder="Enter your PW" v-model="input.password">
+				</div>
+				<v-btn
+					class="login-button"
+					v-on:click = "onSubmit"
+					block
+					color="primary"
+					elevation="2"
+					rounded
+					outlined
+					text>LOGIN
+				</v-btn>
+			<v-spacer></v-spacer>
+			<div class="func_button">
+					<v-btn class="forgot-password"
+						v-on:click="$router.push({name:'find_pw'})"
+						rounded
+						outlined
+						small
+						text>비밀번호 찾기
+					</v-btn>
+					<v-btn class="btn_join" 
+						v-on:click="$router.push({name:'join'})"
+						rounded
+						outlined
+						small
+						text> 회원 가입
+					</v-btn>
+				</div>
+			</v-form>
+		</v-card>
+	</v-container>
 </template>
 
 <script>
