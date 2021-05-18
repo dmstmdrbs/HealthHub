@@ -95,19 +95,57 @@
         </v-col>
         <v-col>
           <v-btn elevation="2" small block v-on:click ="loadExercise()" color ="green">불러오기</v-btn>
-          <v-dialog max-width="350px" v-model="calendarDialog">
+          <template>
+            <v-dialog
+            ref="dialog"
+            :return-value.sync="picker" 
+            full-width
+            width="290px"
+            v-model="calendarDialog">
             <template>
-              <v-row justify="center">
-                <v-date-picker
-                  v-model="picker"
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next"
-                ></v-date-picker>
-              </v-row>
+                <v-container fluid class="pa-0">
+                  <!-- <v-date-picker
+                    v-model="picker"
+                    year-icon="mdi-calendar-blank"
+                    prev-icon="mdi-skip-previous"
+                    next-icon="mdi-skip-next"
+                  ></v-date-picker> -->
+                   <v-date-picker 
+                      v-model="picker" 
+                      year-icon="mdi-calendar-blank"
+                      prev-icon="mdi-skip-previous"
+                      next-icon="mdi-skip-next">
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
+                    <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
+                  </v-date-picker>
+                </v-container>
+                <!-- <v-row >
+                    <v-col>
+                      <v-btn 
+                          rounded
+                          small
+                          @click="hideCalendar()"
+                      >
+                          취소
+                      </v-btn>
+                    </v-col>
+                    <v-col>
+                      <v-btn
+                          color="success"
+                          rounded
+                          small
+                          @click="submitCalendar()"
+                      >
+                          확인
+                      </v-btn>
+                    </v-col>
+                </v-row> -->
+              
+              
             </template>
           </v-dialog>
-          
+          </template>
         </v-col>
         <v-col>
           <v-btn elevation="2" small block color="red">저장</v-btn>
@@ -129,7 +167,8 @@ import CalendarView from '@/components/CalendarView.vue'
         },
         data(){
             return{
-              picker: new Date().toISOString().substr(0, 10),
+              picker:new Date().toISOString().substr(0, 10),
+              date:"",
               setIndex:0,
               weight:null,reps:0,
               sets :[],
@@ -203,7 +242,7 @@ import CalendarView from '@/components/CalendarView.vue'
           },
           loadExercise(){
             console.log('load exercise!')
-            this.showCalendarDialog();
+            this.showCalendar();
           },
           addSet() {
             console.log(this.weight,this.reps,this.setIndex);
@@ -254,15 +293,19 @@ import CalendarView from '@/components/CalendarView.vue'
               })
             }
           },
-          showCalendarDialog(){
+          showCalendar(){
             this.calendarDialog=true;
           },
           hideCalendar(){
             this.calendarDialog=false;
           },
           submitCalendar(){
-
+            this.updateDate();
             this.hideCalendar();
+            console.log(this.picker);
+          },
+          updateDate(){
+            this.$refs.dialog.save(this.picker);
           },
         } 
         
