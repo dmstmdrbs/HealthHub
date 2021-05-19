@@ -1,60 +1,72 @@
 <template>
   <div>
     <v-container>
-      <v-col>
-        <v-col v-for="(exercise,index) in exercises" :key="index">
-          <v-card>
-            <v-card-title>
-              <v-icon
-                medium
-                left
-                @click ="deleteExercise(index)"
-              >
-                mdi-trash-can-outline
-              </v-icon>
-              {{exercise.target}} | {{exercise.kinds}} |
-              <v-col>
-                총 볼륨 : {{calVolume(exercise.sets)}}
-              </v-col>
-              <div>
-                <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                <v-dialog max-width="300" v-model="setDialog">
-                  <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
-                    <template v-slot:body>
-                     <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="6">
-                            <v-text-field v-model="weight" label="무게"></v-text-field>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <v-col >
-                            <v-btn @click="minusReps"> - </v-btn>
-                          </v-col>
-                          <v-col>
-                            <span>{{reps}}</span>
-                          </v-col>
-                          <v-col >
-                            <v-btn @click="plusReps"> + </v-btn>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </template>
-                  </Dialog>
-                </v-dialog>
-              </div>
-              <div>
-                <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
-              </div>  
-            </v-card-title>
-            <v-col v-for="set,idx in exercise.sets" :key="idx">
-              <v-card>
-                {{set.weight}}kg {{set.reps}}회
-              </v-card>
-            </v-col>           
-          </v-card>
-        </v-col>
-      </v-col>
+      <v-row>
+        <v-card class="scroll mx-auto" width="800px" height="600px">
+          <v-card-title class="white--text blue darken-4">운동 목록</v-card-title>
+          <v-card-text class="pt-4">위의 캘린더와 불러오기 날짜 연동 해야함</v-card-text>
+          <v-divider></v-divider>
+            <v-col>
+                <template>
+                <v-col>
+                  <v-col v-for="(exercise,index) in exercises" :key="index">
+                    <v-card>
+                      <v-card-title>
+                        <v-icon
+                          medium
+                          left
+                          @click ="deleteExercise(index)"
+                        >
+                          mdi-trash-can-outline
+                        </v-icon>
+                        {{exercise.target}} | {{exercise.kinds}} |
+                        <v-col>
+                          총 볼륨 : {{calVolume(exercise.sets)}}
+                        </v-col>
+                        <div>
+                          <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
+                          <v-dialog max-width="300" v-model="setDialog">
+                            <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
+                              <template v-slot:body>
+                                <v-container>
+                                  <v-row>
+                                    <v-col cols="12" sm="6">
+                                      <v-text-field v-model="weight" label="무게"></v-text-field>
+                                    </v-col>
+                                  </v-row>
+                                  <v-row>
+                                    <v-col >
+                                      <v-btn @click="minusReps"> - </v-btn>
+                                    </v-col>
+                                    <v-col>
+                                      <span>{{reps}}</span>
+                                    </v-col>
+                                    <v-col >
+                                      <v-btn @click="plusReps"> + </v-btn>
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                              </template>
+                            </Dialog>
+                          </v-dialog>
+                        </div>
+                        <div>
+                          <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
+                        </div>  
+                      </v-card-title>
+                      <v-col v-for="set,idx in exercise.sets" :key="idx">
+                        <v-card>
+                          {{set.weight}}kg {{set.reps}}회
+                        </v-card>
+                      </v-col>           
+                    </v-card>
+                  </v-col>
+                </v-col>
+              </template>
+            </v-col>
+            
+        </v-card>
+      </v-row>
       
       <v-row>
         <v-col>
@@ -281,3 +293,8 @@ import CalendarView from '@/components/CalendarView.vue'
         
     }
 </script>
+<style>
+  .scroll{
+    overflow-y:scroll
+  }
+</style>
