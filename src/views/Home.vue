@@ -2,10 +2,10 @@
     <!-- <h1>Home page</h1> -->
     <div max-width="500">
         <v-app>
-            <v-content>
+            <v-main>
                 <Calendar></Calendar>   
                 <AddExercise></AddExercise>
-            </v-content>
+            </v-main>
         </v-app>
         
     </div>

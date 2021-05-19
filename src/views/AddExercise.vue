@@ -3,8 +3,29 @@
     <v-container>
       <v-row>
         <v-card class="scroll mx-auto" width="800px" height="600px">
-          <v-card-title class="white--text blue darken-4">운동 목록</v-card-title>
-          <v-card-text class="pt-4">위의 캘린더와 불러오기 날짜 연동 해야함</v-card-text>
+          <v-card-title class="white--text blue darken-4">
+            운동 목록
+            <v-spacer></v-spacer>
+            <v-btn elevation="1" small v-on:click ="loadExercise()">날짜 선택</v-btn>
+            <template>
+              <v-dialog
+                ref="dialog"
+                :return-value.sync="date" 
+                width="290px"
+                v-model="calendarDialog">
+                <template>
+                  <v-container fluid class="pa-0">
+                    <v-date-picker v-model="date" year-icon="mdi-calendar-blank" prev-icon="mdi-skip-previous" next-icon="mdi-skip-next">
+                      <v-spacer></v-spacer>
+                      <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
+                      <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
+                    </v-date-picker>
+                  </v-container>
+                </template>
+              </v-dialog>
+            </template>
+          </v-card-title>
+          <v-card-text class="pt-4">{{date}} 에 계획한 운동 목록</v-card-text>
           <v-divider></v-divider>
             <v-col>
                 <template>
@@ -109,25 +130,20 @@
           <v-btn elevation="2" small block v-on:click ="loadExercise()" color ="green">불러오기</v-btn>
           <template>
             <v-dialog
-            ref="dialog"
-            :return-value.sync="date" 
-            full-width
-            width="290px"
-            v-model="calendarDialog">
-            <template>
-              <v-container fluid class="pa-0">
-                <v-date-picker 
-                  v-model="date" 
-                  year-icon="mdi-calendar-blank"
-                  prev-icon="mdi-skip-previous"
-                  next-icon="mdi-skip-next">
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
-                  <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
-                </v-date-picker>
-              </v-container>
-            </template>
-          </v-dialog>
+              ref="dialog"
+              :return-value.sync="date" 
+              width="290px"
+              v-model="calendarDialog">
+              <template>
+                <v-container fluid class="pa-0">
+                  <v-date-picker v-model="date" year-icon="mdi-calendar-blank" prev-icon="mdi-skip-previous" next-icon="mdi-skip-next">
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="hideCalendar()">Cancel</v-btn>
+                    <v-btn color="primary" @click="submitCalendar()">OK</v-btn>
+                  </v-date-picker>
+                </v-container>
+              </template>
+            </v-dialog>
           </template>
         </v-col>
         <v-col>
@@ -150,7 +166,7 @@ import CalendarView from '@/components/CalendarView.vue'
         },
         data(){
             return{
-              date:new Date().toISOString().substr(0, 10),
+              date: new Date().toISOString().substr(0, 10),
               setIndex:0,
               weight:null,reps:0,
               sets :[],
