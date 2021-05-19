@@ -110,14 +110,14 @@
           <template>
             <v-dialog
             ref="dialog"
-            :return-value.sync="picker" 
+            :return-value.sync="date" 
             full-width
             width="290px"
             v-model="calendarDialog">
             <template>
               <v-container fluid class="pa-0">
                 <v-date-picker 
-                  v-model="picker" 
+                  v-model="date" 
                   year-icon="mdi-calendar-blank"
                   prev-icon="mdi-skip-previous"
                   next-icon="mdi-skip-next">
@@ -150,7 +150,7 @@ import CalendarView from '@/components/CalendarView.vue'
         },
         data(){
             return{
-              picker:new Date().toISOString().substr(0, 10),
+              date:new Date().toISOString().substr(0, 10),
               setIndex:0,
               weight:null,reps:0,
               sets :[],
@@ -284,10 +284,10 @@ import CalendarView from '@/components/CalendarView.vue'
           submitCalendar(){
             this.updateDate();
             this.hideCalendar();
-            console.log(this.picker);
+            console.log(this.date);
           },
           updateDate(){
-            this.$refs.dialog.save(this.picker);
+            this.$refs.dialog.save(this.date);
           },
         } 
         
