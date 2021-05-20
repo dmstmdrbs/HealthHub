@@ -76,9 +76,14 @@
                         </div>  
                       </v-card-title>
                       <v-col v-for="set,idx in exercise.sets" :key="idx">
-                        <v-card>
-                          {{set.weight}}kg {{set.reps}}회
-                        </v-card>
+                          <v-container fluid>
+                            <v-row>
+                              <v-checkbox
+                                :v-model="exercises[index].sets[idx].checked"
+                                @change="checkSet($event,index,idx)"></v-checkbox>
+                              <label>{{set.weight}}kg x {{set.reps}}회</label>
+                            </v-row>
+                          </v-container>
                       </v-col>           
                     </v-card>
                   </v-col>
@@ -242,9 +247,17 @@ import CalendarView from '@/components/CalendarView.vue'
             console.log('load exercise!')
             this.showCalendar();
           },
+          checkSet($event,exIdx,setIdx){
+            if(this.exercises[exIdx].sets[setIdx].checked === false){
+              this.exercises[exIdx].sets[setIdx].checked = true;
+            }else{
+              this.exercises[exIdx].sets[setIdx].checked = false;
+            }
+            console.log(this.exercises[exIdx].sets[setIdx].checked);
+          },
           addSet() {
             console.log(this.weight,this.reps,this.setIndex);
-            this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps});
+            this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
             this.setIndex=0;
             
           },
