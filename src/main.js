@@ -11,7 +11,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 // Vue.use(router);
 Vue.config.productionTip = false
-
+//이벤트버스 - AddExercise의 date -> Calendar의 date로
+export const eventBus = new Vue()
 
 
 new Vue({

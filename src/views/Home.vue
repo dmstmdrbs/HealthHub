@@ -19,10 +19,11 @@ import Calendar from '@/components/Calendar'
             Calendar
         },
         data(){
-            
             return{
                 
             }
+        },
+        methods:{
         }
     }
 </script>

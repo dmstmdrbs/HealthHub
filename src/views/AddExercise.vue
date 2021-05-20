@@ -164,7 +164,13 @@
 
 import Dialog from '@/components/Dialog.vue'
 import CalendarView from '@/components/CalendarView.vue'
+import {eventBus} from '@/main'
  export default{
+        created(){
+          eventBus.$on('selectDate', (today)=>{
+            this.date = today;
+      })
+        },
         components:{
             //ExerciseTemplate
             Dialog,CalendarView
@@ -317,6 +323,7 @@ import CalendarView from '@/components/CalendarView.vue'
           },
           updateDate(){
             this.$refs.dialog.save(this.date);
+            eventBus.$emit("updatedDate", this.date);
           },
         } 
         
