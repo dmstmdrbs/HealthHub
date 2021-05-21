@@ -69,7 +69,6 @@
             },
             
             onSubmit(){
-                alert(`id : ${this.input.uid}, pw : ${this.input.password}`);
                 VueRouter.push({path: '/home'});
                
             }

@@ -4,6 +4,7 @@ import LoginPage from '@/views/Login'
 import MainPage from '@/views/Home'
 import TodayPage from '@/views/Today'
 import JoinPage from '@/views/Join'
+import MyPage from '@/views/MyPageView'
 import FindPasswordPage from '@/views/FindPassword'
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const vueRouter = new VueRouter({
         path:'/find_pw',
         name:'find_pw',
         component : FindPasswordPage
+      },
+      {
+        path:'/mypage',
+        name:'mypage',
+        component : MyPage
       }
     ]
   })

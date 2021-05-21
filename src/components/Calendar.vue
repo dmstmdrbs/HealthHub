@@ -1,25 +1,33 @@
 <template>
-  <div>
-    <v-sheet
-      tile
-      height="50"
-      class="d-flex"
-    >
-      <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn icon class="ma-2" @click="$refs.calendar.next()">
-        <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
-    </v-sheet>
+  <div max-width="800px">
+    <v-toolbar>
+      <v-row align="center" justify="center">
+        <v-col align="center">
+          <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col align="center" >
+          <v-toolbar-title v-if="$refs.calendar">
+            {{ $refs.calendar.title }}
+          </v-toolbar-title>
+        </v-col>
+        <v-col align="center">
+          <v-spacer></v-spacer>
+          <v-btn icon class="ma-2" @click="$refs.calendar.next()">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-toolbar>
     <v-sheet height="80">
       <v-calendar
-        :now = "today"
         ref="calendar"
+        :now = "today"
+        :value = "today"
         v-model="value"
         @click:date="open"
-        :weekdays="weekday"
+        :weekdays="weekday" 
         :type="type"
         color="primary"
       ></v-calendar>
@@ -33,7 +41,8 @@
     data () {
       return{
         today: new Date(),
-        month:'',
+        month: '',
+        selectedMonth :'',
         type: 'week',
         weekday: [0, 1, 2, 3, 4, 5, 6],
         value: '',
@@ -49,6 +58,7 @@
     created(){
       eventBus.$on('updatedDate', (date)=>{
         this.today = date;
+        this.value = date;
       })
     }
   }

@@ -9,15 +9,15 @@
                 color="primary"
                 horizontal
             >
-                <v-btn @click = "$router.push({name : 'home'})">
+                <v-btn @click ="$router.push({name : 'home'})">
                     <span>기록</span>
                     <v-icon>far fa-calendar-alt</v-icon>
                 </v-btn>
-                <v-btn @click="$router.push({name : 'today'})">
+                <!-- <v-btn @click="$router.push({name : 'today'})">
                     <span>Today</span>
                     <v-icon>fas fa-dumbbell</v-icon>
-                </v-btn>              
-                <v-btn @click="$router.push({name : 'today'})">
+                </v-btn>               -->
+                <v-btn @click="$router.push({name : 'mypage'})">
                     <span>내 정보</span>
                     <v-icon>fas fa-user</v-icon>
                 </v-btn>

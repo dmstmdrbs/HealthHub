@@ -166,168 +166,168 @@ import Dialog from '@/components/Dialog.vue'
 import CalendarView from '@/components/CalendarView.vue'
 import {eventBus} from '@/main'
  export default{
-        created(){
+    created(){
           eventBus.$on('selectDate', (today)=>{
             this.date = today;
       })
-        },
-        components:{
-            //ExerciseTemplate
-            Dialog,CalendarView
-        },
-        data(){
-            return{
-              date: new Date().toISOString().substr(0, 10),
-              setIndex:0,
-              weight:null,reps:0,
-              sets :[],
-              tab: null,
-              loading: false,
-              selected: [],
-              model: [0,1],
-              exerciseDialog:false,
-              setDialog:false,
-              calendarDialog:false,
-              exercises: [],
-              
-              customs:[
-                {
-                  target: '하체',
-                  list:[
-                    '바벨 백스쿼트',
-                    '컨벤셔널 데드리프트',
-                    '프론트 스쿼트'
-                  ]
-                },
-                {
-                  target: '가슴',
-                  list:[
-                    '벤치프레스',
-                    '덤벨 벤치프레스',
-                    '딥스'
-                  ]
-                },
-                {
-                  target: '등',
-                  list:[
-                    '루마니안 데드리프트',
-                    '랫 풀 다운',
-                    '풀 업'
-                  ]
-                }
-                ,
-                {
-                  target: '어깨',
-                  list:[
-                    '오버 헤드 프레스',
-                    '덤벨 숄더 프레스',
-                    '사이드 레터럴 레이즈'
-                  ]
-                },
-                {
-                  target: '팔',
-                  list:[
-                    '덤벨 컬',
-                    '이지바 컬',
-                    '케이블 푸쉬 다운'
-                  ]
-                }
+    },
+    components:{
+        //ExerciseTemplate
+        Dialog,CalendarView
+    },
+    data(){
+        return{
+          date: new Date().toISOString().substr(0, 10),
+          setIndex:0,
+          weight:null,reps:0,
+          sets :[],
+          tab: null,
+          loading: false,
+          selected: [],
+          model: [0,1],
+          exerciseDialog:false,
+          setDialog:false,
+          calendarDialog:false,
+          exercises: [],
+          
+          customs:[
+            {
+              target: '하체',
+              list:[
+                '바벨 백스쿼트',
+                '컨벤셔널 데드리프트',
+                '프론트 스쿼트'
+              ]
+            },
+            {
+              target: '가슴',
+              list:[
+                '벤치프레스',
+                '덤벨 벤치프레스',
+                '딥스'
+              ]
+            },
+            {
+              target: '등',
+              list:[
+                '루마니안 데드리프트',
+                '랫 풀 다운',
+                '풀 업'
               ]
             }
-        },
-        methods:{
-          plusReps(){
-            this.reps++;
-          },
-          minusReps(){
-            this.reps--;
-          },
-          calVolume(sets){
-            let sum = 0
-            for(let i =0;i<sets.length;i++){
-              sum+= sets[i].weight * sets[i].reps
+            ,
+            {
+              target: '어깨',
+              list:[
+                '오버 헤드 프레스',
+                '덤벨 숄더 프레스',
+                '사이드 레터럴 레이즈'
+              ]
+            },
+            {
+              target: '팔',
+              list:[
+                '덤벨 컬',
+                '이지바 컬',
+                '케이블 푸쉬 다운'
+              ]
             }
-            return sum
-          },
-          loadExercise(){
-            console.log('load exercise!')
-            this.showCalendar();
-          },
-          checkSet($event,exIdx,setIdx){
-            if(this.exercises[exIdx].sets[setIdx].checked === false){
-              this.exercises[exIdx].sets[setIdx].checked = true;
-            }else{
-              this.exercises[exIdx].sets[setIdx].checked = false;
-            }
-            console.log(this.exercises[exIdx].sets[setIdx].checked);
-          },
-          addSet() {
-            console.log(this.weight,this.reps,this.setIndex);
-            this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
-            this.setIndex=0;
-            
-          },
-          deleteSet(index) {
-            this.exercises[index].sets.pop()
-          },
-          deleteExercise(index){
-            this.exercises.splice(index,1);
-          },
-          showExDialog(){
-            this.exerciseDialog = true;
-          },
-          hideExDialog(){
-            this.exerciseDialog=false;
-          },
-          submitExDialog(){
-            for(let i=0;i<this.selected.length;i++){
-              this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
-            }
-            
-            this.selected = [];
-            this.hideExDialog();
-          },
-          showSetDialog(index){
-            this.setDialog=true;
-            this.setIndex=index;
-          },
-          hideSetDialog(){
-            this.weight=null
-            this.reps=0
-            this.setDialog=false;
-          },
-          submitSetDialog(){
-            this.addSet();
-            this.hideSetDialog();
-              
-          },
-          addChip(targetName, item){
-            if(!(this.selected.includes(item))){
-              this.selected.push({
-                target: targetName,
-                kinds: item,
-                sets:[]
-              })
-            }
-          },
-          showCalendar(){
-            this.calendarDialog=true;
-          },
-          hideCalendar(){
-            this.calendarDialog=false;
-          },
-          submitCalendar(){
-            this.updateDate();
-            this.hideCalendar();
-            console.log(this.date);
-          },
-          updateDate(){
-            this.$refs.dialog.save(this.date);
-            eventBus.$emit("updatedDate", this.date);
-          },
-        } 
+          ]
+        }
+    },
+    methods:{
+      plusReps(){
+        this.reps++;
+      },
+      minusReps(){
+        this.reps--;
+      },
+      calVolume(sets){
+        let sum = 0
+        for(let i =0;i<sets.length;i++){
+          sum+= sets[i].weight * sets[i].reps
+        }
+        return sum
+      },
+      loadExercise(){
+        console.log('load exercise!')
+        this.showCalendar();
+      },
+      checkSet($event,exIdx,setIdx){
+        if(this.exercises[exIdx].sets[setIdx].checked === false){
+          this.exercises[exIdx].sets[setIdx].checked = true;
+        }else{
+          this.exercises[exIdx].sets[setIdx].checked = false;
+        }
+        console.log(this.exercises[exIdx].sets[setIdx].checked);
+      },
+      addSet() {
+        console.log(this.weight,this.reps,this.setIndex);
+        this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
+        this.setIndex=0;
         
-    }
+      },
+      deleteSet(index) {
+        this.exercises[index].sets.pop()
+      },
+      deleteExercise(index){
+        this.exercises.splice(index,1);
+      },
+      showExDialog(){
+        this.exerciseDialog = true;
+      },
+      hideExDialog(){
+        this.exerciseDialog=false;
+      },
+      submitExDialog(){
+        for(let i=0;i<this.selected.length;i++){
+          this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
+        }
+        
+        this.selected = [];
+        this.hideExDialog();
+      },
+      showSetDialog(index){
+        this.setDialog=true;
+        this.setIndex=index;
+      },
+      hideSetDialog(){
+        this.weight=null
+        this.reps=0
+        this.setDialog=false;
+      },
+      submitSetDialog(){
+        this.addSet();
+        this.hideSetDialog();
+          
+      },
+      addChip(targetName, item){
+        if(!(this.selected.includes(item))){
+          this.selected.push({
+            target: targetName,
+            kinds: item,
+            sets:[]
+          })
+        }
+      },
+      showCalendar(){
+        this.calendarDialog=true;
+      },
+      hideCalendar(){
+        this.calendarDialog=false;
+      },
+      submitCalendar(){
+        this.updateDate();
+        this.hideCalendar();
+        console.log(this.date);
+      },
+      updateDate(){
+        this.$refs.dialog.save(this.date);
+        eventBus.$emit("updatedDate", this.date);
+      },
+    } 
+        
+  }
 </script>
 <style>
   .scroll{

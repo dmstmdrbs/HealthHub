@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router/index.js'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import VeeValidate from 'vee-validate';
 import VueRouter from 'vue-router'
+import VeeValidate from 'vee-validate'
 
 //Vue.component('컴포넌트명',옵션)
 
@@ -22,3 +22,19 @@ new Vue({
   VeeValidate,
   render: h => h(App)
 }).$mount('#app')
+
+
+let WorkoutList = (function(){
+
+  function WorkoutList(date){
+    this._date = date;
+    this._workoutList = null;
+  }
+
+  WorkoutList.prototype.saveWorkoutList = function(exercises){
+    this._workoutList = exercises;
+
+  };
+
+    return WorkoutDetail;
+}());
