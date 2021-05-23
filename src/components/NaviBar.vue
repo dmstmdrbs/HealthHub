@@ -1,8 +1,6 @@
 <template>
     <v-card>
-        <v-footer
-            v-bind = "localAttrs"
-            >
+        <v-footer v-bind = "localAttrs">
             <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
             <v-card-text
                 class = "navBar"

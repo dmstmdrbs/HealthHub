@@ -8,6 +8,7 @@ import MyPage from '@/views/MyPageView'
 import FindPasswordPage from '@/views/FindPassword'
 Vue.use(VueRouter)
 
+
 const vueRouter = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -20,11 +21,6 @@ const vueRouter = new VueRouter({
         path: '/home',
         name: 'home',
         component: MainPage
-      },
-      {
-        path:'/today',
-        name:'today',
-        component: TodayPage
       },
       {
         path :'/join',

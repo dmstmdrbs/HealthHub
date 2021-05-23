@@ -156,12 +156,14 @@
         </v-col>
       </v-row>
     </v-container>
+    <NaviBar></NaviBar>
   </div>
 </template>
 
 <script>
 //import ExerciseTemplate from '@/components/ExerciseTemplate.vue'
-
+import Header from '@/components/Header.vue'
+import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
 import CalendarView from '@/components/CalendarView.vue'
 import {eventBus} from '@/main'
@@ -169,14 +171,16 @@ import {eventBus} from '@/main'
     created(){
           eventBus.$on('selectDate', (today)=>{
             this.date = today;
+            
       })
     },
     components:{
         //ExerciseTemplate
-        Dialog,CalendarView
+        Header,Dialog,CalendarView,NaviBar
     },
     data(){
         return{
+          detailedEx : null,
           date: new Date().toISOString().substr(0, 10),
           setIndex:0,
           weight:null,reps:0,
