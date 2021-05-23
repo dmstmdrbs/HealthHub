@@ -1,6 +1,7 @@
 <template>
   <div max-width="800px">
-    <v-toolbar>
+    <v-divider></v-divider>
+    <v-toolbar elevation="0">
       <v-row align="center" justify="center">
         <v-col align="center">
           <v-btn icon class="ma-2" @click="$refs.calendar.prev()">

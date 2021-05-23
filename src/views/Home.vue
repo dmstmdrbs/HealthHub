@@ -7,7 +7,7 @@
                 <AddExercise></AddExercise>
             </v-main>
         </v-app>
-    <NaviBar></NaviBar>
+        <NaviBar></NaviBar>
     </div>
 </template>
 <script>

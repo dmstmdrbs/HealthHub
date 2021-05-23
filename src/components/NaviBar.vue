@@ -2,22 +2,18 @@
     <v-card>
         <v-footer v-bind = "localAttrs">
             <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
-            <v-card-text
-                class = "navBar"
-                color="primary"
-                horizontal
-            >
-                <v-btn @click ="$router.push({name : 'home'})">
-                    <span>기록</span>
+            <v-card-text class = "navBar" color="primary" horizontal>
+                <v-btn class="btn record ma-0" text outlined @click ="$router.push({name : 'home'})">
                     <v-icon>far fa-calendar-alt</v-icon>
+                    <span>기록</span>
                 </v-btn>
-                <!-- <v-btn @click="$router.push({name : 'today'})">
-                    <span>Today</span>
-                    <v-icon>fas fa-dumbbell</v-icon>
-                </v-btn>               -->
-                <v-btn @click="$router.push({name : 'mypage'})">
-                    <span>내 정보</span>
+                <v-btn class="btn mypage" text outlined @click="$router.push({name : 'mypage'})">
                     <v-icon>fas fa-user</v-icon>
+                    <span>내정보</span>
+                </v-btn>
+                <v-btn class="btn logout" text outlined @click="$router.push({name : 'login'})">
+                    <v-icon>fas fa-user-lock</v-icon>
+                    <span>로그아웃</span>
                 </v-btn>
             </v-card-text>
         </v-footer>

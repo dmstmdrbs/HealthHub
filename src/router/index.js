@@ -14,7 +14,7 @@ const vueRouter = new VueRouter({
   base: process.env.BASE_URL,
   routes: [{
       path: '/',
-      name: 'Login',
+      name: 'login',
       component: LoginPage
       },
       {
