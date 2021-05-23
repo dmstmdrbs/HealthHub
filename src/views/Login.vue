@@ -1,45 +1,32 @@
 <template>
 	<v-container class="login">
 		<v-card> 
-			<h2>Login</h2>
-			<v-form class="login-form">
-				<div>
-					<v-icon>fas fa-user</v-icon>
-					<input type ="text" placeholder = "Enter your ID" v-model="input.uid">
-				</div>
-				<v-spacer></v-spacer>
-				<div>
-					<v-icon>fas fa-lock</v-icon>
-					<input type = "password" placeholder="Enter your PW" v-model="input.password">
-				</div>
-				<v-btn
-					class="login-button"
-					v-on:click = "onSubmit"
-					block
-					color="primary"
-					elevation="2"
-					rounded
-					outlined
-					text>LOGIN
-				</v-btn>
-			<v-spacer></v-spacer>
-			<div class="func_button">
-					<v-btn class="forgot-password"
-						v-on:click="$router.push({name:'find_pw'})"
-						rounded
-						outlined
-						small
-						text>비밀번호 찾기
-					</v-btn>
-					<v-btn class="btn_join" 
+			<h2 id="login-title">LOGIN</h2>
+			<div class="login-form2">
+					<!-- <h2 align="center">로그인</h2> -->
+                    <v-text-field v-model="input.uid" label="아이디">
+                    </v-text-field>
+                    <v-text-field v-model="input.password" label="패스워드" type="password">
+                    </v-text-field>
+                    <v-btn class="login-button" depressed block large v-on:click = "onSubmit">
+                        LOGIN
+                    </v-btn>
+					 <v-btn 
+					 	text
 						v-on:click="$router.push({name:'join'})"
-						rounded
-						outlined
-						small
-						text> 회원 가입
+						class="btn_join" 
+					>
+						회원가입
 					</v-btn>
-				</div>
-			</v-form>
+                	<v-btn text class="px-3">아이디 찾기</v-btn>
+                	<v-btn 
+						text 
+						class="forgot-password"
+						v-on:click="$router.push({name:'find_pw'})"
+						>
+						비밀번호 찾기
+					</v-btn>
+                </div>
 		</v-card>
 	</v-container>
 </template>

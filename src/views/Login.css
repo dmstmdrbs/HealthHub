@@ -17,27 +17,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 40px;
 }
-
+#login-title{
+    text-align: center;
+    font-size:35px;
+    font-family: Roboto, sans-serif;
+    letter-spacing: 3px;
+    padding-top : 20px;
+    padding-bottom: 30px;
+}
 .login-button {
     width: 100%;
     margin-top: 40px;
+    margin-bottom: 10px;
 }
 
 .login-form {
     width: 290px;
 }
-
+.login-form2 {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .func_button {
     align-items: center;
-}
-
-.forgot-password {
-    margin-top: 10px;
-}
-
-.btn_join {
-    margin-top: 10px;
 }
 
 .login .el-input__prefix {
@@ -57,12 +63,7 @@
     padding-bottom: 30px;
 }
 
-h2 {
-    font-family: "Open Sans";
-    letter-spacing: 1px;
-    font-family: Roboto, sans-serif;
-    padding-bottom: 20px;
-}
+
 
 .login .el-card {
     width: 340px;
