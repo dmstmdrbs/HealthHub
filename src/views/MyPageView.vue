@@ -4,13 +4,16 @@
         <v-divider></v-divider>
 				<template>
 					<v-container>
-						<v-row dense justify="center">
+						<v-row>
 							<v-col v-for="(item,idx) in items" :key="idx">
-								<v-card max-width="400">
+								<v-card max-width="500">
 									<div class="d-flex flex-no-wrap justify-space-between">
-											<v-card-title class="text-h5" v-text="item.header"></v-card-title>
+												<div>
+													<v-card-title class="text-h5" v-text="item.header"></v-card-title>
+													<v-btn small rounded text outlined>수정</v-btn>
+												</div>
 											<v-divider></v-divider>
-											<v-col class="ma-2" v-for="(content,i) in item.contents" :key="i" >
+											<v-col v-for="(content,i) in item.contents" :key="i" >
 												<v-card-title v-text="content.title"></v-card-title>
 												<v-divider class="mx-2"></v-divider>
 												<v-card-text v-text="content.text"></v-card-text>
