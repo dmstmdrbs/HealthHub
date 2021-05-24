@@ -6,7 +6,8 @@
           <v-card-title class="white--text blue darken-4">
             운동 목록
             <v-spacer></v-spacer>
-            <v-btn elevation="1" small v-on:click ="loadExercise()">날짜 선택</v-btn>
+            <v-btn class="pa-2 mx-2" elevation="1" color="#ffffff" small v-on:click="todayExercise()">today</v-btn>
+            <v-btn class="pa-2" elevation="1" color="#ffffff" small v-on:click ="loadExercise()">날짜 선택</v-btn>
             <template>
               <v-dialog
                 ref="dialog"
@@ -256,6 +257,10 @@ import {eventBus} from '@/main'
       loadExercise(){
         console.log('load exercise!')
         this.showCalendar();
+      },
+      todayExercise(){
+        this.date = new Date().toISOString().substr(0, 10);
+        this.updateDate();
       },
       checkSet($event,exIdx,setIdx){
         if(this.exercises[exIdx].sets[setIdx].checked === false){
