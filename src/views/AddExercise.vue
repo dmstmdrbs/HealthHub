@@ -104,7 +104,7 @@
                 <v-card>
                   <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
                     <v-tab v-for="custom in customs" :key="custom.kinds">
-                      {{ custom.target }}
+                      {{ custom.category }}
                     </v-tab>
                   </v-tabs>
                   <v-tabs-items v-model="tab">
@@ -197,6 +197,14 @@ import {eventBus} from '@/main'
           
           customs:[
             {
+              category:'추천',
+              target: '추천',
+              list:[
+
+              ],
+            },
+            {
+              category:'하체',
               target: '하체',
               list:[
                 '바벨 백스쿼트',
@@ -205,6 +213,7 @@ import {eventBus} from '@/main'
               ]
             },
             {
+              category:'가슴',
               target: '가슴',
               list:[
                 '벤치프레스',
@@ -213,6 +222,7 @@ import {eventBus} from '@/main'
               ]
             },
             {
+              category:'등',
               target: '등',
               list:[
                 '루마니안 데드리프트',
@@ -222,6 +232,7 @@ import {eventBus} from '@/main'
             }
             ,
             {
+              category:'어깨',
               target: '어깨',
               list:[
                 '오버 헤드 프레스',
@@ -230,6 +241,7 @@ import {eventBus} from '@/main'
               ]
             },
             {
+              category:'팔',
               target: '팔',
               list:[
                 '덤벨 컬',
