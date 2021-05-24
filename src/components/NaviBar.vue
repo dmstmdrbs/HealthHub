@@ -1,10 +1,10 @@
 <template>
     <v-card>
-        <v-footer v-bind = "localAttrs">
+        <v-footer v-bind = "localAttrs" color="#ECEFF1" padless>
             <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
-            <v-card-text class = "navBar" color="primary" horizontal>
-                <v-btn class="btn record ma-0" text outlined @click ="$router.push({name : 'home'})">
-                    <v-icon>far fa-calendar-alt</v-icon>
+            <v-card-text class = "navBar" horizontal>
+                <v-btn class="btn record" text outlined @click ="$router.push({name : 'home'})">
+                    <v-icon >far fa-calendar-alt</v-icon>
                     <span>기록</span>
                 </v-btn>
                 <v-btn class="btn mypage" text outlined @click="$router.push({name : 'mypage'})">

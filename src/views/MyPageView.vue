@@ -2,10 +2,25 @@
     <div>
         <Header></Header>
         <v-divider></v-divider>
-        <h2>My Page</h2>
-        <div>
-            <p>{{this.User.username}}님의 마이페이지 입니다.</p>
-        </div>
+				<template>
+					<v-container>
+						<v-row dense justify="center">
+							<v-col v-for="(item,idx) in items" :key="idx">
+								<v-card max-width="400">
+									<div class="d-flex flex-no-wrap justify-space-between">
+											<v-card-title class="text-h5" v-text="item.header"></v-card-title>
+											<v-divider></v-divider>
+											<v-col class="ma-2" v-for="(content,i) in item.contents" :key="i" >
+												<v-card-title v-text="content.title"></v-card-title>
+												<v-divider class="mx-2"></v-divider>
+												<v-card-text v-text="content.text"></v-card-text>
+											</v-col>
+									</div>
+								</v-card>
+							</v-col>
+						</v-row>
+					</v-container>
+				</template>
         <NaviBar></NaviBar>
     </div>
 </template>
@@ -20,9 +35,76 @@ import NaviBar from '@/components/NaviBar.vue'
         },
         data () {
             return{
-                User:{
-                    username:'헬창',
-                }
+							
+								items: [
+									{
+										header: '개인 정보',
+										contents:[
+											{
+												title: '이름',
+												text:
+													`은승균`,
+											},
+											{
+												title: '나이',
+												text:
+													'24살',
+											},
+											{
+												title: '성별',
+												text:
+													'남자',
+											},
+										]
+										
+									},
+									
+									{
+										header: '신체 정보',
+										contents:[
+											{
+												
+												title: '키',
+												text:
+													'179cm',
+											},
+											{
+												
+												title: '몸무게',
+												text:
+													'76kg',
+											},
+										]
+									},
+									
+									
+									{
+										header: '1RM',
+										contents:[
+											{
+												title: '스쿼트',
+												text:
+													'140kg',
+											},
+											{
+											
+												title:
+													'벤치프레스',
+												text:
+													'100kg',
+											},
+											{
+										
+												title: '데드리프트',
+												text:
+													'150kg',
+											},
+										]
+									},
+								
+								
+								
+							],
             }
         }    
     }
