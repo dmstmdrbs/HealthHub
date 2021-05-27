@@ -168,6 +168,20 @@ import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
 import CalendarView from '@/components/CalendarView.vue'
 import {eventBus} from '@/main'
+
+  function detailedSets(reps,weight,checked){
+      this.reps = reps;
+      this.weight=weight;
+      this.checked=checked;
+  }
+  function WorkoutDetail(target,workout,sets){
+      this.target=target;
+      this.workout=workout;
+      this.sets=sets;
+      this.addSet=function(set){
+          this.sets.push(set);
+      };
+  }
  export default{
     created(){
           eventBus.$on('selectDate', (today)=>{
@@ -181,6 +195,8 @@ import {eventBus} from '@/main'
     },
     data(){
         return{
+          detailedSets,
+          WorkoutDetail,
           detailedEx : null,
           date: new Date().toISOString().substr(0, 10),
           setIndex:0,
@@ -194,6 +210,7 @@ import {eventBus} from '@/main'
           setDialog:false,
           calendarDialog:false,
           exercises: [],
+          workoutList:[],
           
           customs:[
             {
@@ -274,7 +291,7 @@ import {eventBus} from '@/main'
         this.date = new Date().toISOString().substr(0, 10);
         this.updateDate();
       },
-      checkSet($event,exIdx,setIdx){
+      checkSet(exIdx,setIdx){
         if(this.exercises[exIdx].sets[setIdx].checked === false){
           this.exercises[exIdx].sets[setIdx].checked = true;
         }else{
@@ -283,7 +300,8 @@ import {eventBus} from '@/main'
         console.log(this.exercises[exIdx].sets[setIdx].checked);
       },
       addSet() {
-        console.log(this.weight,this.reps,this.setIndex);
+        console.log(this.exercises);
+        this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
         this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
         this.setIndex=0;
         
@@ -302,9 +320,11 @@ import {eventBus} from '@/main'
       },
       submitExDialog(){
         for(let i=0;i<this.selected.length;i++){
+          var workout = new WorkoutDetail(this.selected[i].target, this.selected[i].kinds, []);
+          this.workoutList.push(workout);
           this.exercises.push({target: this.selected[i].target, kinds:this.selected[i].kinds, sets:[]})
         }
-        
+        console.log(this.workoutList[0]);
         this.selected = [];
         this.hideExDialog();
       },
