@@ -28,7 +28,7 @@
 					<div>
 					<v-btn elevation="2" small block v-on:click ="showSetDialog()" color ="green">수정</v-btn>
 					<v-dialog max-width="300" v-model="setDialog">
-                            <Dialog header-title = "수정" @hide="hideSetDialog" @submit="submitSetDialog">
+                            <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
                               
                             </Dialog>
                           </v-dialog>
