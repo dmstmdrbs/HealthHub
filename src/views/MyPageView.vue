@@ -47,7 +47,8 @@ import Dialog from '@/components/Dialog.vue'
 	export default {
 		components: {
 			Header, 
-			NaviBar 
+			NaviBar ,
+			Dialog
 		},
 		data () {
 		return{			
