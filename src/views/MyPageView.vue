@@ -22,38 +22,38 @@
 						</v-card>
 					</v-col>
 				</v-row>
-			</v-container>
-			<v-row>
-        		<v-col>
-					<div>
-					<v-btn elevation="2" small block v-on:click ="showSetDialog()" color ="green">수정</v-btn>
-					<v-dialog max-width="300" v-model="setDialog">
-                            <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
-                              
-                            </Dialog>
-                          </v-dialog>
-						  </div>
-        		</v-col>
-			</v-row>
+				<v-row>
+					<v-col>
+						<v-app>
+							<v-content>
+								<v-btn height="30px" elevation="2" small block @click="showSetDialog">수정</v-btn>
+								<v-dialog max-width="300" v-model="setDialog">
+									<Dialog @hide="hideSetDialog" @submit="submitSetDialog"></Dialog>
+								</v-dialog>	
+							</v-content>
+														
+						</v-app>
+					</v-col>
+				</v-row>
+			</v-container>	
 		</template>
-		
 		<NaviBar></NaviBar>
 	</div>
 </template>
 <script>
-import Header from '@/components/Header'
-import NaviBar from '@/components/NaviBar.vue'
-import Dialog from '@/components/Dialog.vue'
+	import Header from '@/components/Header'
+	import NaviBar from '@/components/NaviBar.vue'
+	import Dialog from '@/components/Dialog.vue'
 	export default {
 		components: {
 			Header, 
-			NaviBar ,
-			Dialog
+			NaviBar,
+			Dialog,
 		},
 		data () {
-		return{			
-			setDialog:false, 
-			is_show:false,
+			return{			
+				setDialog:false,
+				exerciseDialog:false, 
 				items: [
 					{
 						header: '개인 정보',
@@ -112,22 +112,21 @@ import Dialog from '@/components/Dialog.vue'
 						]
 					},
 				],
-			}
+				}
 		},
 		methods: {
 			hideSetDialog(){
         this.setDialog=false;
       }, 
-	  submitSetDialog(){
-        this.hideSetDialog();
-          
-      },
+			submitSetDialog(){
+				console.log("submit")
+					this.hideSetDialog();
+						
+				},
 			showSetDialog(){
+				console.log("do")
         this.setDialog=true;
-      },
-			handle_toggle: function(){ 
-      this.is_show = !this.is_show;
-    },
-		}    
+      }, 
+    },    
 	}
 </script>
