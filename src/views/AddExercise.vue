@@ -301,7 +301,7 @@ import {eventBus} from '@/main'
       },
       addSet() {
         console.log(this.exercises);
-        this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
+        // this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
         this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
         this.setIndex=0;
         
