@@ -22,19 +22,3 @@ new Vue({
   VeeValidate,
   render: h => h(App)
 }).$mount('#app')
-
-
-let WorkoutList = (function(){
-
-  function WorkoutList(date){
-    this._date = date;
-    this._workoutList = null;
-  }
-
-  WorkoutList.prototype.saveWorkoutList = function(exercises){
-    this._workoutList = exercises;
-
-  };
-
-    return WorkoutDetail;
-}());
