@@ -56,10 +56,6 @@
             },
             
             onSubmit(){
-<<<<<<< HEAD
-=======
-                //id:test  pw:1234
->>>>>>> 8734f3186d430d944f34165785e5b668b2879828
                 const req = {
                 id : this.input.uid,
                 psword : this.input.password
@@ -83,11 +79,7 @@
                 })
                 .catch((err) => {
                     console.error("로그인 중 에러 발생");
-<<<<<<< HEAD
                 });                        
-=======
-                });   
->>>>>>> 8734f3186d430d944f34165785e5b668b2879828
             }
        }
     }
