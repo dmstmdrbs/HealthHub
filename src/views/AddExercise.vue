@@ -395,24 +395,63 @@ import {eventBus} from '@/main'
       submitCalendar(){
         this.updateDate();
         this.hideCalendar();
-        console.log(this.date);
       },
       updateDate(){
         this.$refs.dialog.save(this.date);
         eventBus.$emit("updatedDate", this.date);
 
         fetch(`http://115.85.183.157:3000/exercises/${this.date}`,{
-                    method : "GET",
-                    headers:{
-                        "Content-Type" : "application/json",
-                    },
-                }).then((res) => res.json())
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((err) => {
-                    console.error("error");
-                });
+              method : "GET",
+              headers:{
+                  "Content-Type" : "application/json",
+              },
+          }).then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            var exercises=[];
+            var prev="";
+            var kindIdx=-1;
+            for(var i=0; i<res.length; i++) {
+              console.log(prev!==res[i].kinds);
+              if(prev!==res[i].kinds){
+                prev=res[i].kinds;
+                kindIdx+=1;
+                exercises.push({target : res[i].target, kinds : res[i].kinds, sets : []})
+              }
+              exercises[kindIdx].sets.push({reps : parseInt(res[i].reps), weight : res[i].weight, checked : res[i].checked});
+            }
+            // for(ex in res){
+            //   if(prev!==ex.kinds){
+            //     prev=ex.kinds;
+            //     exercises.push({target : ex.target, kinds : ex.kinds, sets : []})
+                
+            //     tempKind[sets]=[];
+            //   }
+            //   tempKind[target]=ex.target;
+            //   tempKind[kinds]=ex.kinds;
+            //   tempSets=[];
+            //   for(set in ex.sets){
+            //     tempSets.append
+            //   }
+            //   tempKind[sets]=tempSets;
+            // }
+              // {
+              //   target : '등',
+              //   kinds :'랫풀' , 
+              //   sets : [
+              //     {
+              //       reps : 3,
+              //       weight : 50,
+              //     }
+              //   ]
+              // }
+            // kind="";
+            console.log(exercises);
+            this.exercises=exercises;
+          })
+          .catch((err) => {
+              console.error("error");
+          });
 
       },
     }   
