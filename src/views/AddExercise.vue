@@ -97,40 +97,44 @@
       
       <v-row>
         <v-col>
-          <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
-          <v-dialog max-width="600" v-model="exerciseDialog">
-            <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
-              <template v-slot:body>
-                <v-card>
-                  <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-                    <v-tab v-for="custom in customs" :key="custom.kinds">
-                      {{ custom.category }}
-                    </v-tab>
-                  </v-tabs>
-                  <v-tabs-items v-model="tab">
-                    <v-tab-item v-for="custom in customs" :key="custom.kinds">
-                      <v-list>
-                        <v-list-item-group color="indigo">
-                          <v-list-item v-for="item in custom.list" :key="item.kinds" @click ="addChip(custom.target, item)">
-                            <v-list-item-content>
-                              <v-list-item-title v-text="item"></v-list-item-title>
-                            </v-list-item-content>
-                          </v-list-item>
-                        </v-list-item-group>
-                      </v-list>
-                    </v-tab-item>
-                  </v-tabs-items>
-                  <v-row align="center" justify="start">
-                    <v-col v-for="select in selected" :key="select.kinds">
-                      <v-chip :disabled="loading" close @click:close="selected.splice(i, 1)">
-                        {{ select.kinds }}
-                      </v-chip>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </template>
-            </Dialog>
-          </v-dialog>
+          <v-app>
+            <v-content>
+              <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
+              <v-dialog max-width="600" v-model="exerciseDialog">
+                <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
+                  <template v-slot:body>
+                    <v-card>
+                      <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+                        <v-tab v-for="custom in customs" :key="custom.kinds">
+                          {{ custom.category }}
+                        </v-tab>
+                      </v-tabs>
+                      <v-tabs-items v-model="tab">
+                        <v-tab-item v-for="custom in customs" :key="custom.kinds">
+                          <v-list>
+                            <v-list-item-group color="indigo">
+                              <v-list-item v-for="item in custom.list" :key="item.kinds" @click ="addChip(custom.target, item)">
+                                <v-list-item-content>
+                                  <v-list-item-title v-text="item"></v-list-item-title>
+                                </v-list-item-content>
+                              </v-list-item>
+                            </v-list-item-group>
+                          </v-list>
+                        </v-tab-item>
+                      </v-tabs-items>
+                      <v-row align="center" justify="start">
+                        <v-col v-for="select in selected" :key="select.kinds">
+                          <v-chip :disabled="loading" close @click:close="selected.splice(i, 1)">
+                            {{ select.kinds }}
+                          </v-chip>
+                        </v-col>
+                      </v-row>
+                    </v-card>
+                  </template>
+                </Dialog>
+              </v-dialog>
+            </v-content>
+          </v-app>
         </v-col>
         <v-col>
           <v-btn elevation="2" small block v-on:click ="loadExercise()" color ="green">불러오기</v-btn>

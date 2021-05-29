@@ -27,6 +27,7 @@
 						<v-app>
 							<v-content>
 								<v-btn height="30px" elevation="2" small block @click="showSetDialog">수정</v-btn>
+<<<<<<< HEAD
 								<v-dialog max-width="500" v-model="setDialog">
 									<Dialog header-title="정보 수정" @hide="hideSetDialog" @submit="submitSetDialog">
 										<template v-slot:body>
@@ -66,6 +67,13 @@
 									
 								</v-dialog>	
 							</v-content>
+=======
+								<v-dialog max-width="300" v-model="setDialog">
+									<Dialog @hide="hideSetDialog" @submit="submitSetDialog"></Dialog>
+								</v-dialog>	
+							</v-content>
+														
+>>>>>>> dfb6bf4f29ef2d092a44f74436bc5326501bf69f
 						</v-app>
 					</v-col>
 				</v-row>
