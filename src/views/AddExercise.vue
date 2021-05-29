@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" sm="4">
           <v-card class="scroll mx-auto" height="600px">
-            <v-card-title>추천 운동 리스트</v-card-title>
+            <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
             <template>
               <v-divider></v-divider>
               <v-col>
@@ -13,10 +13,8 @@
                     <v-col v-for="(exercise,index) in exercises" :key="index">
                       <v-card>
                         <v-card-title>
-                          {{exercise.target}} | {{exercise.kinds}} |
-                          <v-col>
-                            총 볼륨 : {{calVolume(exercise.sets)}}
-                          </v-col> 
+                          {{exercise.target}} | {{exercise.kinds}}
+                          
                         </v-card-title>
                         <v-col v-for="set,idx in exercise.sets" :key="idx">
                             <v-container fluid>
@@ -35,7 +33,7 @@
         </v-col>
         <v-divider vertical></v-divider>
         <v-col cols="12" sm="8">
-        <v-card class="scroll mx-auto" width="800px" height="600px">
+        <v-card class="scroll mx-auto" height="600px">
           <v-card-title class="white--text blue darken-4">
             운동 목록
             <v-spacer></v-spacer>
@@ -67,19 +65,12 @@
                   <v-col v-for="(exercise,index) in exercises" :key="index">
                     <v-card>
                       <v-card-title>
-                        <v-icon
-                          medium
-                          left
-                          @click ="deleteExercise(index)"
-                        >
+                        <v-icon medium left @click ="deleteExercise(index)">
                           mdi-trash-can-outline
                         </v-icon>
-                        {{exercise.target}} | {{exercise.kinds}} |
-                        <v-col>
-                          총 볼륨 : {{calVolume(exercise.sets)}}
-                        </v-col>
-                        <div>
-                          <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
+                        {{exercise.target}} | {{exercise.kinds}} 
+                        <v-spacer></v-spacer>
+                        <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
                           <v-dialog max-width="300" v-model="setDialog">
                             <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
                               <template v-slot:body>
@@ -104,21 +95,29 @@
                               </template>
                             </Dialog>
                           </v-dialog>
-                        </div>
-                        <div>
                           <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
-                        </div>  
                       </v-card-title>
-                      <v-col v-for="set,idx in exercise.sets" :key="idx">
+                      <v-row>
+                        <v-col cols="12" sm="4">
+                          <v-btn text disabled color="#ffffff">총 볼륨 : {{calVolume(exercise.sets)}}</v-btn>
+                        </v-col>
+                        <v-col cols="12" sm="8">
+                          
+                        </v-col>
+                      </v-row>
+                        <v-col v-for="set,idx in exercise.sets" :key="idx">
                           <v-container fluid>
                             <v-row>
                               <v-checkbox
                                 :v-model="exercises[index].sets[idx].checked"
-                                @change="checkSet($event,index,idx)"></v-checkbox>
-                              <label>{{set.weight}}kg x {{set.reps}}회</label>
+                                @change="checkSet($event,index,idx)"
+                              >
+                              </v-checkbox>
+                              <label style="margin-top:20px"> {{set.weight}}kg x {{set.reps}}회</label>
                             </v-row>
                           </v-container>
-                      </v-col>           
+                        </v-col>           
+
                     </v-card>
                   </v-col>
                 </v-col>
