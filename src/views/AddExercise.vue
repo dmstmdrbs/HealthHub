@@ -1,7 +1,40 @@
 <template>
   <v-app>
-    <v-container>
+    <v-container >
       <v-row>
+        <v-col cols="12" sm="4">
+          <v-card class="scroll mx-auto" height="600px">
+            <v-card-title>추천 운동 리스트</v-card-title>
+            <template>
+              <v-divider></v-divider>
+              <v-col>
+                <template>
+                  <v-col>
+                    <v-col v-for="(exercise,index) in exercises" :key="index">
+                      <v-card>
+                        <v-card-title>
+                          {{exercise.target}} | {{exercise.kinds}} |
+                          <v-col>
+                            총 볼륨 : {{calVolume(exercise.sets)}}
+                          </v-col> 
+                        </v-card-title>
+                        <v-col v-for="set,idx in exercise.sets" :key="idx">
+                            <v-container fluid>
+                              <v-row>
+                                <label>{{set.weight}}kg x {{set.reps}}회</label>
+                              </v-row>
+                            </v-container>
+                        </v-col>           
+                      </v-card>
+                    </v-col>
+                  </v-col>
+                </template>
+              </v-col>   
+            </template>
+          </v-card>
+        </v-col>
+        <v-divider vertical></v-divider>
+        <v-col cols="12" sm="8">
         <v-card class="scroll mx-auto" width="800px" height="600px">
           <v-card-title class="white--text blue darken-4">
             운동 목록
@@ -92,12 +125,20 @@
               </template>
             </v-col>   
         </v-card>
+        </v-col>
       </v-row> 
       <v-row>
         <v-col>
           <v-app>
             <v-content>
-              <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
+              <v-btn elevation="2" small block color="blue" @click="showRecommendDialog">운동 추가</v-btn>
+              <v-dialog max-width="600" v-model="recommendDialog">
+                <Dialog header-title = "운동 추가" @hide="hideRecommendDialog" @submit="submitRecommendDialog">
+                  <template v-slot:body>
+                    
+                  </template>
+                </Dialog>
+              </v-dialog>
               <v-dialog max-width="600" v-model="exerciseDialog">
                 <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
                   <template v-slot:body>
@@ -242,7 +283,9 @@ import {eventBus} from '@/main'
           exerciseDialog:false,
           setDialog:false,
           calendarDialog:false,
+          recommendDialog:false,
           exercises: [],
+          recommended:[],
           workoutList:[], 
           customs:[
             {
@@ -320,32 +363,28 @@ import {eventBus} from '@/main'
           dates : this.date,
           exercises : this.exercises,
         }
-            
-                fetch("http://115.85.183.157:3000/exercises",{
-                    method : "POST",
-                    headers:{
-                        "Content-Type" : "application/json",
-                    },
-                    body : JSON.stringify(req),
-                }).then((res) => res.json())
-                .then((res) => {
-                    if (res.success) {
-                        alert("성공");
-                    }else{
-                        alert((res.msg));
-                    }
-                })
-                .catch((err) => {
-                    console.error("error");
-                });
-        
-
+        fetch("http://115.85.183.157:3000/exercises",{
+            method : "POST",
+            headers:{
+                "Content-Type" : "application/json",
+            },
+            body : JSON.stringify(req),
+        }).then((res) => res.json())
+        .then((res) => {
+            if (res.success) {
+                alert("성공");
+            }else{
+                alert((res.msg));
+            }
+        })
+        .catch((err) => {
+            console.error("error");
+        });
       },
       loadExercise(){
         console.log('load exercise!')
         this.showCalendar();
       },
-      
       todayExercise(){
         function getDateFormat(date){
           var year = date.getFullYear();
@@ -413,6 +452,16 @@ import {eventBus} from '@/main'
           this.hideSetDialog();
         
         } 
+      },
+      showRecommendDialog(){
+        this.recommendDialog=true;
+      },
+      hideRecommendDialog(){
+        this.recommendDialog=false;
+        this.showExDialog();
+      },
+      submitRecommendDialog(){
+        this.recommendDialog=false;
       },
       addChip(targetName, item){
         if(!(this.selected.includes(item))){
