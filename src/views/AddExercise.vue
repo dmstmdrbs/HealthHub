@@ -188,15 +188,16 @@ import {eventBus} from '@/main'
     created(){
           eventBus.$on('selectDate', (today)=>{
             this.date = today;
+            this.exercises = ''
       })
     },
     components:{
         //ExerciseTemplate
         Header,Dialog,CalendarView,NaviBar
     },
-    // mounted(){
-    //   updateDate();
-    // },
+    mounted(){
+
+    },
     data(){
         return{
           detailedSets,
@@ -205,7 +206,7 @@ import {eventBus} from '@/main'
           date: new Date().toISOString().substr(0, 10),
           setIndex:0,
           weight:null,reps:0,
-          sets :[],
+          // sets :[],
           tab: null,
           loading: false,
           selected: [],
@@ -287,7 +288,6 @@ import {eventBus} from '@/main'
         return sum
       },
       saveExercise(){
-
         const req = {
           dates : this.date,
           exercises : this.exercises,

@@ -48,6 +48,13 @@
 								<v-card-text>{{userInfo.weight}}</v-card-text>
 							</v-col>
 						</div>
+						<div style="text-align:center;">
+							<v-card-title class="text-h5">약점부위</v-card-title>
+						</div>
+						<v-divider></v-divider>
+						<v-col>
+							<v-card-text>{{userInfo.weak}}</v-card-text>
+						</v-col>
 					</v-card>
 				</v-col>
 				<v-col>
@@ -72,6 +79,13 @@
 								<v-divider class="mx-2"></v-divider>
 								<v-card-text>{{userInfo.dead}}</v-card-text>
 							</v-col>
+							<div style="text-align:center;">
+								<v-card-title class="text-h5">숙련도</v-card-title>
+							</div>
+							<v-divider></v-divider>
+								<v-col>	
+									<v-card-text>{{userInfo.proficiency}}</v-card-text>
+								</v-col>
 						</div>
 					</v-card>
 				</v-col>
@@ -90,6 +104,8 @@
 														<h2>신체정보</h2>
 														<v-text-field v-model="userInfo.height" label="키"></v-text-field>
 														<v-text-field v-model="userInfo.weight" label="몸무게"></v-text-field>
+														<h2>약점 부위</h2>
+														<v-text-field v-model="userInfo.weak" label="약점 부위"></v-text-field>
 													</v-col>
 													<v-divider vertical></v-divider>
 													
@@ -104,6 +120,14 @@
 														<v-text-field v-model="userInfo.dead"
 																	label="데드리프트"
 														></v-text-field>
+														<h2>숙련도</h2>
+														<v-radio-group
+															mandatory
+															v-model="proficiency">
+															<v-radio label="초급자" value="초급자"></v-radio>
+															<v-radio label="중급자" value="중급자"></v-radio>
+															<v-radio label="고급자" value="고급자"></v-radio>
+														</v-radio-group>
 													</v-col>
 												</v-row>
 											</v-container>
@@ -124,6 +148,9 @@ import Header from '@/components/Header'
 import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
 	export default {
+		mounted() {
+				this.getUserInfo();
+		},
 		components: {
 					Header, 
 					NaviBar,
@@ -133,13 +160,15 @@ import Dialog from '@/components/Dialog.vue'
 			return{         
 				userInfo:{
 					name:'은승균',
-					age:'24',
-					sex:'남자',
-					height:'179',
-					weight:'76',
-					sqrt:'140',
-					bench:'100',
-					dead:'150'            
+					age:'',
+					sex:'',
+					height:'',
+					weight:'',
+					sqrt:'',
+					bench:'',
+					dead:'',
+					weak:'',
+					proficiency:'중급자',       
 				},
 				setDialog:false,
 			}
@@ -150,12 +179,59 @@ import Dialog from '@/components/Dialog.vue'
 			}, 
 			submitSetDialog(){
 				console.log("submit")
+				this.saveUserInfo();
 				this.hideSetDialog();
 			},
 			showSetDialog(){
 				console.log("do")
 				this.setDialog=true;
-			}, 
+			},
+			saveUserInfo(){
+				//db에 저장
+				const req = {
+          uName:this.userInfo.name,
+					age:parseInt(this.userInfo.age),
+					sex:this.userInfo.sex,
+					height:parseInt(this.userInfo.height),
+					weight:parseInt(this.userInfo.weight),
+					sqrt:parseInt(this.userInfo.sqrt),
+					bench:parseInt(this.userInfo.bench),
+					dead:parseInt(this.userInfo.dead),
+					weak:this.userInfo.weak,
+        }
+				fetch("http://115.85.183.157:3000/userInfo",{
+						method : "POST",
+						headers:{
+								"Content-Type" : "application/json",
+						},
+						body : JSON.stringify(req),
+				}).then((res) => res.json())
+				.then((res) => {
+						if (res.success) {
+								alert("성공");
+						}else{
+								alert((res.msg));
+						}
+				})
+				.catch((err) => {
+						console.error("error");
+				});
+				this.hideSetDialog();
+			},
+			getUserInfo(){
+
+				//db에서 받아오면 됨.
+				this.userInfo.name='은승균';
+				this.userInfo.age=24;
+				this.userInfo.sex='남자';
+				// this.userInfo.height=179.3;
+				// this.userInfo.weight=76;
+				// this.userInfo.sqrt=140;
+				// this.userInfo.bench=100;
+				// this.userInfo.dead=150;
+				// this.userInfo.weak='등';
+
+			},
 		},    
 	}
 </script>
