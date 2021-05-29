@@ -39,6 +39,12 @@ const process = {
         const response = await user.getExercise();
         return res.json(response);
     },
+    updateExercise : async (req, res) => {
+        req.body = req.params.date;
+        const user = new User(req.body);
+        const response = await user.updateExercise();
+        return res.json(response);
+    },
 
 
 }

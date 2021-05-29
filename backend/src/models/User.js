@@ -57,6 +57,18 @@ class User{
           return { success : false, msg : err};
       }
   }
+
+    async updateExercise(){
+      const client = this.body;
+      try{
+      const response = await UserStorage.updateExercise(client);
+      client
+      response  
+      return response;
+      } catch (err){
+          return { success : false, msg : err};
+      }
+  }
 }
 
 module.exports = User;

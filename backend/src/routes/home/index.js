@@ -18,4 +18,7 @@ router.post("/register",ctrl.process.register);
 
 router.post("/exercises", ctrl.process.saveExercise);
 
+router.patch("/exercises", ctrl.process.updateExercise);
+
+
 module.exports = router;
