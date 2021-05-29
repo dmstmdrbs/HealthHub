@@ -28,6 +28,9 @@
           ></v-text-field>
         </v-col>
 
+        
+      </v-row>
+      <v-row>
         <v-col
           cols="12"
           md="4"
@@ -60,7 +63,6 @@
             v-on:click = "checkID">
             아이디 중복 확인
           </v-btn>
-        
         </v-col> 
       </v-row>
       <v-row>
@@ -93,6 +95,18 @@
           </v-col>
       </v-row>
       <v-row>
+        <v-col cols="12" md="4">
+          <v-container fluid class="px-0">
+            <v-radio-group
+              mandatory 
+              v-model="sexGroup">
+              <v-radio label="남자" value=1></v-radio>
+              <v-radio label="여자" value=2></v-radio>
+            </v-radio-group>
+          </v-container>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-btn
             elevation="2"
             small
@@ -116,6 +130,12 @@
       lastname: '',
       id : '',
       pw : '',
+      sexGroup: 1,
+      age:'',
+      weak:'',
+      userInfo:{
+
+      },
       idRules:[
         v => !!v || 'ID is required',
       ],
@@ -188,6 +208,7 @@
         //   //로그인 페이지로 이동
         //   VueRouter.push({path:'/'})
         // }
+        console.log(this.sexGroup);
            alert('환영합니다! 로그인을 해주세요.');
           //로그인 페이지로 이동
           VueRouter.push({path:'/'});
