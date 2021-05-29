@@ -307,7 +307,7 @@ import {eventBus} from '@/main'
                 .catch((err) => {
                     console.error("error");
                 });
-                console.log(body);
+        
 
       },
       loadExercise(){
@@ -397,6 +397,20 @@ import {eventBus} from '@/main'
       updateDate(){
         this.$refs.dialog.save(this.date);
         eventBus.$emit("updatedDate", this.date);
+
+        fetch(`http://115.85.183.157:3000/exercises/${this.date}`,{
+                    method : "GET",
+                    headers:{
+                        "Content-Type" : "application/json",
+                    },
+                }).then((res) => res.json())
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                    console.error("error");
+                });
+
       },
     }   
   }
