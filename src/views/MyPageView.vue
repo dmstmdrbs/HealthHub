@@ -15,7 +15,7 @@
 								<v-col>
 									<v-card-title>이름</v-card-title>
 									<v-divider class="mx-2"></v-divider>
-									<v-card-text>{{userInfo.name}}</v-card-text>
+									<v-card-text>{{userInfo.uName}}</v-card-text>
 								</v-col>
 								<v-col>
 									<v-card-title>나이</v-card-title>
@@ -144,7 +144,7 @@ import Dialog from '@/components/Dialog.vue'
 		data () {
 			return{         
 				userInfo:{
-					name:'은승균',
+					uName:'은승균',
 					age:'',
 					sex:'',
 					height:'',
@@ -173,7 +173,7 @@ import Dialog from '@/components/Dialog.vue'
 			saveUserInfo(){
 				//db에 저장
 				const req = {
-          name:this.userInfo.name,
+          uName:this.userInfo.uName,
 					age:parseInt(this.userInfo.age),
 					sex:this.userInfo.sex,
 					height:parseInt(this.userInfo.height),
