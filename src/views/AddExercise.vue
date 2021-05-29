@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-container>
       <v-row>
         <v-card class="scroll mx-auto" width="800px" height="600px">
@@ -90,11 +90,9 @@
                   </v-col>
                 </v-col>
               </template>
-            </v-col>
-            
+            </v-col>   
         </v-card>
-      </v-row>
-      
+      </v-row> 
       <v-row>
         <v-col>
           <v-app>
@@ -162,7 +160,7 @@
       </v-row>
     </v-container>
     <NaviBar></NaviBar>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -189,8 +187,7 @@ import {eventBus} from '@/main'
  export default{
     created(){
           eventBus.$on('selectDate', (today)=>{
-            this.date = today;
-            
+            this.date = today;  
       })
     },
     components:{
@@ -214,8 +211,7 @@ import {eventBus} from '@/main'
           setDialog:false,
           calendarDialog:false,
           exercises: [],
-          workoutList:[],
-          
+          workoutList:[], 
           customs:[
             {
               category:'추천',
@@ -373,8 +369,7 @@ import {eventBus} from '@/main'
           this.addSet();
           this.hideSetDialog();
         
-        }
-            
+        } 
       },
       addChip(targetName, item){
         if(!(this.selected.includes(item))){
@@ -400,8 +395,7 @@ import {eventBus} from '@/main'
         this.$refs.dialog.save(this.date);
         eventBus.$emit("updatedDate", this.date);
       },
-    } 
-        
+    }   
   }
 </script>
 <style>
