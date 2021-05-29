@@ -52,34 +52,34 @@
 				</v-col>
 				<v-col>
 					<v-card max-width="500">
-							<div class="d-flex flex-no-wrap justify-space-between">
-								<div style="text-align:center;">
-											<v-card-title class="text-h5">1RM</v-card-title>
-								</div>
-								<v-divider></v-divider>
-								<v-col>
-											<v-card-title>스쿼트</v-card-title>
-											<v-divider class="mx-2"></v-divider>
-											<v-card-text>{{userInfo.sqrt}}</v-card-text>
-								</v-col>
-		<v-col>
-											<v-card-title>벤치프레스</v-card-title>
-											<v-divider class="mx-2"></v-divider>
-											<v-card-text>{{userInfo.bench}}</v-card-text>
-								</v-col>
-		<v-col>
-											<v-card-title>데드리프트</v-card-title>
-											<v-divider class="mx-2"></v-divider>
-											<v-card-text>{{userInfo.dead}}</v-card-text>
-								</v-col>
+						<div class="d-flex flex-no-wrap justify-space-between">
+							<div style="text-align:center;">
+								<v-card-title class="text-h5">1RM</v-card-title>
 							</div>
+							<v-divider></v-divider>
+							<v-col>
+								<v-card-title>스쿼트</v-card-title>
+								<v-divider class="mx-2"></v-divider>
+								<v-card-text>{{userInfo.sqrt}}</v-card-text>
+							</v-col>
+							<v-col>
+								<v-card-title>벤치프레스</v-card-title>
+								<v-divider class="mx-2"></v-divider>
+								<v-card-text>{{userInfo.bench}}</v-card-text>
+							</v-col>
+							<v-col>
+								<v-card-title>데드리프트</v-card-title>
+								<v-divider class="mx-2"></v-divider>
+								<v-card-text>{{userInfo.dead}}</v-card-text>
+							</v-col>
+						</div>
 					</v-card>
 				</v-col>
 			</v-row>
 			<v-row>
 				<v-col>
 					<v-app>
-						<v-content>
+						<v-main>
 							<v-btn height="30px" elevation="2" small block @click="showSetDialog">수정</v-btn>
 								<v-dialog max-width="500" v-model="setDialog">
 									<Dialog header-title="정보 수정" @hide="hideSetDialog" @submit="submitSetDialog">
@@ -110,7 +110,7 @@
 										</template>
 									</Dialog>
 								</v-dialog>   
-							</v-content>
+							</v-main>
 						</v-app>
 					</v-col>
 				</v-row>
@@ -130,35 +130,33 @@ import Dialog from '@/components/Dialog.vue'
 					Dialog,
 		},
 		data () {
-					return{         
-							userInfo:{
-										name:'은승균',
-				age:'24',
-				sex:'남자',
-				height:'179',
-				weight:'76',
-				sqrt:'140',
-				bench:'100',
-				dead:'150'            
-							},
-							setDialog:false,
-							exerciseDialog:false, 
-							
-							}
+			return{         
+				userInfo:{
+					name:'은승균',
+					age:'24',
+					sex:'남자',
+					height:'179',
+					weight:'76',
+					sqrt:'140',
+					bench:'100',
+					dead:'150'            
+				},
+				setDialog:false,
+				exerciseDialog:false, 
+			}
 		},
 		methods: {
-					hideSetDialog(){
+			hideSetDialog(){
 				this.setDialog=false;
-		}, 
-					submitSetDialog(){
-							console.log("submit")
-										this.hideSetDialog();
-											
-							},
-					showSetDialog(){
-							console.log("do")
+			}, 
+			submitSetDialog(){
+				console.log("submit")
+				this.hideSetDialog();
+			},
+			showSetDialog(){
+				console.log("do")
 				this.setDialog=true;
-		}, 
-	},    
+			}, 
+		},    
 	}
 </script>
