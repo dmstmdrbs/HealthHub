@@ -157,7 +157,7 @@
           </template>
         </v-col>
         <v-col>
-          <v-btn elevation="2" small block color="red">저장</v-btn>
+          <v-btn elevation="2" small block v-on:click ="saveExercise()" color="red">저장</v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -286,6 +286,30 @@ import {eventBus} from '@/main'
           sum+= sets[i].weight * sets[i].reps
         }
         return sum
+      },
+      saveExercise(){
+
+        const req = this.exercises;
+            
+                fetch("http://115.85.183.157:3000/exercises",{
+                    method : "POST",
+                    headers:{
+                        "Content-Type" : "application/json",
+                    },
+                    body : JSON.stringify(req),
+                }).then((res) => res.json())
+                .then((res) => {
+                    if (res.success) {
+                        alert("성공");
+                    }else{
+                        alert((res.msg));
+                    }
+                })
+                .catch((err) => {
+                    console.error("error");
+                });
+                console.log(body);
+
       },
       loadExercise(){
         console.log('load exercise!')

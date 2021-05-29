@@ -56,12 +56,32 @@
             },
             
             onSubmit(){
-                VueRouter.push({path: '/home'});
-               
+                const req = {
+                id : this.input.uid,
+                psword : this.input.password
+                };
+            
+            
+            fetch("http://115.85.183.157:3000/login",{
+                method : "POST",
+                headers:{
+                    "Content-Type" : "application/json",
+                },
+                body : JSON.stringify(req),
+                }).then((res) => res.json())
+                .then((res) => {
+                    if (res.success) {
+                        VueRouter.push({path: '/home'});
+                    }else{
+                        alert(res.msg);
+                        console.log(res.msg);
+                    }
+                })
+                .catch((err) => {
+                    console.error("로그인 중 에러 발생");
+                });                        
             }
-
-
-        }
+       }
     }
 </script>
 
