@@ -188,7 +188,35 @@ import {eventBus} from '@/main'
     created(){
           eventBus.$on('selectDate', (today)=>{
             this.date = today;
-            this.exercises = ''
+            
+              fetch(`http://115.85.183.157:3000/exercises/${this.date}`,{
+              method : "GET",
+              headers:{
+                  "Content-Type" : "application/json",
+              },
+              }).then((res) => res.json())
+              .then((res) => {
+                console.log(res);
+                var exercises=[];
+                var prev="";
+                var kindIdx=-1;
+                for(var i=0; i<res.length; i++) {
+                  console.log(prev!==res[i].kinds);
+                  if(prev!==res[i].kinds){
+                    prev=res[i].kinds;
+                    kindIdx+=1;
+                    exercises.push({target : res[i].target, kinds : res[i].kinds, sets : []})
+                  }
+                  exercises[kindIdx].sets.push({reps : parseInt(res[i].reps), weight : res[i].weight, checked : res[i].checked});
+                }
+              
+                console.log(exercises);
+                this.exercises=exercises;
+              })
+              .catch((err) => {
+                  console.error("error");
+              });
+            
       })
     },
     components:{
@@ -196,7 +224,7 @@ import {eventBus} from '@/main'
         Header,Dialog,CalendarView,NaviBar
     },
     mounted(){
-
+      this.todayExercise();
     },
     data(){
         return{
@@ -317,8 +345,17 @@ import {eventBus} from '@/main'
         console.log('load exercise!')
         this.showCalendar();
       },
+      
       todayExercise(){
-        this.date = new Date().toISOString().substr(0, 10);
+        function getDateFormat(date){
+          var year = date.getFullYear();
+          var month = (1+date.getMonth());
+          month = month >=10?month:'0'+month;
+          var day=date.getDate();
+          day=day>=10?day:'0'+day;
+          return year+'-'+month+'-'+day;
+        }
+        this.date = getDateFormat(new Date());
         this.updateDate();
       },
       checkSet(exIdx,setIdx){
