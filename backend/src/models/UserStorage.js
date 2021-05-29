@@ -25,15 +25,25 @@ class UserStorage{
     }
 
     static async updateExercise(exInfo){
-        console.log(exInfo[0].target,exInfo[1].kinds,exInfo[2].sets);
-        return new Promise((resolve, reject)=>{
-            const query = "DELETE FROM exercises WHERE dates = ?;INSERT INTO exercises(dates, kinds, reps, weight) VALUES(?, ?, ?, ?);";
-            db.query(query, [exInfo.dates, exInfo.dates, exInfo.kinds, exInfo.reps, exInfo.weight], 
-            (err)=>{
-                if (err) reject(`${err}`);
-                resolve({success: true});
+            return new Promise((resolve, reject)=>{
+
+                const query_del = "DELETE FROM exercises WHERE dates = ?;";
+                db.query(query_del,[exInfo.dates], 
+                    (err)=>{
+                        if (err) reject(`${err}`);
+                        resolve({success: true});
+                    });
+
+                const query = "INSERT INTO exercises(dates,kinds,setIdx,reps,weight,checked) VALUES(?, ?, ?, ?,?,?);";
+                exInfo.exercises.forEach(element => element.sets.forEach(function(e,i){
+                    db.query(query, [exInfo.dates, element.kinds,i+1,e.reps,e.weight,e.checked], 
+                        (err)=>{
+                            if (err) reject(`${err}`);
+                            resolve({success: true});
+                        }
+                    );
+                }));
             });
-        });
     }
 
     static async readExercise(date){

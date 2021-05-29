@@ -285,7 +285,10 @@ import {eventBus} from '@/main'
       },
       saveExercise(){
 
-        const req = this.exercises;
+        const req = {
+          dates : this.date,
+          exercises : this.exercises,
+        }
             
                 fetch("http://115.85.183.157:3000/exercises",{
                     method : "POST",
