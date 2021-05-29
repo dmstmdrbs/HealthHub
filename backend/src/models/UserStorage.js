@@ -25,7 +25,7 @@ class UserStorage{
     }
 
     static async updateExercise(exInfo){
-        //console.log(exInfo[0].target,exInfo[1].kinds,exInfo[2].sets);
+        console.log(exInfo[0].target,exInfo[1].kinds,exInfo[2].sets);
         return new Promise((resolve, reject)=>{
             const query = "DELETE FROM exercises WHERE dates = ?;INSERT INTO exercises(dates, kinds, reps, weight) VALUES(?, ?, ?, ?);";
             db.query(query, [exInfo.dates, exInfo.dates, exInfo.kinds, exInfo.reps, exInfo.weight], 
