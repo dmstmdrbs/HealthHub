@@ -22,38 +22,72 @@
 						</v-card>
 					</v-col>
 				</v-row>
-			</v-container>
-			<v-row>
-        		<v-col>
-					<div>
-					<v-btn elevation="2" small block v-on:click ="showSetDialog()" color ="green">수정</v-btn>
-					<v-dialog max-width="300" v-model="setDialog">
-                            <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
-                              
-                            </Dialog>
-                          </v-dialog>
-						  </div>
-        		</v-col>
-			</v-row>
+				<v-row>
+					<v-col>
+						<v-app>
+							<v-content>
+								<v-btn height="30px" elevation="2" small block @click="showSetDialog">수정</v-btn>
+								<v-dialog max-width="500" v-model="setDialog">
+									<Dialog header-title="정보 수정" @hide="hideSetDialog" @submit="submitSetDialog">
+										<template v-slot:body>
+											<v-container>
+												<v-row>
+												<v-col cols="12" sm="6">
+													<h2>신체정보</h2>
+													<v-text-field
+     								       label="키"
+        								  ></v-text-field>
+													<v-text-field
+     								       label="몸무게"
+        								  ></v-text-field>
+												</v-col>
+													<v-divider vertical></v-divider>
+													
+													<v-col cols="12" sm="6">
+														<h2>1RM</h2>
+														<v-text-field
+     								       label="스쿼트"
+        								  ></v-text-field>
+													<v-text-field
+     								       label="벤치프레스"
+        								  ></v-text-field>
+													<v-text-field
+     								       label="데드리프트"
+        								  ></v-text-field>
+													</v-col>
+										
+									
+									</v-row>
+											</v-container>
+
+										</template>
+										
+									</Dialog>
+									
+								</v-dialog>	
+							</v-content>
+						</v-app>
+					</v-col>
+				</v-row>
+			</v-container>	
 		</template>
-		
 		<NaviBar></NaviBar>
 	</div>
 </template>
 <script>
-import Header from '@/components/Header'
-import NaviBar from '@/components/NaviBar.vue'
-import Dialog from '@/components/Dialog.vue'
+	import Header from '@/components/Header'
+	import NaviBar from '@/components/NaviBar.vue'
+	import Dialog from '@/components/Dialog.vue'
 	export default {
 		components: {
 			Header, 
-			NaviBar ,
-			Dialog
+			NaviBar,
+			Dialog,
 		},
 		data () {
-		return{			
-			setDialog:false, 
-			is_show:false,
+			return{			
+				setDialog:false,
+				exerciseDialog:false, 
 				items: [
 					{
 						header: '개인 정보',
@@ -112,22 +146,21 @@ import Dialog from '@/components/Dialog.vue'
 						]
 					},
 				],
-			}
+				}
 		},
 		methods: {
 			hideSetDialog(){
         this.setDialog=false;
       }, 
-	  submitSetDialog(){
-        this.hideSetDialog();
-          
-      },
+			submitSetDialog(){
+				console.log("submit")
+					this.hideSetDialog();
+						
+				},
 			showSetDialog(){
+				console.log("do")
         this.setDialog=true;
-      },
-			handle_toggle: function(){ 
-      this.is_show = !this.is_show;
-    },
-		}    
+      }, 
+    },    
 	}
 </script>
