@@ -25,9 +25,10 @@ class UserStorage{
     }
 
     static async updateExercise(exInfo){
+        console.log(exInfo[0].target,exInfo[1].kinds,exInfo[2].sets);
         return new Promise((resolve, reject)=>{
-            const query = "INSERT INTO exercises(dates, kinds, reps, weight) VALUES(?, ?, ?, ?);";
-            db.query(query, [exInfo.dates, exInfo.kinds, exInfo.reps, exInfo.weight], 
+            const query = "DELETE FROM exercises WHERE dates = ?;INSERT INTO exercises(dates, kinds, reps, weight) VALUES(?, ?, ?, ?);";
+            db.query(query, [exInfo.dates, exInfo.dates, exInfo.kinds, exInfo.reps, exInfo.weight], 
             (err)=>{
                 if (err) reject(`${err}`);
                 resolve({success: true});
@@ -45,6 +46,17 @@ class UserStorage{
             });
         });
     }
+
+    // static async updateExercise(exInfo){
+    //     return new Promise((resolve, reject)=>{
+    //         const query = "UPDATE exercises SET kinds = ?, reps = ?, weight = ? WHERE dates = ?;";
+    //         db.query(query, [exInfo.kinds, exInfo.reps, exInfo.weight, exInfo.dates], 
+    //         (err)=>{
+    //             if (err) reject(`${err}`);
+    //             resolve({success: true});
+    //         });
+    //     });
+    // }
 }
 
 module.exports = UserStorage;
