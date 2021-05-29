@@ -305,10 +305,14 @@ import {eventBus} from '@/main'
       },
       addSet() {
         console.log(this.exercises);
+        if(this.reps < 0){
+          alert("횟수를 확인해주세요.");
+          return -1;
+        }
         // this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
         this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
         this.setIndex=0;
-        
+        return 0;
       },
       deleteSet(index) {
         this.exercises[index].sets.pop()
@@ -342,8 +346,11 @@ import {eventBus} from '@/main'
         this.setDialog=false;
       },
       submitSetDialog(){
-        this.addSet();
-        this.hideSetDialog();
+        test=this.addSet();
+        if(test===0){
+          this.hideSetDialog();
+        }
+        
           
       },
       addChip(targetName, item){
