@@ -15,7 +15,7 @@
 								<v-col>
 									<v-card-title>이름</v-card-title>
 									<v-divider class="mx-2"></v-divider>
-									<v-card-text>{{userInfo.uName}}</v-card-text>
+									<v-card-text>{{userInfo.name}}</v-card-text>
 								</v-col>
 								<v-col>
 									<v-card-title>나이</v-card-title>
@@ -79,6 +79,13 @@
 								<v-divider class="mx-2"></v-divider>
 								<v-card-text>{{userInfo.dead}}</v-card-text>
 							</v-col>
+							<div style="text-align:center;">
+								<v-card-title class="text-h5">숙련도</v-card-title>
+							</div>
+							<v-divider></v-divider>
+								<v-col>	
+									<v-card-text>{{userInfo.proficiency}}</v-card-text>
+								</v-col>
 						</div>
 					</v-card>
 				</v-col>
@@ -113,6 +120,14 @@
 														<v-text-field v-model="userInfo.dead"
 																	label="데드리프트"
 														></v-text-field>
+														<h2>숙련도</h2>
+														<v-radio-group
+															mandatory
+															v-model="proficiency">
+															<v-radio label="초급자" value="초급자"></v-radio>
+															<v-radio label="중급자" value="중급자"></v-radio>
+															<v-radio label="고급자" value="고급자"></v-radio>
+														</v-radio-group>
 													</v-col>
 												</v-row>
 											</v-container>
@@ -144,7 +159,7 @@ import Dialog from '@/components/Dialog.vue'
 		data () {
 			return{         
 				userInfo:{
-					uName:'은승균',
+					name:'은승균',
 					age:'',
 					sex:'',
 					height:'',
@@ -152,7 +167,8 @@ import Dialog from '@/components/Dialog.vue'
 					sqrt:'',
 					bench:'',
 					dead:'',
-					weak:'',            
+					weak:'',
+					proficiency:'중급자',       
 				},
 				setDialog:false,
 			}
@@ -173,7 +189,7 @@ import Dialog from '@/components/Dialog.vue'
 			saveUserInfo(){
 				//db에 저장
 				const req = {
-          uName:this.userInfo.uName,
+          uName:this.userInfo.name,
 					age:parseInt(this.userInfo.age),
 					sex:this.userInfo.sex,
 					height:parseInt(this.userInfo.height),
