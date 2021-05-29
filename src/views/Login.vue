@@ -77,10 +77,7 @@
                 .catch((err) => {
                     console.error("로그인 중 에러 발생");
                 });                        
-<<<<<<< HEAD
-=======
               });   
->>>>>>> bcfad80597a5e22b167c8cf5567e0928dea07ed3
             }
        }
     }
