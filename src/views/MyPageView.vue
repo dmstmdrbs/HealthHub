@@ -27,7 +27,6 @@
 						<v-app>
 							<v-content>
 								<v-btn height="30px" elevation="2" small block @click="showSetDialog">수정</v-btn>
-<<<<<<< HEAD
 								<v-dialog max-width="500" v-model="setDialog">
 									<Dialog header-title="정보 수정" @hide="hideSetDialog" @submit="submitSetDialog">
 										<template v-slot:body>
@@ -36,44 +35,33 @@
 												<v-col cols="12" sm="6">
 													<h2>신체정보</h2>
 													<v-text-field
-     								       label="키"
-        								  ></v-text-field>
-													<v-text-field
-     								       label="몸무게"
-        								  ></v-text-field>
+														label="키"
+														></v-text-field>
+																<v-text-field
+														label="몸무게"
+														></v-text-field>
+															</v-col>
+																<v-divider vertical></v-divider>
+																
+																<v-col cols="12" sm="6">
+																	<h2>1RM</h2>
+																	<v-text-field
+														label="스쿼트"
+														></v-text-field>
+																<v-text-field
+														label="벤치프레스"
+														></v-text-field>
+																<v-text-field
+														label="데드리프트"
+													></v-text-field>
 												</v-col>
-													<v-divider vertical></v-divider>
-													
-													<v-col cols="12" sm="6">
-														<h2>1RM</h2>
-														<v-text-field
-     								       label="스쿼트"
-        								  ></v-text-field>
-													<v-text-field
-     								       label="벤치프레스"
-        								  ></v-text-field>
-													<v-text-field
-     								       label="데드리프트"
-        								  ></v-text-field>
-													</v-col>
-										
-									
-									</v-row>
+												</v-row>
 											</v-container>
-
 										</template>
-										
 									</Dialog>
 									
 								</v-dialog>	
 							</v-content>
-=======
-								<v-dialog max-width="300" v-model="setDialog">
-									<Dialog @hide="hideSetDialog" @submit="submitSetDialog"></Dialog>
-								</v-dialog>	
-							</v-content>
-														
->>>>>>> dfb6bf4f29ef2d092a44f74436bc5326501bf69f
 						</v-app>
 					</v-col>
 				</v-row>
@@ -94,6 +82,9 @@
 		},
 		data () {
 			return{			
+				userInfo:{
+
+				},
 				setDialog:false,
 				exerciseDialog:false, 
 				items: [
