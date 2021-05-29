@@ -101,6 +101,10 @@
 											<v-container>
 												<v-row>
 													<v-col cols="12" sm="6">
+														<h2>유저 정보</h2>
+														<v-text-field v-model="userInfo.age" label="나이"></v-text-field>
+													</v-col>
+													<v-col cols="12" sm="6">
 														<h2>신체정보</h2>
 														<v-text-field v-model="userInfo.height" label="키"></v-text-field>
 														<v-text-field v-model="userInfo.weight" label="몸무게"></v-text-field>
@@ -123,7 +127,7 @@
 														<h2>숙련도</h2>
 														<v-radio-group
 															mandatory
-															v-model="proficiency">
+															v-model="userInfo.proficiency">
 															<v-radio label="초급자" value="초급자"></v-radio>
 															<v-radio label="중급자" value="중급자"></v-radio>
 															<v-radio label="고급자" value="고급자"></v-radio>
@@ -140,28 +144,31 @@
 				</v-row>
 			</v-container>   
 		</template>
-		<NaviBar></NaviBar>
+		<NaviBar v-on:getUserInfo="getUserInfo"></NaviBar>
 	</div>
 </template>
 <script>
 import Header from '@/components/Header'
 import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
+import axios from 'axios'
+
 	export default {
-		mounted() {
+		mounted(){
 				this.getUserInfo();
 		},
 		components: {
 					Header, 
 					NaviBar,
 					Dialog,
+					axios
 		},
 		data () {
 			return{         
 				userInfo:{
 					name:'은승균',
-					age:'',
-					sex:'',
+					age:'24',
+					sex:'남자',
 					height:'',
 					weight:'',
 					sqrt:'',
@@ -204,7 +211,6 @@ import Dialog from '@/components/Dialog.vue'
 						headers:{
 								"Content-Type" : "application/json",
 						},
-						body : JSON.stringify(req),
 				}).then((res) => res.json())
 				.then((res) => {
 						if (res.success) {
@@ -219,19 +225,25 @@ import Dialog from '@/components/Dialog.vue'
 				this.hideSetDialog();
 			},
 			getUserInfo(){
-
-				//db에서 받아오면 됨.
-				this.userInfo.name='은승균';
-				this.userInfo.age=24;
-				this.userInfo.sex='남자';
-				// this.userInfo.height=179.3;
-				// this.userInfo.weight=76;
-				// this.userInfo.sqrt=140;
-				// this.userInfo.bench=100;
-				// this.userInfo.dead=150;
-				// this.userInfo.weak='등';
-
-			},
+				fetch(`http://115.85.183.157:3000/userInfo/${this.userInfo.name}`,{
+						method : "GET",
+						headers:{
+								"Content-Type" : "application/json",
+						},
+				}).then((res) => res.json())
+				.then((res) => {
+						this.userInfo.age=res.age;
+						this.userInfo.height=res.height;
+						this.userInfo.weight=res.weight;
+						this.userInfo.sqrt=res.sqrt;
+						this.userInfo.bench=res.bench;
+						this.userInfo.dead=res.dead;
+						this.userInfo.weak=res.weak;
+				})
+				.catch((err) => {
+						console.error("error");
+				});
+			}
 		},    
 	}
 </script>
