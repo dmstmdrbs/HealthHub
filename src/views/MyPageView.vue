@@ -142,7 +142,6 @@ import Dialog from '@/components/Dialog.vue'
 					dead:'150'            
 				},
 				setDialog:false,
-				exerciseDialog:false, 
 			}
 		},
 		methods: {
