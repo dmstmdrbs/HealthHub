@@ -1,31 +1,42 @@
 <template>
-  <v-container class="login">
-    <v-card> 
-      <h2 id="login-title">LOGIN</h2>
-      <div class="login-form2">
-        <v-text-field v-model="input.uid" label="아이디"></v-text-field>
-	<v-text-field v-model="input.password" label="패스워드" type="password"></v-text-field>
-        <v-btn class="login-button" depressed block large v-on:click = "onSubmit">
-	  LOGIN
-        </v-btn>
-	<v-btn 
-	  text
-	  v-on:click="$router.push({name:'join'})"
-	  class="btn_join" 
-        >
-	  회원가입
-	</v-btn>
-	<v-btn text class="px-3">아이디 찾기</v-btn>
-        <v-btn 
-	  text 
-	  class="forgot-password"
-	  v-on:click="$router.push({name:'find_pw'})"
-	  >
-	  비밀번호 찾기
-        </v-btn>
-      </div>
-    </v-card>
-  </v-container>
+    <div>
+        <v-row justify="center">
+            <v-col align="center">
+                <h1>T.I.M.P.</h1>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-container class="login">
+                <v-card> 
+            <h2 id="login-title">LOGIN</h2>
+            <div class="login-form2">
+                <v-text-field v-model="input.uid" label="아이디"></v-text-field>
+            <v-text-field v-model="input.password" label="패스워드" type="password"></v-text-field>
+                <v-btn class="login-button" depressed block large v-on:click = "onSubmit">
+            LOGIN
+                </v-btn>
+            <v-btn 
+            text
+            v-on:click="$router.push({name:'join'})"
+            class="btn_join" 
+                >
+            회원가입
+            </v-btn>
+            <v-btn text class="px-3">아이디 찾기</v-btn>
+                <v-btn 
+            text 
+            class="forgot-password"
+            v-on:click="$router.push({name:'find_pw'})"
+            >
+            비밀번호 찾기
+                </v-btn>
+            </div>
+            </v-card>
+
+        </v-container>
+    </div>
+    
+    
 </template>
 
 <script>
