@@ -17,11 +17,13 @@
 
 ### 실행 방법
 
-    npm install
-    npm run serve
+1. install npm module
+   npm install
+2. run server
+   npm run serve
+3. login
+   서버가 켜져 있다면 아래의 아이디와 비밀번호를 이용해 접속 가능
+   id : test / pw : 1234
 
-    서버가 켜져 있다면 아래의 아이디와 비밀번호를 이용해 접속 가능
-        id : test / pw : 1234
-
-    서버가 켜져있지 않다면 아래의 링크를 통해 접속 가능 (????:port 번호)
-        http://localhost:????/home
+   서버가 켜져있지 않다면 아래의 링크를 통해 접속 가능 (????:port 번호)
+   http://localhost:????/home
