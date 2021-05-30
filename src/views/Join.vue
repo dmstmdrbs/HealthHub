@@ -1,5 +1,10 @@
 <template>
   <v-form v-model="valid">
+    <v-row justify="center">
+      <v-col style="margin:10px">
+        <h1>회원가입</h1>
+      </v-col>
+    </v-row>
     <v-container>
       <v-row>
         <v-col
