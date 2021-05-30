@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 @click ="$router.push({name :'home'})" style="text-align:center">HealthHub</h1>
+        <h1 @click ="$router.push({name :'home'})" style="text-align:center">T.I.M.P.</h1>
     </div>    
 </template>
 <script>
