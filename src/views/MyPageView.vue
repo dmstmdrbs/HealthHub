@@ -102,6 +102,8 @@
 												<v-row>
 													<v-col cols="12" sm="6">
 														<h2>유저 정보</h2>
+														<v-text-field disabled v-model="userInfo.name" label="이름"></v-text-field>
+														<v-text-field disabled v-model="userInfo.sex" label="성별"></v-text-field>
 														<v-text-field v-model="userInfo.age" label="나이"></v-text-field>
 													</v-col>
 													<v-col cols="12" sm="6">
@@ -152,31 +154,24 @@ import Header from '@/components/Header'
 import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
 import axios from 'axios'
-
+import {user} from '@/main.js'
+user;
 	export default {
 		mounted(){
-				this.getUserInfo();
+			this.userInfo=user;
+			// this.getUserInfo();
+				
 		},
 		components: {
 					Header, 
 					NaviBar,
 					Dialog,
-					axios
+					axios,
+
 		},
 		data () {
-			return{         
-				userInfo:{
-					name:'은승균',
-					age:'24',
-					sex:'남자',
-					height:'',
-					weight:'',
-					sqrt:'',
-					bench:'',
-					dead:'',
-					weak:'',
-					proficiency:'중급자',       
-				},
+			return{  
+				userInfo:'',
 				setDialog:false,
 			}
 		},
@@ -195,6 +190,8 @@ import axios from 'axios'
 			},
 			saveUserInfo(){
 				//db에 저장
+				this.user=this.userInfo;
+				console.log(this.user);
 				const req = {
           uName:this.userInfo.name,
 					age:parseInt(this.userInfo.age),
@@ -222,6 +219,7 @@ import axios from 'axios'
 				.catch((err) => {
 						console.error("error");
 				});
+				
 				this.hideSetDialog();
 			},
 			getUserInfo(){
