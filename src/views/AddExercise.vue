@@ -3,32 +3,49 @@
     <v-container >
       <v-row>
         <v-col cols="12" sm="4">
-          <v-card class="scroll mx-auto" height="600px">
+          <v-card
+            class="mx-auto scroll"
+            width="500"
+            height="600px"
+          >
             <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
-            <template>
-              <v-divider></v-divider>
-              <v-col>
+            <v-spacer></v-spacer>
+            <v-card-actions>
+              <v-btn icon @click="show = !show">
+                <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+              </v-btn>
+              <v-btn text @click="show = !show">전체 세트 보기</v-btn>
+            </v-card-actions>
                 <template>
-                  <v-col>
-                    <v-col v-for="(exercise,index) in exercises" :key="index">
-                      <v-card>
+                <v-divider></v-divider>
+                <v-col>
+                  <template>
+                    <v-col>
+                      <v-col v-for="(exercise,index) in recommended" :key="index">
+                        <v-card>
                         <v-card-title>
-                          {{exercise.target}} | {{exercise.kinds}}
-                          
+                                {{exercise.target}} | {{exercise.kinds}}
                         </v-card-title>
-                        <v-col v-for="set,idx in exercise.sets" :key="idx">
-                            <v-container fluid>
-                              <v-row>
-                                <label>{{set.weight}}kg x {{set.reps}}회</label>
-                              </v-row>
-                            </v-container>
-                        </v-col>           
-                      </v-card>
+                        <v-expand-transition>
+                          <div v-show="show">
+                            
+                              
+                              <v-col v-for="set,idx in exercise.sets" :key="idx">
+                                <v-container fluid>
+                                  <v-row>
+                                    <label>{{set.weight}}kg x {{set.reps}}회</label>
+                                  </v-row>
+                                </v-container>
+                              </v-col>           
+                            
+                          </div>
+                        </v-expand-transition>
+                        </v-card>
+                      </v-col>
                     </v-col>
-                  </v-col>
+                  </template>
+                </v-col>   
                 </template>
-              </v-col>   
-            </template>
           </v-card>
         </v-col>
         <v-divider vertical></v-divider>
@@ -277,6 +294,7 @@ import {eventBus} from '@/main'
           // sets :[],
           tab: null,
           loading: false,
+          show: false,
           selected: [],
           model: [0,1],
           exerciseDialog:false,
@@ -284,23 +302,95 @@ import {eventBus} from '@/main'
           calendarDialog:false,
           recommendDialog:false,
           exercises: [],
-          recommended:[],
-          workoutList:[], 
-          customs:[
+          userProficiency:'초급자',
+          userWeakness:'등',
+          recommended:[
             {
-              category:'추천',
-              target: '추천',
-              list:[
-
+              target:'등',
+              kinds:'랫 풀 다운',
+              sets:[
+                {reps:15,weight:25},
+                {reps:12,weight:30},
+                {reps:10,weight:35},
+                {reps:10,weight:35},
+                {reps:10,weight:35},
+              ]
+            },
+            {
+              target:'어깨',
+              kinds:'덤벨 숄더 프레스',
+              sets:[
+                {reps:15,weight:8},
+                {reps:12,weight:10},
+                {reps:10,weight:12},
+                {reps:10,weight:12},
+                {reps:10,weight:12},
+              ]
+            },
+            {
+              target : '등',
+              kinds:'루마니안 데드리프트',
+              sets:[
+                {reps:15,weight:20},
+                {reps:12,weight:30},
+                {reps:10,weight:40},
+                {reps:10,weight:40},
+                {reps:10,weight:40},
+              ]
+            },
+            {
+              target:'어깨',
+              kinds :'사이드 레터럴 레이즈',
+              sets:[
+                {reps:20,weight:5},
+                {reps:20,weight:5},
+                {reps:20,weight:5},
+                {reps:20,weight:5},
+                {reps:20,weight:5},
               ],
             },
+            {
+              target:'어깨',
+              kinds :'벤트오버 레터럴 레이즈',
+              sets:[
+                {reps:12,weight:4},
+                {reps:12,weight:4},
+                {reps:12,weight:4},
+                {reps:12,weight:4},
+                {reps:12,weight:4},
+              ]
+            },
+            {
+              target:'등',
+              kinds:'원 암 덤벨 로우',
+              sets:[
+                {reps:10,weight:12},
+                {reps:12,weight:12},
+                {reps:14,weight:10},
+                {reps:14,weight:10},
+                {reps:14,weight:10},
+              ]
+            },
+          ],
+          workoutList:[], 
+          customs:[
             {
               category:'하체',
               target: '하체',
               list:[
                 '바벨 백스쿼트',
                 '컨벤셔널 데드리프트',
-                '프론트 스쿼트'
+                '프론트 스쿼트',
+                '브이 스쿼트',
+                '스미스 런지',
+                '불가리안 스쿼트',
+                '레그 익스텐션',
+                '레그 컬',
+                '레그 프레스',
+                '이너 타이 머신',
+                '핵 스쿼트',
+                '굿모닝 스쿼트',
+                '힙 쓰러스트'
               ]
             },
             {
@@ -308,8 +398,17 @@ import {eventBus} from '@/main'
               target: '가슴',
               list:[
                 '벤치프레스',
+                '인클라인 벤치프레스',
+                '디클라인 벤치 프레스',
                 '덤벨 벤치프레스',
-                '딥스'
+                '인클라인 덤벨 벤치프레스',
+                '딥스',
+                '체스트 프레스 머신',
+                '덤벨 플라이',
+                '팩 덱 플라이 머신',
+                '케이블 플라이',
+                '덤벨 풀 오버',
+                '푸쉬업',                
               ]
             },
             {
@@ -318,8 +417,16 @@ import {eventBus} from '@/main'
               list:[
                 '루마니안 데드리프트',
                 '랫 풀 다운',
-                '풀 업'
-              ]
+                '풀 업',
+                '원 암 덤벨 로우',
+                '바벨 로우',
+                '티 바 로우',
+                '케이블 롱 풀',
+                '와이드 풀 다운',
+                '스트레이트 암 풀 다운',
+                '프론트 로우',
+                '팬들레이 로우',
+              ],
             }
             ,
             {
@@ -328,17 +435,28 @@ import {eventBus} from '@/main'
               list:[
                 '오버 헤드 프레스',
                 '덤벨 숄더 프레스',
-                '사이드 레터럴 레이즈'
+                '사이드 레터럴 레이즈',
+                '벤트오버 레터럴 레이즈',
+                '숄더 프레스 머신',
+                '리버스 팩 덱 플라이',
+                '케이블 페이스 풀 오버',
+                '업라이트 로우',
+                '케이블 레터럴 레이즈',
+                '리버스 케이블 플라이'
               ]
             },
             {
               category:'팔',
-              target: '팔',
+              target: '이두',
               list:[
                 '덤벨 컬',
                 '이지바 컬',
-                '케이블 푸쉬 다운'
-              ]
+                '케이블 푸쉬 다운',
+                '프리처 컬',
+                '케이블 컬',
+                '라잉 트라이셉스 익스텐션',
+                '해머 컬',
+              ],
             }
           ]
         }
