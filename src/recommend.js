@@ -128,11 +128,6 @@ function nextMainTarget() {
     return nextMain
 }
 
-function getReps() {
-
-}
-
-
 function getSets() {
     sets: []
     const max_set = 5;
