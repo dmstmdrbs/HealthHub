@@ -7,7 +7,10 @@ let userInfo = {
     weakness = "",
     proficiency = "",
 };
-let workoutHistoy = [{
+let workoutHistory = [
+];
+let workouts = [
+    {
         target: '하체',
         list: [
             { name: '바벨 백스쿼트', difficulty: 3 },
@@ -28,7 +31,18 @@ let workoutHistoy = [{
     {
         target: '가슴',
         list: [
-            { name: '벤치프레스', difficulty: 3 } { name: '인클라인 벤치프레스', difficulty: 3 } { name: '디클라인 벤치 프레스', difficulty: 4 } { name: '덤벨 벤치프레스', difficulty: 3 } { name: '인클라인 덤벨 벤치프레스', difficulty: 3 } { name: '딥스', difficulty: 3 } { name: '체스트 프레스 머신', difficulty: 2 } { name: '덤벨 플라이', difficulty: 3 } { name: '팩 덱 플라이 머신', difficulty: 3 } { name: '케이블 플라이', difficulty: 3 } { name: '덤벨 풀 오버', difficulty: 5 } { name: '푸쉬업', difficulty: 1 }
+            { name: '벤치프레스', difficulty: 3 },
+            { name: '인클라인 벤치프레스', difficulty: 3 }, 
+            { name: '디클라인 벤치 프레스', difficulty: 4 }, 
+            { name: '덤벨 벤치프레스', difficulty: 3 }, 
+            { name: '인클라인 덤벨 벤치프레스', difficulty: 3 }, 
+            { name: '딥스', difficulty: 3 }, 
+            { name: '체스트 프레스 머신', difficulty: 2 }, 
+            { name: '덤벨 플라이', difficulty: 3 }, 
+            { name: '팩 덱 플라이 머신', difficulty: 3 }, 
+            { name: '케이블 플라이', difficulty: 3 }, 
+            { name: '덤벨 풀 오버', difficulty: 5 }, 
+            { name: '푸쉬업', difficulty: 1 }
         ]
     },
     {
@@ -74,9 +88,6 @@ let workoutHistoy = [{
             { name: '해머 컬', difficulty: 3 },
         ],
     }
-];
-let workouts = [
-
 ];
 
 
