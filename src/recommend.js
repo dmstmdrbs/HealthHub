@@ -63,28 +63,28 @@ let workoutHistoy=[
         {
           target: '어깨',
           list:[
-            '오버 헤드 프레스',
-            '덤벨 숄더 프레스',
-            '사이드 레터럴 레이즈',
-            '벤트오버 레터럴 레이즈',
-            '숄더 프레스 머신',
-            '리버스 팩 덱 플라이',
-            '케이블 페이스 풀 오버',
-            '업라이트 로우',
-            '케이블 레터럴 레이즈',
-            '리버스 케이블 플라이'
+            {name:'오버 헤드 프레스', difficulty:3},
+            {name:'덤벨 숄더 프레스', difficulty:2},
+            {name:'사이드 레터럴 레이즈', difficulty:1},
+            {name:'벤트오버 레터럴 레이즈', difficulty:2},
+            {name:'숄더 프레스 머신', difficulty:2},
+            {name:'리버스 팩 덱 플라이', difficulty:3},
+            {name:'케이블 페이스 풀 오버', difficulty:4},
+            {name:'업라이트 로우', difficulty:5},
+            {name:'케이블 레터럴 레이즈', difficulty:4},
+            {name:'리버스 케이블 플라이', difficulty:4},
           ]
         },
         {
           target: '이두',
           list:[
-            '덤벨 컬',
-            '이지바 컬',
-            '케이블 푸쉬 다운',
-            '프리처 컬',
-            '케이블 컬',
-            '라잉 트라이셉스 익스텐션',
-            '해머 컬',
+            {name:'덤벨 컬', difficulty:1},
+            {name:'이지바 컬', difficulty:2},
+            {name:'케이블 푸쉬 다운', difficulty:3},
+            {name:'프리처 컬', difficulty:2},
+            {name:'케이블 컬', difficulty:2},
+            {name:'라잉 트라이셉스 익스텐션', difficulty:3},
+            {name:'해머 컬', difficulty:3},
           ],
         }
     ];
