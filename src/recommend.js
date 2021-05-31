@@ -11,36 +11,36 @@ let workoutHistoy=[
         {
           target: '하체',
           list:[
-            {'바벨 백스쿼트',}
-            {'컨벤셔널 데드리프트',}
-            {'프론트 스쿼트',}
-            {'브이 스쿼트',}
-            {'스미스 런지',}
-            '불가리안 스쿼트',
-            '레그 익스텐션',
-            '레그 컬',
-            '레그 프레스',
-            '이너 타이 머신',
-            '핵 스쿼트',
-            '굿모닝 스쿼트',
-            '힙 쓰러스트'
+            {name:'바벨 백스쿼트',difficulty:3},
+            {name:'컨벤셔널 데드리프트',difficulty:3},
+            {name:'프론트 스쿼트',difficulty:4},
+            {name:'브이 스쿼트',difficulty:3},
+            {name:'스미스 런지',difficulty:3},
+            {name:'불가리안 스쿼트',difficulty:5},
+            {name:'레그 익스텐션',difficulty:2},
+            {name:'레그 컬',difficulty:2},
+            {name:'레그 프레스',difficulty:2},
+            {name:'이너 타이 머신',difficulty:2},
+            {name:'핵 스쿼트',difficulty:3},
+            {name:'굿모닝 스쿼트',difficulty:4},
+            {name:'힙 쓰러스트',difficulty:3},
           ]
         },
         {
           target: '가슴',
           list:[
-            '벤치프레스',
-            '인클라인 벤치프레스',
-            '디클라인 벤치 프레스',
-            '덤벨 벤치프레스',
-            '인클라인 덤벨 벤치프레스',
-            '딥스',
-            '체스트 프레스 머신',
-            '덤벨 플라이',
-            '팩 덱 플라이 머신',
-            '케이블 플라이',
-            '덤벨 풀 오버',
-            '푸쉬업',                
+            {name:'벤치프레스',difficulty:3}
+            {name:'인클라인 벤치프레스',difficulty:3}
+            {name:'디클라인 벤치 프레스',difficulty:4}
+            {name:'덤벨 벤치프레스',difficulty:3}
+            {name:'인클라인 덤벨 벤치프레스',difficulty:3}
+            {name:'딥스',difficulty:3}
+            {name:'체스트 프레스 머신',difficulty:2}
+            {name:'덤벨 플라이',difficulty:3}
+            {name:'팩 덱 플라이 머신',difficulty:3}
+            {name:'케이블 플라이',difficulty:3}
+            {name:'덤벨 풀 오버',difficulty:5}
+            {name:'푸쉬업',difficulty:1}                
           ]
         },
         {
