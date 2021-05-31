@@ -49,7 +49,7 @@ let workoutHistoy = [{
             { name: '랫 풀 다운', difficulty: 2 },
             { name: '풀 업', difficulty: 2 },
             { name: '원 암 덤벨 로우', difficulty: 2 },
-            { name: '바벨 로우', difficulty: 3 },
+            { name: '바벨 로우', difficulty: 2 },
             { name: '티 바 로우', difficulty: 3 },
             { name: '케이블 롱 풀', difficulty: 3 },
             { name: '와이드 풀 다운', difficulty: 3 },
