@@ -132,23 +132,6 @@ function getReps() {
 
 }
 
-function getWeight(idx) {
-    recommendweight: 0
-    oneRM: 0
-    let nextTarget = nextMainTarget();
-    switch (nextTarget) {
-        case '하체':
-            oneRM = userInfo.oneRM[0]
-            break
-        case '가슴':
-            oneRM = userInfo.oneRM[1]
-            break
-        case '등':
-            oneRM = userInfo.oneRM[2]
-            break
-    }
-
-}
 
 function getSets() {
     sets: []
