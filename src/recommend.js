@@ -207,8 +207,7 @@ let workoutHistory = [
         ]
     },
 ];
-let workouts = [
-    {
+let workouts = [{
         target: '하체',
         list: [
             { name: '바벨 백스쿼트', difficulty: 3 },
@@ -230,16 +229,16 @@ let workouts = [
         target: '가슴',
         list: [
             { name: '벤치프레스', difficulty: 3 },
-            { name: '인클라인 벤치프레스', difficulty: 3 }, 
-            { name: '디클라인 벤치프레스', difficulty: 5 }, 
-            { name: '덤벨 벤치프레스', difficulty: 3 }, 
-            { name: '인클라인 덤벨 벤치프레스', difficulty: 3 }, 
-            { name: '딥스', difficulty: 3 }, 
-            { name: '체스트 프레스 머신', difficulty: 2 }, 
-            { name: '덤벨 플라이', difficulty: 3 }, 
-            { name: '팩 덱 플라이 머신', difficulty: 3 }, 
-            { name: '케이블 플라이', difficulty: 3 }, 
-            { name: '덤벨 풀 오버', difficulty: 5 }, 
+            { name: '인클라인 벤치프레스', difficulty: 3 },
+            { name: '디클라인 벤치 프레스', difficulty: 5 },
+            { name: '덤벨 벤치프레스', difficulty: 3 },
+            { name: '인클라인 덤벨 벤치프레스', difficulty: 3 },
+            { name: '딥스', difficulty: 3 },
+            { name: '체스트 프레스 머신', difficulty: 2 },
+            { name: '덤벨 플라이', difficulty: 3 },
+            { name: '팩 덱 플라이 머신', difficulty: 3 },
+            { name: '케이블 플라이', difficulty: 3 },
+            { name: '덤벨 풀 오버', difficulty: 5 },
             { name: '푸쉬업', difficulty: 1 }
         ]
     },
@@ -300,12 +299,7 @@ let workouts = [
 //     return nextMain
 // }
 
-function getReps(){
 
-}
-function getWeight(){
-
-}
 function getSets(){
     sets:[]
     let reps=0;
@@ -413,16 +407,56 @@ function getWorkout(target, difficulty, proficiency){
 
 
     sets=getSets(target);
+}
+function nextMainTarget() {
+    let nextMain = "등"
+        //logic
+
+    //logic
+    return nextMain
+}
+
+function getSets() {
+    sets: []
+    const max_set = 5;
+    for (var i = 0; i < max_set; i++) {
+        switch (nextTarget) {
+            case '하체':
+                oneRM = userInfo.oneRM[0]
+                break
+            case '가슴':
+                oneRM = userInfo.oneRM[1]
+                break
+            case '등':
+                oneRM = userInfo.oneRM[2]
+                break
+        }
+    }
+
+}
+
+function checkFreq() {
+
+}
+
+function getWorkout(target, difficulty, proficiency) {
+    //랜덤으로 숙련도와 그에 따른 적합한 운동 난이도를 따져서 운동을 뽑는다.
+    let workout = {};
+
+    //--------- logic ----------
+
+    sets = getSets();
 
     //--------- logic ----------
     return workout;
 }
-function makeList(){
+
+function makeList() {
     let maxNum
-    let nextMain=nextMainTarget();
-    let list =[];
+    let nextMain = nextMainTarget();
+    let list = [];
     //logic
-    
+
     //return 만들어진 운동 리스트
     return list;
 }
