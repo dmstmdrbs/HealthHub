@@ -288,30 +288,6 @@ let workouts = [{
 ];
 
 
-
-// function nextMainTarget(){
-//     let nextMain="등"
-//     //logic
-//     //최근 기록 봐야되고, 이전 메인 타겟확인,
-//     //case1: 최근 기록이 너무 오래전일때
-//     //case2:
-//     //logic
-//     return nextMain
-// }
-
-
-function getSets(){
-    sets:[]
-    let reps=0;
-    let weight=0;
-    const max_set=5;
-    for(var i=0;i<max_set;i++){
-        reps=getReps();
-        weight =getWeight();
-        sets.append({reps,weight});
-    }
-    return sets;
-}
 function nextMainTarget(){
     let nextMain="등"
 
@@ -399,33 +375,8 @@ function nextMainTarget(){
 
     return nextMain;
 }
-function getWorkout(target, difficulty, proficiency){
-    //랜덤으로 숙련도와 그에 따른 적합한 운동 난이도를 따져서 운동을 뽑는다.
-    let workout={};
 
-    //--------- logic ----------
-
-
-    sets=getSets(target);
-}
-function nextMainTarget() {
-    let nextMain = "등"
-        //logic
-
-    //logic
-    return nextMain
-}
-
-<<<<<<< HEAD
-function getReps() {
-
-}
-
-
-function getSets(maintarget, targetidx) {
-=======
 function getSets() {
->>>>>>> 08a5569dd0d14f8b7fd78eebbf5b5f12bf5e623a
     sets: []
     const max_set = 5;
     weight: 0
@@ -505,9 +456,6 @@ function getSets() {
 
 }
 
-function checkFreq() {
-
-}
 
 function getWorkout(target, difficulty, proficiency) {
     //랜덤으로 숙련도와 그에 따른 적합한 운동 난이도를 따져서 운동을 뽑는다.
