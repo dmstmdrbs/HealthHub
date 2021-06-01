@@ -133,22 +133,83 @@ function getReps() {
 }
 
 
-function getSets() {
+function getSets(maintarget, targetidx) {
     sets: []
     const max_set = 5;
+    weight: 0
+    reps: 0
     for (var i = 0; i < max_set; i++) {
         switch (nextTarget) {
             case '하체':
                 oneRM = userInfo.oneRM[0]
+                switch (targetidx) {
+                    case 1, 2, 3, 4, 9:
+                        weight = oneRM
+                        if (i < 2) weight = weight * (0.5 + 0.2 * i)
+                        else if (i < 4) weight = weight * 0.8
+                        else weight = weight * 0.7
+                        break
+                    case 7, 8, 11, 12:
+                        weight = oneRM * 0.7
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i)
+                        else if (i == 4) weight = weight * 0.8
+                        break
+                    case 5, 6, 10, 13:
+                        weight = oneRM / 2
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i)
+                        else if (i == 4) weight = weight * 0.8
+                        break
+                }
                 break
             case '가슴':
                 oneRM = userInfo.oneRM[1]
+                switch (targetidx) {
+                    case 1:
+                        weight = oneRM
+                        if (i < 2) weight = weight * (0.5 + 0.2 * i)
+                        else if (i < 4) weight = weight * 0.8
+                        else weight = weight * 0.7
+                        break
+                    case 2, 3, 4, 5, 6, 7, 10, 11:
+                        weight = oneRM * 0.7
+                        if (targetidx == 4 || targetidx == 5) weight = weight / 2
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i)
+                        else if (i == 4) weight = weight * 0.8
+                        break
+                    case 9, 12:
+                        weight = oneRM * 0.4
+                        if (targetidx == 4 || targetidx == 5) weight = weight / 2
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i)
+                        else if (i == 4) weight = weight * 0.8
+                        break
+                    case 8:
+                        if (oneRM > 100) weight = 10
+                        else weight = 5
+                }
                 break
             case '등':
                 oneRM = userInfo.oneRM[2]
+                switch (targetidx) {
+                    case 1, 7:
+                        weight = oneRM
+                        if (i < 2) weight = weight * (0.5 + 0.2 * i)
+                        else if (i < 4) weight = weight * 0.8
+                        else weight = weight * 0.7
+                        break
+                    case 2, 4, 5, 6, 8, 9, 10, 11:
+                        weight = oneRM * 0.7
+                        if (targetidx == 4 || targetidx == 5) weight = weight / 2
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i)
+                        else if (i == 4) weight = weight * 0.8
+                        break
+                }
                 break
         }
+        if (i < 3) reps = 10 - 2 * i
+        if (i == 4) reps = 7
+        sets.append([reps, weight])
     }
+    return sets
 
 }
 
