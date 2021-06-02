@@ -27,7 +27,7 @@
         :now = "today"
         :value = "today"
         v-model="value"
-        @click:date="open"
+        @click:date="selectDate"
         :weekdays="weekday" 
         :type="type"
         color="primary"
@@ -50,7 +50,7 @@
       }
     },
     methods:{
-      open(event){ 
+      selectDate(event){ 
         console.log(event.date);
         this.today = event.date;
         eventBus.$emit("selectDate",this.today);
