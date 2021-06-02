@@ -24,12 +24,10 @@
                       <v-col v-for="(exercise,index) in recommended" :key="index">
                         <v-card>
                         <v-card-title>
-                                {{exercise.target}} | {{exercise.kinds}}
+                          {{exercise.target}} | {{exercise.kinds}}
                         </v-card-title>
                         <v-expand-transition>
                           <div v-show="show">
-                            
-                              
                               <v-col v-for="set,idx in exercise.sets" :key="idx">
                                 <v-container fluid>
                                   <v-row>
@@ -37,7 +35,6 @@
                                   </v-row>
                                 </v-container>
                               </v-col>           
-                            
                           </div>
                         </v-expand-transition>
                         </v-card>
@@ -134,7 +131,6 @@
                             </v-row>
                           </v-container>
                         </v-col>           
-
                     </v-card>
                   </v-col>
                 </v-col>
@@ -146,15 +142,8 @@
       <v-row>
         <v-col>
           <v-app>
-            <v-content>
+            <v-main>
               <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
-              <v-dialog max-width="600" v-model="recommendDialog">
-                <!-- <Dialog header-title = "운동 추가" @hide="hideRecommendDialog" @submit="submitRecommendDialog">
-                  <template v-slot:body>
-                    
-                  </template>
-                </Dialog> -->
-              </v-dialog>
               <v-dialog max-width="600" v-model="exerciseDialog">
                 <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
                   <template v-slot:body>
@@ -188,7 +177,7 @@
                   </template>
                 </Dialog>
               </v-dialog>
-            </v-content>
+            </v-main>
           </v-app>
         </v-col>
         <v-col>
@@ -324,7 +313,7 @@ import {eventBus} from '@/main'
     },
     components:{
         //ExerciseTemplate
-        Header,Dialog,NaviBar
+        Header, Dialog, NaviBar
     },
     mounted(){
       this.todayExercise();
@@ -352,7 +341,6 @@ import {eventBus} from '@/main'
           exerciseDialog:false,
           setDialog:false,
           calendarDialog:false,
-          recommendDialog:false,
           feedbackDialog:false,
           exercises: [],
           userProficiency:'초급자',
@@ -628,16 +616,6 @@ import {eventBus} from '@/main'
           this.addSet();
           this.hideSetDialog();
         } 
-      },
-      showRecommendDialog(){
-        this.recommendDialog=true;
-      },
-      hideRecommendDialog(){
-        this.recommendDialog=false;
-        this.showExDialog();
-      },
-      submitRecommendDialog(){
-        this.recommendDialog=false;
       },
       addChip(targetName, item){
         if(!(this.selected.includes(item))){
