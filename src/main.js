@@ -4,7 +4,6 @@ import router from './router/index.js'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import VueRouter from 'vue-router'
-import VeeValidate from 'vee-validate'
 
 //Vue.component('컴포넌트명',옵션)
 
@@ -19,7 +18,6 @@ new Vue({
   router,
   store,
   vuetify,
-  VeeValidate,
   render: h => h(App)
 }).$mount('#app')
 
