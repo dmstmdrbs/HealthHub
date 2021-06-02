@@ -91,7 +91,7 @@
                                 <v-container>
                                   <v-row>
                                     <v-col cols="12" sm="6">
-                                      <v-text-field v-model="weight" label="무게"></v-text-field>
+                                      <v-text-field type="number" v-model="weight" label="무게"></v-text-field>
                                     </v-col>
                                   </v-row>
                                   <v-row>
@@ -147,8 +147,8 @@
               <v-dialog max-width="600" v-model="exerciseDialog">
                 <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
                   <template v-slot:body>
-                    <v-card>
-                      <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+                      <v-card>
+                        <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
                         <v-tab v-for="custom in customs" :key="custom.kinds">
                           {{ custom.category }}
                         </v-tab>
@@ -173,7 +173,7 @@
                           </v-chip>
                         </v-col>
                       </v-row>
-                    </v-card>
+                      </v-card>
                   </template>
                 </Dialog>
               </v-dialog>
@@ -205,7 +205,7 @@
             <v-dialog max-width="600" v-model="feedbackDialog">
             <Dialog header-title="피드백" @hide="hideFeedbackDialog" @submit="submitFeedbackDialog">
               <template v-slot:body>
-              <p>RPE_LOW : 매우 쉬웠음  <br>RPE_MID : 2~5개 더 할 수 있음   <br>RPE_HIGH : 매우 힘듦. 1개 더 할 수 있음</p>
+                  <p>RPE_LOW : 매우 쉬웠음  <br>RPE_MID : 2~5개 더 할 수 있음   <br>RPE_HIGH : 매우 힘듦. 1개 더 할 수 있음</p>
               <v-btn @click="submitFeedbackDialog" text outlined>Skip</v-btn>
               <v-col v-for="(exercise,index) in exercises" :key="index">
                 <v-card>
@@ -237,7 +237,6 @@
                               <v-radio
                                 label="Failed"
                                 value="RPE.Failed">
-
                               </v-radio>
                             </v-radio-group>
                           </v-container>
@@ -277,6 +276,7 @@ import {eventBus} from '@/main'
       };
   }
  export default{
+    name: 'AddExercise',
     created(){
           eventBus.$on('selectDate', (today)=>{
             this.date = today;
