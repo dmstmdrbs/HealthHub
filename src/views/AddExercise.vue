@@ -147,13 +147,13 @@
         <v-col>
           <v-app>
             <v-content>
-              <v-btn elevation="2" small block color="blue" @click="showRecommendDialog">운동 추가</v-btn>
+              <v-btn elevation="2" small block color="blue" @click="showExDialog">운동 추가</v-btn>
               <v-dialog max-width="600" v-model="recommendDialog">
-                <Dialog header-title = "운동 추가" @hide="hideRecommendDialog" @submit="submitRecommendDialog">
+                <!-- <Dialog header-title = "운동 추가" @hide="hideRecommendDialog" @submit="submitRecommendDialog">
                   <template v-slot:body>
                     
                   </template>
-                </Dialog>
+                </Dialog> -->
               </v-dialog>
               <v-dialog max-width="600" v-model="exerciseDialog">
                 <Dialog header-title = "운동 추가" @hide="hideExDialog" @submit="submitExDialog">
@@ -212,7 +212,54 @@
           </template>
         </v-col>
         <v-col>
-          <v-btn elevation="2" small block v-on:click ="saveExercise()" color="red">저장</v-btn>
+          <v-btn elevation="2" small block v-on:click ="showFeedbackDialog()" color="red">저장</v-btn>
+            <v-dialog max-width="600" v-model="feedbackDialog">
+            <Dialog header-title="피드백" @hide="hideFeedbackDialog" @submit="submitFeedbackDialog">
+              <template v-slot:body>
+              <p>RPE_LOW : 매우 쉬웠음  <br>RPE_MID : 2~5개 더 할 수 있음   <br>RPE_HIGH : 매우 힘듦. 1개 더 할 수 있음</p>
+              <v-btn @click="submitFeedbackDialog" text outlined>Skip</v-btn>
+              <v-col v-for="(exercise,index) in exercises" :key="index">
+                <v-card>
+                  <v-card-title>
+                    {{exercise.target}} | {{exercise.kinds}} 
+                    <v-spacer></v-spacer>
+                  </v-card-title>
+                    <v-col v-for="set,idx in exercise.sets" :key="idx">
+                      <v-container fluid>
+                        <v-row>
+                          <label style="margin-top:20px"> {{set.weight}}kg x {{set.reps}}회</label>
+                          <v-container fluid>
+                            <v-radio-group
+                              v-model="set.rpe"
+                              row
+                            >
+                              <v-radio
+                                label="RPE_LOW"
+                                value="RPE.LOW"
+                              ></v-radio>
+                              <v-radio
+                                label="RPE_MID"
+                                value="RPE.MID"
+                              ></v-radio>
+                              <v-radio
+                                label="RPE_HIGH"
+                                value="RPE.HIGH">
+                              </v-radio>
+                              <v-radio
+                                label="Failed"
+                                value="RPE.Failed">
+
+                              </v-radio>
+                            </v-radio-group>
+                          </v-container>
+                        </v-row>
+                      </v-container>
+                    </v-col>           
+                  </v-card>
+                </v-col>
+              </template>
+            </Dialog>
+            </v-dialog>
         </v-col>
       </v-row>
     </v-container>
@@ -285,6 +332,12 @@ import {eventBus} from '@/main'
     },
     data(){
         return{
+          RPE:{
+            LOW:false,
+            MID:false,
+            HIGH:false,
+            Failed:false,
+          },
           detailedSets,
           WorkoutDetail,
           detailedEx : null,
@@ -301,6 +354,7 @@ import {eventBus} from '@/main'
           setDialog:false,
           calendarDialog:false,
           recommendDialog:false,
+          feedbackDialog:false,
           exercises: [],
           userProficiency:'초급자',
           userWeakness:'등',
@@ -462,6 +516,12 @@ import {eventBus} from '@/main'
         }
     },
     methods:{
+      showFeedbackDialog(){this.feedbackDialog=true;},
+      hideFeedbackDialog(){this.feedbackDialog=false;},
+      submitFeedbackDialog(){
+        this.hideFeedbackDialog();
+        this.saveExercise();
+      },
       plusReps(){
         this.reps++;
       },
@@ -488,6 +548,7 @@ import {eventBus} from '@/main'
             body : JSON.stringify(req),
         }).then((res) => res.json())
         .then((res) => {
+          
             if (res.success) {
                 alert("성공");
             }else{
@@ -525,7 +586,7 @@ import {eventBus} from '@/main'
       addSet() {
         console.log(this.exercises);
         // this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
-        this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false});
+        this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false, rpe:null});
         this.setIndex=0;
         return 0;
       },
