@@ -1,13 +1,12 @@
-import { MIN_SAFE_INTEGER, random } from 'core-js/core/number';
 
 export let recommendedList = [];
 let userInfo = {
     weight: 77,
     height: 179,
-    sex = '남자',
-    oneRM = { squat: 130, bench = 100, dead = 150 },
-    weakness = "",
-    proficiency = "",
+    sex : '남자',
+    oneRM :{ squat: 130, bench : 100, dead: 150 },
+    weakness : "",
+    proficiency : "",
 };
 let workoutHistory = [
     {
@@ -314,13 +313,13 @@ function nextMainTarget(){
     let count = 0;
     let latest='';
     let freq={
-        chest=0,
-        leg=0,
-        back=0
+        chest:0,
+        leg:0,
+        back:0
     }
     reversedHistory.forEach((history)=>{
         if(idx>7 & count===0){
-            break;
+            return false;
         }
         if(history.date<today & history.date > lastweek)
         {
