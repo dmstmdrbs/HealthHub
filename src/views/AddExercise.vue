@@ -272,7 +272,6 @@
 import Header from '@/components/Header.vue'
 import NaviBar from '@/components/NaviBar.vue'
 import Dialog from '@/components/Dialog.vue'
-import CalendarView from '@/components/CalendarView.vue'
 import {eventBus} from '@/main'
 
   function detailedSets(reps,weight,checked){
@@ -325,7 +324,7 @@ import {eventBus} from '@/main'
     },
     components:{
         //ExerciseTemplate
-        Header,Dialog,CalendarView,NaviBar
+        Header,Dialog,NaviBar
     },
     mounted(){
       this.todayExercise();
@@ -628,7 +627,6 @@ import {eventBus} from '@/main'
         if(this.reps>0){
           this.addSet();
           this.hideSetDialog();
-        
         } 
       },
       showRecommendDialog(){
