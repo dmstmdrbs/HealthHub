@@ -111,7 +111,11 @@
 														<v-text-field v-model="userInfo.height" label="키"></v-text-field>
 														<v-text-field v-model="userInfo.weight" label="몸무게"></v-text-field>
 														<h2>약점 부위</h2>
-														<v-text-field v-model="userInfo.weak" label="약점 부위"></v-text-field>
+														<v-radio-group v-model="userInfo.weak"> 
+															<v-radio label="하체" value="하체"></v-radio>
+															<v-radio label="등" value="등"></v-radio>
+															<v-radio label="가슴" value="가슴"></v-radio>
+														</v-radio-group>
 													</v-col>
 													<v-divider vertical></v-divider>
 													
