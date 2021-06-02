@@ -50,5 +50,11 @@
           default: '닫기',
       }
     },
-  }
+    data()
+    {
+      return{
+        defaultBodyContent: 'body slot 영역을 작성해주세요.',
+      }
+    }
+}
 </script>
