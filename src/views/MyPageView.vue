@@ -110,7 +110,7 @@
 														<h2>신체정보</h2>
 														<v-text-field v-model="userInfo.height" label="키"></v-text-field>
 														<v-text-field v-model="userInfo.weight" label="몸무게"></v-text-field>
-														<h2>약점 부위</h2> 
+														<h2>약점 부위</h2>
 														<v-radio-group v-model="userInfo.weak"> 
 															<v-radio label="하체" value="하체"></v-radio>
 															<v-radio label="등" value="등"></v-radio>
