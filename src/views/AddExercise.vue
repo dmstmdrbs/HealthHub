@@ -85,29 +85,43 @@
                         {{exercise.target}} | {{exercise.kinds}} 
                         <v-spacer></v-spacer>
                         <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                        <v-dialog max-width="300" v-model="setDialog">
-                          <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
-                            <template v-slot:body>
-                              <v-container>
-                                <v-row>
-                                  <v-col cols="12" sm="6">
-                                    <v-text-field type="number" v-model="weight" label="무게"></v-text-field>
-                                  </v-col>
+                        <v-dialog ref="dialog" style="width=250px" v-model="setDialog">
+                          <template>
+                            <v-container class="pa-1">
+                            <v-card>
+                              <v-card-title>
+                                세트 추가
+                              </v-card-title>
+                              <v-card-text>
+                                <v-text-field suffix="kg" label="무게" style="width:250px" v-model="weight"></v-text-field>
+                                <v-row no-gutters justify="start" align="center">
+                                  <v-col><v-btn @click="reps--">-</v-btn></v-col>
+                                  <v-col><span>{{reps}}</span></v-col>
+                                  <v-col><v-btn @click="reps++">+</v-btn></v-col> 
                                 </v-row>
-                                <v-row>
-                                  <v-col >
-                                    <v-btn @click="minusReps"> - </v-btn>
-                                  </v-col>
-                                  <v-col>
-                                    <span>{{reps}}</span>
-                                  </v-col>
-                                  <v-col >
-                                    <v-btn @click="plusReps"> + </v-btn>
-                                  </v-col>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-row no-gutters>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="hideSetDialog"
+                                  >
+                                    취소
+                                  </v-btn>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="submitSetDialog(index)"
+                                  >
+                                    저장
+                                  </v-btn>
                                 </v-row>
-                              </v-container>
-                            </template>
-                          </Dialog>
+                              </v-card-actions>
+                            </v-card>
+                          </v-container>
+                          </template>
+                          
                         </v-dialog>
                         <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
                       </v-card-title>
@@ -124,7 +138,7 @@
                             <v-row>
                               <v-checkbox
                                 :v-model="exercises[index].sets[idx].checked"
-                                @change="checkSet($event,index,idx)"
+                                @change="checkSet(index,idx)"
                               >
                               </v-checkbox>
                               <label style="margin-top:20px"> {{set.weight}}kg x {{set.reps}}회</label>
@@ -513,12 +527,6 @@ import {eventBus} from '@/main'
         this.hideFeedbackDialog();
         this.saveExercise();
       },
-      plusReps(){
-        this.reps++;
-      },
-      minusReps(){
-        this.reps--;
-      },
       calVolume(sets){
         let sum = 0
         for(let i =0;i<sets.length;i++){
@@ -580,7 +588,7 @@ import {eventBus} from '@/main'
         this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false, rpe:null});
         this.setIndex=0;
         this.reps=0;
-        return 0;
+        return;
       },
       deleteSet(index) {
         this.exercises[index].sets.pop()
@@ -612,15 +620,20 @@ import {eventBus} from '@/main'
         this.weight=null
         this.reps=0
         this.setDialog=false;
+        return;
       },
       submitSetDialog(){
         //무게 유효성 검사 - 입력 안했을 때, 몸무게 5배 이상 입력했을 때
+        if(this.weight==null){
+          alert("무게를 제대로 입력해주세요.")
+        }
         if(this.reps <= 0 | this.reps===null){
           alert("횟수를 확인해주세요.");
         }
         if(this.reps>0){
           this.addSet();
           this.hideSetDialog();
+          console.log(this.selected)
         } 
       },
       addChip(targetName, item){
