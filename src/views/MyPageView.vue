@@ -199,7 +199,7 @@ user;
 				this.user=this.userInfo;
 				console.log(this.user);
 				const req = {
-          uName:this.userInfo.name,
+          			uName:this.userInfo.name,
 					age:parseInt(this.userInfo.age),
 					sex:this.userInfo.sex,
 					height:parseInt(this.userInfo.height),

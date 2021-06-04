@@ -85,31 +85,31 @@
                         {{exercise.target}} | {{exercise.kinds}} 
                         <v-spacer></v-spacer>
                         <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                          <v-dialog max-width="300" v-model="setDialog">
-                            <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
-                              <template v-slot:body>
-                                <v-container>
-                                  <v-row>
-                                    <v-col cols="12" sm="6">
-                                      <v-text-field type="number" v-model="weight" label="무게"></v-text-field>
-                                    </v-col>
-                                  </v-row>
-                                  <v-row>
-                                    <v-col >
-                                      <v-btn @click="minusReps"> - </v-btn>
-                                    </v-col>
-                                    <v-col>
-                                      <span>{{reps}}</span>
-                                    </v-col>
-                                    <v-col >
-                                      <v-btn @click="plusReps"> + </v-btn>
-                                    </v-col>
-                                  </v-row>
-                                </v-container>
-                              </template>
-                            </Dialog>
-                          </v-dialog>
-                          <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
+                        <v-dialog max-width="300" v-model="setDialog">
+                          <Dialog header-title = "세트 추가" @hide="hideSetDialog" @submit="submitSetDialog">
+                            <template v-slot:body>
+                              <v-container>
+                                <v-row>
+                                  <v-col cols="12" sm="6">
+                                    <v-text-field type="number" v-model="weight" label="무게"></v-text-field>
+                                  </v-col>
+                                </v-row>
+                                <v-row>
+                                  <v-col >
+                                    <v-btn @click="minusReps"> - </v-btn>
+                                  </v-col>
+                                  <v-col>
+                                    <span>{{reps}}</span>
+                                  </v-col>
+                                  <v-col >
+                                    <v-btn @click="plusReps"> + </v-btn>
+                                  </v-col>
+                                </v-row>
+                              </v-container>
+                            </template>
+                          </Dialog>
+                        </v-dialog>
+                        <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
                       </v-card-title>
                       <v-row>
                         <v-col cols="12" sm="4">
@@ -167,7 +167,7 @@
                         </v-tab-item>
                       </v-tabs-items>
                       <v-row align="center" justify="start">
-                        <v-col v-for="select in selected" :key="select.kinds">
+                        <v-col v-for="(select,i) in selected" :key="i">
                           <v-chip :disabled="loading" close @click:close="selected.splice(i, 1)">
                             {{ select.kinds }}
                           </v-chip>
@@ -503,6 +503,10 @@ import {eventBus} from '@/main'
         }
     },
     methods:{
+      refreshAll() {
+            // 새로고침
+            this.$router.go();
+        },
       showFeedbackDialog(){this.feedbackDialog=true;},
       hideFeedbackDialog(){this.feedbackDialog=false;},
       submitFeedbackDialog(){
@@ -575,6 +579,7 @@ import {eventBus} from '@/main'
         // this.exercises[this.setIndex].addSet({weight : this.weight, reps : this.reps, checked : false});
         this.exercises[this.setIndex].sets.push({weight : this.weight, reps : this.reps, checked : false, rpe:null});
         this.setIndex=0;
+        this.reps=0;
         return 0;
       },
       deleteSet(index) {
@@ -609,7 +614,8 @@ import {eventBus} from '@/main'
         this.setDialog=false;
       },
       submitSetDialog(){
-        if(this.reps <= 0){
+        //무게 유효성 검사 - 입력 안했을 때, 몸무게 5배 이상 입력했을 때
+        if(this.reps <= 0 | this.reps===null){
           alert("횟수를 확인해주세요.");
         }
         if(this.reps>0){
@@ -660,39 +666,13 @@ import {eventBus} from '@/main'
               }
               exercises[kindIdx].sets.push({reps : parseInt(res[i].reps), weight : res[i].weight, checked : res[i].checked});
             }
-            // for(ex in res){
-            //   if(prev!==ex.kinds){
-            //     prev=ex.kinds;
-            //     exercises.push({target : ex.target, kinds : ex.kinds, sets : []})
-                
-            //     tempKind[sets]=[];
-            //   }
-            //   tempKind[target]=ex.target;
-            //   tempKind[kinds]=ex.kinds;
-            //   tempSets=[];
-            //   for(set in ex.sets){
-            //     tempSets.append
-            //   }
-            //   tempKind[sets]=tempSets;
-            // }
-              // {
-              //   target : '등',
-              //   kinds :'랫풀' , 
-              //   sets : [
-              //     {
-              //       reps : 3,
-              //       weight : 50,
-              //     }
-              //   ]
-              // }
-            // kind="";
+            
             console.log(exercises);
             this.exercises=exercises;
           })
           .catch((err) => {
               console.error("error");
           });
-
       },
     }   
   }
