@@ -296,7 +296,7 @@ function nextMainTarget() {
   const reversedHistory = workoutHistory.reverse();
   let idx = 0;
   let count = 0;
-  let lastest = '';
+  let lastTarget = '';
   let freq = {
     chest: 0,
     leg: 0,
@@ -309,7 +309,7 @@ function nextMainTarget() {
     if (history.date < today && history.date > lastweek) {
       count++;
       if (count === 1) {
-        lastest = history.mainTarget;
+        lastTarget = history.mainTarget;
       }
       if (history.mainTarget === '가슴') {
         freq.chest++;
@@ -343,8 +343,8 @@ function nextMainTarget() {
     //case 2: 빈도가 다를 때 -> 최하 빈도 부위
     if (freq.back === freq.chest && freq.back == freq.chest) {
       //빈도가 모두 같을 때
-      if (lastest === userInfo.weakness) {
-        if (lastest === '가슴' && userInfo.weakness === '가슴') {
+      if (lastTarget === userInfo.weakness) {
+        if (lastTarget === '가슴' && userInfo.weakness === '가슴') {
           if (userInfo.sex === '여자') {
             if ((freq.back - freq.chest > 2) | (freq.leg - freq.chest > 2)) {
               nextMain = '가슴';
@@ -365,9 +365,9 @@ function nextMainTarget() {
           nextMain = '가슴';
         }
       } else {
-        if (lastest === '등') {
+        if (lastTarget === '등') {
           nextMain = '하체';
-        } else if (lastest === '하체') {
+        } else if (lastTarget === '하체') {
           nextMain = '가슴';
         } else {
           nextMain = '등';
@@ -375,34 +375,34 @@ function nextMainTarget() {
       }
     } else {
       //최하 빈도 부위
-      //최하 빈도 부위가 lastest면 그 다음 종목
+      //최하 빈도 부위가 lastTarget면 그 다음 종목
       if (freq.back < freq.chest) {
         if (freq.back < freq.leg) {
-          if (lastest === '등') {
+          if (lastTarget === '등') {
             nextMain = '하체';
           } else nextMain = '등';
         } else {
-          if (lastest === '하체') {
+          if (lastTarget === '하체') {
             nextMain = '등';
           } else nextMain = '하체';
         }
       } else if (freq.chest < freq.back) {
         if (freq.chest < freq.leg) {
-          if (lastest === '가슴') {
+          if (lastTarget === '가슴') {
             nextMain = '등';
           } else nextMain = '가슴';
         } else {
-          if (lastest === '하체') {
+          if (lastTarget === '하체') {
             nextMain = '가슴';
           } else nextMain = '하체';
         }
       } else if (freq.leg < freq.back) {
         if (freq.leg < freq.chest) {
-          if (lastest === '하체') {
+          if (lastTarget === '하체') {
             nextMain = '가슴';
           } else nextMain = '하체';
         } else {
-          if (lastest === '가슴') {
+          if (lastTarget === '가슴') {
             nextMain = '등';
           } else nextMain = '가슴';
         }
@@ -422,7 +422,7 @@ function getSets() {
     switch (nextTarget) {
       case '하체':
         oneRM = userInfo.oneRM[0];
-        switch (targetidx) {
+        switch (targetIdx) {
           case (1, 2, 3, 4, 9):
             weight = oneRM;
             if (i < 2) weight = weight * (0.5 + 0.2 * i);
@@ -443,7 +443,7 @@ function getSets() {
         break;
       case '가슴':
         oneRM = userInfo.oneRM[1];
-        switch (targetidx) {
+        switch (targetIdx) {
           case 1:
             weight = oneRM;
             if (i < 2) weight = weight * (0.5 + 0.2 * i);
@@ -452,13 +452,13 @@ function getSets() {
             break;
           case (2, 3, 4, 5, 6, 7, 10, 11):
             weight = oneRM * 0.7;
-            if (targetidx == 4 || targetidx == 5) weight = weight / 2;
+            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
           case (9, 12):
             weight = oneRM * 0.4;
-            if (targetidx == 4 || targetidx == 5) weight = weight / 2;
+            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
@@ -469,7 +469,7 @@ function getSets() {
         break;
       case '등':
         oneRM = userInfo.oneRM[2];
-        switch (targetidx) {
+        switch (targetIdx) {
           case (1, 7):
             weight = oneRM;
             if (i < 2) weight = weight * (0.5 + 0.2 * i);
@@ -478,7 +478,7 @@ function getSets() {
             break;
           case (2, 4, 5, 6, 8, 9, 10, 11):
             weight = oneRM * 0.7;
-            if (targetidx == 4 || targetidx == 5) weight = weight / 2;
+            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
@@ -515,6 +515,6 @@ function makeList() {
 }
 export function recommend(value) {
   recommendedList = makeList();
-  console.log(recommendeList);
+  console.log(recommendedList);
   return recommendedList;
 }
