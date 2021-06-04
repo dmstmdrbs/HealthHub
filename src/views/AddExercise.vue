@@ -85,7 +85,7 @@
                         {{exercise.target}} | {{exercise.kinds}} 
                         <v-spacer></v-spacer>
                         <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                        <v-dialog ref="dialog" max-width="300px" v-model="setDialog">
+                        <v-dialog :retain-focus="false" ref="dialog" max-width="300px" v-model="setDialog">
                           <template>
                             <v-container class="pa-1">
                             <v-card>
@@ -121,7 +121,6 @@
                             </v-card>
                           </v-container>
                           </template>
-                          
                         </v-dialog>
                         <v-btn rounded outlined text @click ="deleteSet(index)">세트 삭제</v-btn>
                       </v-card-title>
@@ -200,6 +199,7 @@
             <v-dialog
               ref="dialog"
               :return-value.sync="date" 
+              :retain-focus="false"
               width="290px"
               v-model="calendarDialog">
               <template>
