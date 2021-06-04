@@ -5,7 +5,7 @@
         <v-col cols="12" sm="4">
           <v-card
             class="mx-auto scroll"
-            width="500"
+            width="100%"
             height="600px"
           >
             <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
@@ -85,7 +85,7 @@
                         {{exercise.target}} | {{exercise.kinds}} 
                         <v-spacer></v-spacer>
                         <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                        <v-dialog ref="dialog" style="width=250px" v-model="setDialog">
+                        <v-dialog ref="dialog" max-width="300px" v-model="setDialog">
                           <template>
                             <v-container class="pa-1">
                             <v-card>
@@ -93,8 +93,8 @@
                                 세트 추가
                               </v-card-title>
                               <v-card-text>
-                                <v-text-field suffix="kg" label="무게" style="width:250px" v-model="weight"></v-text-field>
-                                <v-row no-gutters justify="start" align="center">
+                                <v-text-field suffix="kg" label="무게" v-model="weight"></v-text-field>
+                                <v-row no-gutters>
                                   <v-col><v-btn @click="reps--">-</v-btn></v-col>
                                   <v-col><span>{{reps}}</span></v-col>
                                   <v-col><v-btn @click="reps++">+</v-btn></v-col> 
