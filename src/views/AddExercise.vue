@@ -630,7 +630,7 @@ import {eventBus} from '@/main'
         if(this.reps <= 0 | this.reps===null){
           alert("횟수를 확인해주세요.");
         }
-        if(this.reps>0){
+        if(this.reps>0 & this.weight !==null){
           this.addSet();
           this.hideSetDialog();
           console.log(this.selected)
