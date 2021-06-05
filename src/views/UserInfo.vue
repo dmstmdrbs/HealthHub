@@ -51,7 +51,7 @@ export default {
     } else if (localStorage.getItem('sex') == 2) {
       this.userInfo.sex = '여자';
     }
-    fetch('http://115.85.183.157:3000/register/userInfo/getUID/${id}', {
+    fetch(`http://115.85.183.157:3000/register/userInfo/getUID/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     test() {
-      console.log(this.userInfo);
       this.saveUser();
     },
     saveUser() {

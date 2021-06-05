@@ -118,7 +118,7 @@ class User {
   async getUserInfo() {
     const client = this.body;
     try {
-      const response = await UserStorage.readUserInfo(client);
+      const response = await UserStorage.getUserInfo(client);
       return response;
     } catch (err) {
       return { success: false, msg: err };
