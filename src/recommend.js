@@ -506,17 +506,8 @@ function makeList() {
     let idxlist = [];
     var i;
     //logic
-    switch (userInfo.proficiency) {
-        case 1:
-            maxNum = 3
-            break
-        case 2:
-            maxNum = 4
-            break
-        case 3:
-            maxNum = 5
-            break
-    }
+    maxNum = userInfo.proficiency + 2
+
     switch (nextMain) {
         case '하체':
             wlist = workouts[0].list
