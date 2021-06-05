@@ -133,6 +133,7 @@ export default {
           psword: this.pw,
         };
         console.log(req);
+        console.log(this.sexGroup);
         localStorage.setItem('id', this.id);
         localStorage.setItem('uName', this.name);
         localStorage.setItem('sex', this.sexGroup);

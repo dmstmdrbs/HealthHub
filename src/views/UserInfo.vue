@@ -42,9 +42,9 @@ export default {
   created() {
     var id = localStorage.getItem('id');
     this.userInfo.name = localStorage.getItem('uName');
-    if (localStorage.getItem('sex') === 1) {
+    if (localStorage.getItem('sex') == 1) {
       this.userInfo.sex = '남자';
-    } else {
+    } else if (localStorage.getItem('sex') == 2) {
       this.userInfo.sex = '여자';
     }
     fetch('http://115.85.183.157:3000/userID/{id}', {
