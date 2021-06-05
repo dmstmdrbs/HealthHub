@@ -404,7 +404,7 @@ function nextMainTarget() {
 
     return nextMain;
 }
-function getShouderWeight() {
+function getShoulderWeight() {
     let weight = 0;
     switch(userInfo.sex){
         case 1:
@@ -629,7 +629,7 @@ function getSets(nextTarget, targetIdx) {
                 switch(targetIdx) {
                     case (0, 6):
                         // 덤벨
-                        weight = getArmWeight()
+                        weight = getArmWeight();
 
                     case(1, 3, 4, 5):
                         // 바벨
