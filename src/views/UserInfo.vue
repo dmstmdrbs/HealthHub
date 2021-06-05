@@ -38,16 +38,19 @@
   </v-container>
 </template>
 <script>
+import VueRouter from '@/router/index.js';
 export default {
   created() {
     var id = localStorage.getItem('id');
     this.userInfo.name = localStorage.getItem('uName');
+    this.userInfo.email = localStorage.getItem('email');
+    this.userInfo.sex = localStorage.getItem('sex');
     if (localStorage.getItem('sex') == 1) {
       this.userInfo.sex = '남자';
     } else if (localStorage.getItem('sex') == 2) {
       this.userInfo.sex = '여자';
     }
-    fetch('http://115.85.183.157:3000/userID/{id}', {
+    fetch('http://115.85.183.157:3000/register/userInfo/getUID/${id}', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -55,9 +58,8 @@ export default {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
-          //   this.userInfo.uid = res.data;
-        }
+        var uid = res;
+        this.userInfo.uid = uid;
       })
       .catch(err => {
         console.error('회원가입 중 에러 발생');
@@ -75,7 +77,7 @@ export default {
         sex: '',
         height: '',
         weight: '',
-        sqrt: '',
+        squat: '',
         bench: '',
         dead: '',
         weak: '',
@@ -86,6 +88,7 @@ export default {
   methods: {
     test() {
       console.log(this.userInfo);
+      this.saveUser();
     },
     saveUser() {
       if (this.userInfo.proficiency === '초급자') {
@@ -114,6 +117,7 @@ export default {
         .catch(err => {
           console.error('회원가입 중 에러 발생');
         });
+      VueRouter.push({ path: '/' });
     },
   },
 };
