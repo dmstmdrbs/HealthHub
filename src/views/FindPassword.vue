@@ -6,14 +6,17 @@
 <script>
 import {recommend} from '@/recommend.js'
 export default {
+    created(){
+        this.get();
+    },
     data(){
         return{
-            list:this.get()
+            list:[]
         }
     },
     methods:{
         get(){
-            return recommend(1);
+            this.list = recommend(1);
             
         }
     }

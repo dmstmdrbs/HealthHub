@@ -2,10 +2,10 @@ export let recommendedList = [];
 let userInfo = {
     weight: 77,
     height: 179,
-    sex: '남자',
+    sex: 1,
     oneRM: { squat: 130, bench: 100, dead: 150 },
-    weakness: '',
-    proficiency: '',
+    weakness: '하체',
+    proficiency: 2,
 };
 let workoutHistory = [{
         date: '2021-05-20',
@@ -270,7 +270,7 @@ function nextMainTarget() {
         var date = new Date();
         var year = date.getFullYear();
         var month = 1 + date.getMonth();
-        mont = month >= 10 ? month : '0' + month;
+        month = month >= 10 ? month : '0' + month;
         var day = date.getDate();
         day = day >= 10 ? day : '0' + day;
         return year + '-' + month + '-' + day;
@@ -529,72 +529,107 @@ function getArmWeight(){
             }
             break;
     }
+    return weight;
 }
 function getSets(nextTarget, targetIdx) {
+
+    
     let sets = [];
     const max_set = 5;
     let weight = 0;
     let reps = 0;
-    
+    let oneRM = 0;
+
     for (var i = 0; i < max_set; i++) {
         switch (nextTarget) {
             case '하체':
-                oneRM = userInfo.oneRM[0];
+                console.log("하체");
+                oneRM = userInfo.oneRM.squat;
+                
                 switch (targetIdx) {
-                    case (1, 2, 3, 4, 9):
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 8:
                         weight = oneRM;
                         if (i < 2) weight = weight * (0.5 + 0.2 * i);
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
                         break;
-                    case (7, 8, 11, 12):
+                    case 6:
+                    case 7:
+                    case 10:
+                    case 11:
                         weight = oneRM * 0.7;
                         if (i < 3) weight = weight * (0.7 + 0.1 * i);
                         else if (i == 4) weight = weight * 0.8;
                         break;
-                    case (5, 6, 10, 13):
+                    case 4:
+                    case 5:
+                    case 9:
+                    case 12:
                         weight = oneRM / 2;
                         if (i < 3) weight = weight * (0.7 + 0.1 * i);
                         else if (i == 4) weight = weight * 0.8;
                         break;
+                    default:
                 }
                 break;
             case '가슴':
+                console.log("가슴");
                 oneRM = userInfo.oneRM[1];
                 switch (targetIdx) {
-                    case 1:
+                    case 0:
                         weight = oneRM;
                         if (i < 2) weight = weight * (0.5 + 0.2 * i);
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
                         break;
-                    case (2, 3, 4, 5, 6, 7, 10, 11):
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 9:
+                    case 10:
                         weight = oneRM * 0.7;
-                        if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
-                        if (i < 3) weight = weight * (0.7 + 0.1 * i);
-                        else if (i == 4) weight = weight * 0.8;
-                        break;
-                    case (9, 12):
-                        weight = oneRM * 0.4;
                         if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
                         if (i < 3) weight = weight * (0.7 + 0.1 * i);
                         else if (i == 4) weight = weight * 0.8;
                         break;
                     case 8:
+                    case 11:
+                        weight = oneRM * 0.4;
+                        if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i);
+                        else if (i == 4) weight = weight * 0.8;
+                        break;
+                    case 7:
                         if (oneRM > 100) weight = 10;
                         else weight = 5;
                 }
                 break;
             case '등':
+                console.log("등");
                 oneRM = userInfo.oneRM[2];
                 switch (targetIdx) {
-                    case (1, 7):
+                    case 0:
+                    case 6:
                         weight = oneRM;
                         if (i < 2) weight = weight * (0.5 + 0.2 * i);
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
                         break;
-                    case (2, 4, 5, 6, 8, 9, 10, 11):
+                    case 1:
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
                         weight = oneRM * 0.7;
                         if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
                         if (i < 3) weight = weight * (0.7 + 0.1 * i);
@@ -604,44 +639,73 @@ function getSets(nextTarget, targetIdx) {
                 break;
             case '어깨':
                 weight = getShoulderWeight();
+                
                 switch(targetIdx) {
                     case 0:
                     // 바벨
+                        console.log(11111111);
                         if (i < 2) weight = weight * (0.7 + 0.1 * i);
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
                         break;
-                        
-                    case(1, 2, 3, 7):
-                    // 덤벨
+                    
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 7:
+                        // 덤벨
+                        console.log(weight);
                         if (i < 2) weight = weight * (0.5 + 0.2 * i);
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
+                        
+                        console.log(weight);
                         break;
-                    case(4, 5, 6, 8, 9):
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 8:
+                    case 9:
                     // 머신
+                        console.log(333333);
                         if (i < 3) weight = weight * (0.7 + 0.1 * i);
                         else if (i == 4) weight = weight * 0.8;
                         break;
 
                 }
-            case '이두':
+                break;
+            case '팔':
+                weight = getArmWeight();
                 switch(targetIdx) {
-                    case (0, 6):
+                    case 0:
+                    case 6:
                         // 덤벨
-                        weight = getArmWeight();
-
-                    case(1, 3, 4, 5):
+                        if (i < 2) weight = weight * (0.5 + 0.2 * i);
+                        else if (i < 4) weight = weight * 0.8;
+                        else weight = weight * 0.7;
+                        break;
+                    case 1:
+                    case 3:
+                    case 4:
+                    case 5:
                         // 바벨
+                        if (i < 2) weight = weight * (0.7 + 0.1 * i);
+                        else if (i < 4) weight = weight * 0.8;
+                        else weight = weight * 0.7;
+                        break;
                     case 2:
                         // 케이블
+                        if (i < 2) weight = weight * (5 + 0.7 + 0.1 * i);
+                        else if (i < 4) weight = weight * (5 + 0.8);
+                        else weight = weight * (5 + 0.7);
+                        break;
 
                 }
             
         }
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
-        sets.append({ reps, weight });
+        sets.push({ reps, weight });
     }
     return sets;
 }
@@ -664,6 +728,7 @@ function makeList() {
     let list = [];
     let wlist = [];
     let idxlist = [];
+    let nextidx=[];
     var i;
     //logic
     maxNum = userInfo.proficiency + 2
@@ -676,26 +741,35 @@ function makeList() {
         case '등':
             wlist = workouts[2].list
     }
-    for (i = 0; i < length(wlist); i++) {
+    for (i = 0; i < wlist.length; i++) {
         if (wlist[i].difficulty <= maxNum) {
-            idxlist.append(i)
+            idxlist.push(i)
         }
     }
 
-    let idx = Math.floor(Math.random() * length(wlist));
+    let idx = Math.floor(Math.random() * idxlist.length);
     for (i = 0; i < 4; i++) {
-        while (idxlist.includes(idx)) {
-            idx = Math.floor(Math.random() * length(wlist))
+        // do{
+        //    
+        //     if(idxlist.includes(idx))
+        // }while(1)
+        while (1) {
+            if(!nextidx.includes(idx)){
+                nextidx.push(idx);
+                list.push(getSets(nextMain, idx));
+                break;
+            }
+            idx = Math.floor(Math.random() * wlist.length)
         }
-        idxlist.append(idx);
-        list.append(getsets(nextMain, idx));
+        
+        
     }
     nextMain = '어깨'
-    idx = Math.floor(Math.random() * length(workouts[3].list))
-    list.append(getsets(nextMain, idx))
+    idx = Math.floor(Math.random() * workouts[3].list.length)
+    list.push(getSets(nextMain, idx))
     nextMain = '팔'
-    idx = Math.floor(Math.random() * length(workouts[4].list))
-    list.append(getsets(nextMain, idx))
+    idx = Math.floor(Math.random() * workouts[4].list.length)
+    list.push(getSets(nextMain, idx))
     return list;
 }
 export function recommend(value) {
