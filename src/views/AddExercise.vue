@@ -94,12 +94,7 @@
                         {{ exercise.target }} | {{ exercise.kinds }}
                         <v-spacer></v-spacer>
                         <v-btn rounded outlined text @click="showSetDialog(index)">세트 추가</v-btn>
-                        <v-dialog
-                          :retain-focus="false"
-                          ref="dialog"
-                          max-width="300px"
-                          v-model="setDialog"
-                        >
+                        <v-dialog :retain-focus="false" max-width="300px" v-model="setDialog">
                           <template>
                             <v-container class="pa-1">
                               <v-card>
@@ -221,6 +216,7 @@
               :return-value.sync="date"
               :retain-focus="false"
               width="290px"
+              mode="eager"
               v-model="calendarDialog"
             >
               <template>
@@ -599,7 +595,7 @@ export default {
         day = day >= 10 ? day : '0' + day;
         return year + '-' + month + '-' + day;
       }
-      this.date = getDateFormat(new Date());
+      this.date = this.date = new Date().toISOString().substr(0, 10);
       this.updateDate();
     },
     checkSet(exIdx, setIdx) {
@@ -692,8 +688,12 @@ export default {
       this.updateDate();
       this.hideCalendar();
     },
+    saveDate(date) {
+      this.$refs.dialog.save(date);
+    },
     updateDate() {
-      this.$refs.dialog.save(this.date);
+      this.saveDate(this.date);
+
       eventBus.$emit('updatedDate', this.date);
 
       fetch(`http://115.85.183.157:3000/exercises/${this.date}`, {
