@@ -310,18 +310,6 @@ function WorkoutDetail(target, workout, sets) {
 export default {
   name: 'AddExercise',
   created() {
-    fetch(`http://115.85.183.157:3000/exercises/${user.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(res => {})
-      .catch(err => {
-        console.error('error');
-      });
-
     eventBus.$on('selectDate', today => {
       this.date = today;
 
