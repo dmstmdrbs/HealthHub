@@ -1,37 +1,44 @@
 <template>
-    <v-card>
-        <v-footer v-bind = "localAttrs" color="#ECEFF1" padless>
-            <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
-            <v-card-text class = "navBar" horizontal>
-                <v-btn class="btn record" text outlined @click ="$router.push({name : 'home'})">
-                    <v-icon >far fa-calendar-alt</v-icon>
-                    <span>기록</span>
-                </v-btn>
-                <v-btn class="btn mypage" text outlined @click="$router.push({name : 'mypage'})">
-                    <v-icon>fas fa-user</v-icon>
-                    <span>내정보</span>
-                </v-btn>
-                <v-btn class="btn logout" text outlined @click="$router.push({name : 'login'})">
-                    <v-icon>fas fa-user-lock</v-icon>
-                    <span>로그아웃</span>
-                </v-btn>
-            </v-card-text>
-        </v-footer>
-    </v-card>
+  <v-card>
+    <v-footer v-bind="localAttrs" color="#ECEFF1" padless>
+      <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet" />
+      <v-card-text class="navBar" horizontal>
+        <v-btn class="btn record" text outlined @click="$router.push({ name: 'home' })">
+          <v-icon>far fa-calendar-alt</v-icon>
+          <span>기록</span>
+        </v-btn>
+        <v-btn class="btn mypage" text outlined @click="$router.push({ name: 'mypage' })">
+          <v-icon>fas fa-user</v-icon>
+          <span>내정보</span>
+        </v-btn>
+        <v-btn class="btn logout" text outlined @click="logout">
+          <v-icon>fas fa-user-lock</v-icon>
+          <span>로그아웃</span>
+        </v-btn>
+      </v-card-text>
+    </v-footer>
+  </v-card>
 </template>
 <script>
-  export default {
-      //초기값 0번째 : 기록
-    data: () => ({}),
-    computed: {
-        localAttrs () {
-        const attrs = {}
-        attrs['fixed']=true
-        return attrs
-      },
+import VueRouter from '@/router/index.js';
+export default {
+  //초기값 0번째 : 기록
+  data: () => ({}),
+  computed: {
+    localAttrs() {
+      const attrs = {};
+      attrs['fixed'] = true;
+      return attrs;
     },
-  }
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      VueRouter.push({ name: 'login' });
+    },
+  },
+};
 </script>
 <style>
-    @import url(./NaviBar.css);
+@import url(./NaviBar.css);
 </style>

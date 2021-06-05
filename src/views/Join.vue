@@ -7,52 +7,24 @@
     </v-row>
     <v-container>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
+        <v-col cols="12" md="4">
           <v-text-field
-            v-model="firstname"
-            :rules="nameRules"
-            :counter="2"
-            label="First name"
-            required
-          ></v-text-field>
-        </v-col>
-
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="lastname"
+            v-model="name"
             :rules="nameRules"
             :counter="5"
-            label="Last name"
+            label="Name"
             required
-          ></v-text-field>
-        </v-col>
-
-        
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
+            @input="searchChangeFunc($event)"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col
-          cols="12"
-          md="4"
-        >
+        <v-col cols="12" md="4">
+          <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" md="4">
           <v-text-field
             v-model="id"
             :rules="idRules"
@@ -62,19 +34,13 @@
           ></v-text-field>
         </v-col>
         <v-col>
-          <v-btn
-            elevation="2"
-            small
-            v-on:click = "checkID">
+          <v-btn elevation="2" small v-on:click="checkID">
             아이디 중복 확인
           </v-btn>
-        </v-col> 
+        </v-col>
       </v-row>
       <v-row>
-          <v-col
-          cols="12"
-          md="4"
-        >
+        <v-col cols="12" md="4">
           <v-text-field
             type="password"
             v-model="pw"
@@ -84,140 +50,116 @@
             required
           ></v-text-field>
         </v-col>
-        
-        <v-col
-          cols="12"
-          md="4"
-        >
-          <v-text-field
-            type = "password"
-            v-model="pwCheck"
-            :rules="pwCheckRules"
-            label="Password Check"
-            :counter="20"
-            required
-          ></v-text-field>
-          </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" md="4">
           <v-container fluid class="px-0">
-            <v-radio-group
-              mandatory 
-              v-model="sexGroup">
-              <v-radio label="남자" value=1></v-radio>
-              <v-radio label="여자" value=2></v-radio>
+            <v-radio-group mandatory v-model="sexGroup">
+              <v-radio label="남자" value="1"></v-radio>
+              <v-radio label="여자" value="2"></v-radio>
             </v-radio-group>
           </v-container>
         </v-col>
       </v-row>
       <v-row>
-        <v-btn
-            elevation="2"
-            small
-            v-on:click = "checkForm">
-            가입
+        <v-btn elevation="2" small v-on:click="checkForm">
+          가입
         </v-btn>
       </v-row>
-      
     </v-container>
   </v-form>
 </template>
 <script>
-  import VueRouter from '@/router/index.js'
-  export default {
+import VueRouter from '@/router/index.js';
 
-    data: () => ({
-      checkId:false,checkPw:false,
-      valid: false,
-      errors:[],
-      firstname: '',
-      lastname: '',
-      id : '',
-      pw : '',
-      sexGroup: 1,
-      age:'',
-      weak:'',
-      userInfo:{
-
-      },
-      idRules:[
-        v => !!v || 'ID is required',
-      ],
-      pwRules:[
-        v => !!v || 'Password is required',
-        v => v.length <= 20 || 'Password must be less than 20 characters',
-      ],
-      pwCheck: '',
-      pwCheckRules:[
-        v => !!v || 'Rewrite the password',
-      ],
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+/.test(v) || 'E-mail must be valid',
-      ],
-    }),
-    methods: {
-
-      checkValid: function(){
-        return true;
-        //db에서 아이디 중복 확인
-      },
-      checkPW: function(){
-        if(this.pw.length==0 || this.pwCheck.length==0){
-          alert('입력x')
-        }
-        if(this.pw != this.pwCheck){
-          this.errors.push('Please check the pasword')
-          alert('패스워드를 확인하세요')
-        }
-        else{
-          return true;
-        }
-      },
-      checkID:function(){
-        let check = false;//db에서 아이디 중복 확인 결과 리턴
-        if(check){
-          //db에서 유효성 검사
-          //아이디 중복 확인
-          check = checkValid();
-          this.checkId = true;
+export default {
+  data: () => ({
+    checkId: false,
+    checkPw: false,
+    valid: false,
+    id: '',
+    pw: '',
+    name: '',
+    sexGroup: 1,
+    age: '',
+    idRules: [v => !!v || 'ID is required'],
+    pwRules: [
+      v => !!v || 'Password is required',
+      v => v.length <= 20 || 'Password must be less than 20 characters',
+    ],
+    pwCheckRules: [v => !!v || 'Rewrite the password'],
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => v.length <= 10 || 'Name must be less than 10 characters',
+    ],
+    email: '',
+    emailRules: [v => !!v || 'E-mail is required', v => /.+@.+/.test(v) || 'E-mail must be valid'],
+  }),
+  methods: {
+    searchChangeFunc(event) {
+      console.log('id changed!');
+      this.checkId = false;
+      console.log(this.cehckId);
+    },
+    checkID: function() {
+      const req = {
+        id: this.id,
+      };
+      //db에서 아이디 중복 확인
+      fetch('http://115.85.183.157:3000/checkID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(req),
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            alert('중복된 아이디 입니다. 다시 입력해주세요.');
+          }
+        })
+        .catch(err => {
           alert('사용 가능한 아이디 입니다.');
-          
-        }else{
           this.checkId = true;
-          alert('사용중인 아이디 입니다. 다른 아이디를 입력해주세요');
-          
-        }
-      },
-      saveDB: function(){
-        //db에 저장
-        return true;
-      },
-      checkForm: function(){
-        // if(this.checkId && checkPW()){
-        //   //아이디 비번 db에 저장 후
-        //   // if(saveDB()){
-        //   //   alert('환영합니다! 로그인을 해주세요.');
-        //   // //로그인 페이지로 이동
-        //   //   VueRouter.push({path:'/'})
-        //   // }else{
-        //   //   alert('db 저장 실패!');
-        //   // }
-        //   alert('환영합니다! 로그인을 해주세요.');
-        //   //로그인 페이지로 이동
-        //   VueRouter.push({path:'/'})
-        // }
-        console.log(this.sexGroup);
-           alert('환영합니다! 로그인을 해주세요.');
-          //로그인 페이지로 이동
-          VueRouter.push({path:'/'});
+        });
+    },
+    checkForm: function() {
+      if (this.checkId === false) {
+        alert('아이디 중복 체크를 해주세요.');
+      } else {
+        const req = {
+          id: this.id,
+          psword: this.pw,
+        };
+        console.log(req);
+        localStorage.setItem('id', this.id);
+        localStorage.setItem('uName', this.name);
+        localStorage.setItem('sex', this.sexGroup);
+        localStorage.setItem('sex', this.email);
+        //db에서 아이디 중복 확인
+        fetch('http://115.85.183.157:3000/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(req),
+        })
+          .then(res => res.json())
+          .then(res => {
+            if (res.success) {
+              alert('성공');
+
+              VueRouter.push({ path: '/join/userinfo' });
+            } else {
+              alert('중복된 아이디 입니다.');
+            }
+          })
+          .catch(err => {
+            console.error('회원가입 중 에러 발생');
+          });
       }
-    }
-  }
+    },
+  },
+};
 </script>
