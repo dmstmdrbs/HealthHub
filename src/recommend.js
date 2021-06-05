@@ -641,33 +641,61 @@ function getSets(nextTarget, targetIdx) {
         }
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
-        sets.append([reps, weight]);
+        sets.append({ reps, weight });
     }
     return sets;
 }
 
-function getWorkout(target, difficulty, proficiency) {
+/*function getWorkout(target, difficulty, proficiency) {
     //랜덤으로 숙련도와 그에 따른 적합한 운동 난이도를 따져서 운동을 뽑는다.
     let workout = {};
-
+    
     //--------- logic ----------
 
     sets = getSets();
 
     //--------- logic ----------
     return workout;
-}
+}*/
 
 function makeList() {
     let maxNum;
     let nextMain = nextMainTarget();
     let list = [];
-    let wIdx = [];
+    let wlist = [];
+    let idxlist = [];
+    var i;
     //logic
-    
-    list.append(getWorkout(nextMain, difficulty, proficiency));
-   
-    //return 만들어진 운동 리스트
+    maxNum = userInfo.proficiency + 2
+
+    switch (nextMain) {
+        case '하체':
+            wlist = workouts[0].list
+        case '가슴':
+            wlist = workouts[1].list
+        case '등':
+            wlist = workouts[2].list
+    }
+    for (i = 0; i < length(wlist); i++) {
+        if (wlist[i].difficulty <= maxNum) {
+            idxlist.append(i)
+        }
+    }
+
+    let idx = Math.floor(Math.random() * length(wlist));
+    for (i = 0; i < 4; i++) {
+        while (idxlist.includes(idx)) {
+            idx = Math.floor(Math.random() * length(wlist))
+        }
+        idxlist.append(idx);
+        list.append(getsets(nextMain, idx));
+    }
+    nextMain = '어깨'
+    idx = Math.floor(Math.random() * length(workouts[3].list))
+    list.append(getsets(nextMain, idx))
+    nextMain = '팔'
+    idx = Math.floor(Math.random() * length(workouts[4].list))
+    list.append(getsets(nextMain, idx))
     return list;
 }
 export function recommend(value) {
