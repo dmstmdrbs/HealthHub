@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="6">
         <h2>유저 정보</h2>
-        <v-text-field disabled v-model="userInfo.name" label="이름"></v-text-field>
+        <v-text-field disabled v-model="userInfo.uName" label="이름"></v-text-field>
         <v-text-field disabled v-model="userInfo.sex" label="성별"></v-text-field>
         <v-text-field v-model="userInfo.age" label="나이"></v-text-field>
       </v-col>
@@ -23,7 +23,7 @@
       <v-divider vertical></v-divider>
       <v-col cols="12" sm="6">
         <h2>1RM</h2>
-        <v-text-field v-model="userInfo.sqrt" label="스쿼트"></v-text-field>
+        <v-text-field v-model="userInfo.squat" label="스쿼트"></v-text-field>
         <v-text-field v-model="userInfo.bench" label="벤치프레스"></v-text-field>
         <v-text-field v-model="userInfo.dead" label="데드리프트"></v-text-field>
         <h2>숙련도</h2>
@@ -42,7 +42,8 @@ import VueRouter from '@/router/index.js';
 export default {
   created() {
     var id = localStorage.getItem('id');
-    this.userInfo.name = localStorage.getItem('uName');
+    console.log(id);
+    this.userInfo.uName = localStorage.getItem('uName');
     this.userInfo.email = localStorage.getItem('email');
     this.userInfo.sex = localStorage.getItem('sex');
     if (localStorage.getItem('sex') == 1) {
@@ -58,8 +59,9 @@ export default {
     })
       .then(res => res.json())
       .then(res => {
-        var uid = res;
-        this.userInfo.uid = uid;
+        var uID = res.uID;
+        this.userInfo.uID = uID;
+        console.log(uID);
       })
       .catch(err => {
         console.error('회원가입 중 에러 발생');
@@ -70,8 +72,8 @@ export default {
   data() {
     return {
       userInfo: {
-        uid: 0,
-        name: '',
+        uID: 0,
+        uName: '',
         age: '',
         email: '',
         sex: '',
