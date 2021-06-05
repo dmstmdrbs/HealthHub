@@ -522,9 +522,9 @@ function makeList() {
         }
     }
 
-    let idx;
+    let idx = Math.floor(Math.random() * length(wlist));
     for (i = 0; i < 4; i++) {
-        while (!idxlist.includes(idx)) {
+        while (idxlist.includes(idx)) {
             idx = Math.floor(Math.random() * length(wlist))
         }
         idxlist.append(idx);
