@@ -1,5 +1,3 @@
-import { includes } from "core-js/core/array";
-
 export let recommendedList = [];
 let userInfo = {
     weight: 77,
@@ -481,7 +479,7 @@ function getSets() {
         }
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
-        sets.append([reps, weight]);
+        sets.append({ reps, weight });
     }
     return sets;
 }
@@ -522,9 +520,9 @@ function makeList() {
         }
     }
 
-    let idx;
+    let idx = Math.floor(Math.random() * length(wlist));
     for (i = 0; i < 4; i++) {
-        while (!idxlist.includes(idx)) {
+        while (idxlist.includes(idx)) {
             idx = Math.floor(Math.random() * length(wlist))
         }
         idxlist.append(idx);
@@ -536,7 +534,6 @@ function makeList() {
     nextMain = '팔'
     idx = Math.floor(Math.random() * length(workouts[4].list))
     list.append(getsets(nextMain, idx))
-        //return 만들어진 운동 리스트
     return list;
 }
 export function recommend(value) {
