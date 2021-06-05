@@ -250,7 +250,7 @@ let workouts = [{
         ],
     },
     {
-        target: '이두',
+        target: '팔',
         list: [
             { name: '덤벨 컬', difficulty: 1 },
             { name: '이지바 컬', difficulty: 2 },
@@ -404,12 +404,138 @@ function nextMainTarget() {
 
     return nextMain;
 }
+function getShouderWeight() {
+    let weight = 0;
+    switch(userInfo.sex){
+        case 1:
+            //남자 기준
+            switch(userInfo.proficiency){
+                case 1:
+                    if(userInfo.weight < 52){
+                        weight = 20;
+                    }
+                    else if(userInfo.weight < 60){
+                        weight = 25;
+                    }
+                    else if(userInfo.weight < 90){
+                        weight = 30;
+                    }
+                    else {
+                        weight = 35;
+                    }
+                    break;
+                case 2:
+                    if(userInfo.weight < 52){
+                        weight = 20;
+                    }
+                    else if(userInfo.weight < 60){
+                        weight = 30;
+                    }
+                    else if(userInfo.weight < 90){
+                        weight = 35;
+                    }
+                    else {
+                        weight = 40;
+                    }
+                    break;
+                case 3:
+                    if(userInfo.weight < 60){
+                        weight = 40;
+                    }
+                    else if(userInfo.weight < 90){
+                        weight = 50;
+                    }
+                    else {
+                        weight = 55;
+                    }
+                    break;
+            }
+            break;
+        case 2:
+            // 여자 기준
+            switch(userInfo.proficiency){
+                case 1:
+                    if(userInfo.weight < 52){
+                        weight = 20;
+                    }
+                    else if(userInfo.weight < 60){
+                        weight = 25;
+                    }
+                    else {
+                        weight = 30;
+                    }
+                    break;
+                case 2:
+                    if(userInfo.weight < 44){
+                        weight = 20;
+                    }
+                    else if(userInfo.weight < 52){
+                        weight = 25;
+                    }
+                    else if(userInfo.weight < 60){
+                        weight = 30;
+                    }
+                    else {
+                        weight = 35;
+                    }
+                    break;
+                case 3:
+                    if(userInfo.weight < 52){
+                        weight = 35;
+                    }
+                    else if(userInfo.weight < 60){
+                        weight = 40;
+                    }
+                    else {
+                        weight = 45;
+                    }
+                    break;
+            }
+            break;
+    }
 
-function getSets() {
+    
+    return weight;
+}
+
+function getArmWeight(){
+    let weight = 0;
+    switch(userInfo.sex){
+        case 1:
+            //남자 기준
+            switch(userInfo.proficiency){
+                case 1:
+                    weight = 8;
+                    break;
+                case 2:
+                    weight = 12;
+                    break;
+                case 3:
+                    weight = 16;
+                    break;
+            }
+            break;
+        case 2:
+            // 여자 기준
+            switch(userInfo.proficiency){
+                case 1:
+                    weight = 5;
+                case 2:
+                    weight = 8;
+                    break;
+                case 3:
+                    weight = 10;
+                    break;
+            }
+            break;
+    }
+}
+function getSets(nextTarget, targetIdx) {
     let sets = [];
     const max_set = 5;
     let weight = 0;
     let reps = 0;
+    
     for (var i = 0; i < max_set; i++) {
         switch (nextTarget) {
             case '하체':
@@ -476,6 +602,42 @@ function getSets() {
                         break;
                 }
                 break;
+            case '어깨':
+                weight = getShoulderWeight();
+                switch(targetIdx) {
+                    case 0:
+                    // 바벨
+                        if (i < 2) weight = weight * (0.7 + 0.1 * i);
+                        else if (i < 4) weight = weight * 0.8;
+                        else weight = weight * 0.7;
+                        break;
+                        
+                    case(1, 2, 3, 7):
+                    // 덤벨
+                        if (i < 2) weight = weight * (0.5 + 0.2 * i);
+                        else if (i < 4) weight = weight * 0.8;
+                        else weight = weight * 0.7;
+                        break;
+                    case(4, 5, 6, 8, 9):
+                    // 머신
+                        if (i < 3) weight = weight * (0.7 + 0.1 * i);
+                        else if (i == 4) weight = weight * 0.8;
+                        break;
+
+                }
+            case '이두':
+                switch(targetIdx) {
+                    case (0, 6):
+                        // 덤벨
+                        weight = getArmWeight()
+
+                    case(1, 3, 4, 5):
+                        // 바벨
+                    case 2:
+                        // 케이블
+
+                }
+            
         }
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
@@ -500,8 +662,11 @@ function makeList() {
     let maxNum;
     let nextMain = nextMainTarget();
     let list = [];
+    let wIdx = [];
     //logic
-
+    
+    list.append(getWorkout(nextMain, difficulty, proficiency));
+   
     //return 만들어진 운동 리스트
     return list;
 }
