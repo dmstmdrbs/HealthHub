@@ -1,3 +1,5 @@
+import { includes } from "core-js/core/array";
+
 export let recommendedList = [];
 let userInfo = {
     weight: 77,
@@ -250,7 +252,7 @@ let workouts = [{
         ],
     },
     {
-        target: '이두',
+        target: '팔',
         list: [
             { name: '덤벨 컬', difficulty: 1 },
             { name: '이지바 컬', difficulty: 2 },
@@ -484,25 +486,66 @@ function getSets() {
     return sets;
 }
 
-function getWorkout(target, difficulty, proficiency) {
+/*function getWorkout(target, difficulty, proficiency) {
     //랜덤으로 숙련도와 그에 따른 적합한 운동 난이도를 따져서 운동을 뽑는다.
     let workout = {};
-
+    
     //--------- logic ----------
 
     sets = getSets();
 
     //--------- logic ----------
     return workout;
-}
+}*/
 
 function makeList() {
     let maxNum;
     let nextMain = nextMainTarget();
     let list = [];
+    let wlist = [];
+    let idxlist = [];
+    var i;
     //logic
+    switch (userInfo.proficiency) {
+        case 1:
+            maxNum = 3
+            break
+        case 2:
+            maxNum = 4
+            break
+        case 3:
+            maxNum = 5
+            break
+    }
+    switch (nextMain) {
+        case '하체':
+            wlist = workouts[0].list
+        case '가슴':
+            wlist = workouts[1].list
+        case '등':
+            wlist = workouts[2].list
+    }
+    for (i = 0; i < length(wlist); i++) {
+        if (wlist[i].difficulty <= maxNum) {
+            idxlist.append(i)
+        }
+    }
 
-    //return 만들어진 운동 리스트
+    let idx;
+    for (i = 0; i < 4; i++) {
+        while (!idxlist.includes(idx)) {
+            idx = Math.floor(Math.random() * length(wlist))
+        }
+        idxlist.append(idx);
+        list.append(getsets(nextMain, idx));
+    }
+    nextMain = '어깨'
+    idx = Math.floor(Math.random() * length(workouts[3].list))
+    list.append(getsets(nextMain, idx))
+    nextMain = '팔'
+    idx = Math.floor(Math.random() * length(workouts[4].list))
+    list.append(getsets(nextMain, idx))
+        //return 만들어진 운동 리스트
     return list;
 }
 export function recommend(value) {
