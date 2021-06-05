@@ -26,7 +26,7 @@ class UserStorage {
     static readUserUID(id) {
         return new Promise((resolve, reject) => {
             const query = "SELECT uID FROM Users WHERE id = ?;";
-            db.query(query, [id], (err, data) => {
+            db.query(query, [id.id], (err, data) => {
                 if (err) reject(`${err}`);
                 resolve(data[0]);
             });
@@ -100,15 +100,6 @@ class UserStorage {
                     if (err) reject(`${err}`);
                     resolve({ success: true });
                 });
-        });
-    }
-    static async readUserInfo(uName) {
-        return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM userInfo WHERE uName = ?;";
-            db.query(query, [uName], (err, data) => {
-                if (err) reject(`${err}`);
-                resolve(data[0]);
-            });
         });
     }
 }
