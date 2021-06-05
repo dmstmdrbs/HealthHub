@@ -136,7 +136,7 @@ export default {
         localStorage.setItem('id', this.id);
         localStorage.setItem('uName', this.name);
         localStorage.setItem('sex', this.sexGroup);
-        localStorage.setItem('sex', this.email);
+        localStorage.setItem('email', this.email);
         //db에서 아이디 중복 확인
         fetch('http://115.85.183.157:3000/register', {
           method: 'POST',
