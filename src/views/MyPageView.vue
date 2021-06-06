@@ -15,7 +15,7 @@
                 <v-col>
                   <v-card-title>이름</v-card-title>
                   <v-divider class="mx-2"></v-divider>
-                  <v-card-text>{{ userInfo.name }}</v-card-text>
+                  <v-card-text>{{ userInfo.uName }}</v-card-text>
                 </v-col>
                 <v-col>
                   <v-card-title>나이</v-card-title>
@@ -84,7 +84,9 @@
                 </div>
                 <v-divider></v-divider>
                 <v-col>
-                  <v-card-text>{{ userInfo.proficiency }}</v-card-text>
+                  <v-card-text v-if="userInfo.proficiency == 1">초급자</v-card-text>
+                  <v-card-text v-else-if="userInfo.proficiency == 2">중급자</v-card-text>
+                  <v-card-text v-else-if="userInfo.proficiency == 3">고급자</v-card-text>
                 </v-col>
               </div>
             </v-card>
@@ -168,6 +170,8 @@ import { userInfo } from '@/userInfo.js';
 user;
 export default {
   created() {
+    console.log('here is created');
+    //아직 user, userInfo없음
     fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
       method: 'GET',
       headers: {
@@ -176,13 +180,16 @@ export default {
     })
       .then(res => res.json())
       .then(res => {
-        user.userInfo = res.userInfo;
+        userInfo = res.userInfo;
+        user.userInfo = userInfo;
+        console.log(userInfo);
       })
       .catch(err => {
         console.error('error');
       });
   },
   mounted() {
+    console.log('here is mounted');
     this.userInfo = user.userInfo;
     // this.getUserInfo();
     console.log(user.uID);
@@ -220,9 +227,7 @@ export default {
     },
     saveUserInfo() {
       //db에 저장
-      this.user = this.userInfo;
-      console.log(this.user);
-      userInfo.proficiency = this.userInfo.proficiency;
+
       const req = {
         uID: user.uID,
         uName: this.userInfo.name,
@@ -234,7 +239,7 @@ export default {
         bench: parseInt(this.userInfo.bench),
         dead: parseInt(this.userInfo.dead),
         weak: this.userInfo.weak,
-        proficiency: proficiency,
+        proficiency: this.userInfo.proficiency,
       };
       fetch('http://115.85.183.157:3000/register/userInfo', {
         method: 'POST',
@@ -270,13 +275,7 @@ export default {
           this.userInfo.bench = res.bench;
           this.userInfo.dead = res.dead;
           this.userInfo.weak = res.weak;
-          if (res.proficiency === 1) {
-            this.userInfo.proficiency = '초급자';
-          } else if (res.proficiency === 2) {
-            this.userInfo.proficiency = '중급자';
-          } else {
-            this.userInfo.proficiency = '고급자';
-          }
+          this.userInfo.proficiency = res.proficiency;
         })
         .catch(err => {
           console.error('error');
