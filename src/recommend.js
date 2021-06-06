@@ -123,7 +123,6 @@ function nextMainTarget() {
         back: 0,
     };
 
-<<<<<<< HEAD
   freq = getMainTarget(reversedHistory);
   count = freq.chest + freq.leg + freq.back;
   //가슴->등->하체 순서
@@ -210,61 +209,6 @@ function nextMainTarget() {
           if (lastTarget === '하체') {
             nextMain = '가슴';
           } else nextMain = '하체';
-=======
-    freq = getMainTarget(reversedHistory);
-    //가슴->등->하체 순서
-    //가장 많이한 것 제외
-    //case 1: 최근 일주일 내에 운동을 하지 않았을 때
-    if (count === 0) {
-        //가슴 등 하체
-        if (
-            userInfo.weak === '가슴' ||
-            userInfo.weak === '등' ||
-            userInfo.weak === '하체'
-        ) {
-            nextMain = userInfo.weak;
-        } else {
-            nextMain = '가슴';
-        }
-    }
-    //case 2: 최근 일주일 내에 운동을 했을 때
-    else {
-        //최근 운동이 있을 때
-        //case 1: 빈도가 같을 때 -> case 1-1: 전날 했던 것 제외하고 다음 것 or 약점 부위
-        //case 2: 빈도가 다를 때 -> 최하 빈도 부위
-        if (freq.back === freq.chest && freq.back == freq.chest) {
-            //빈도가 모두 같을 때
-            if (lastTarget === userInfo.weak) {
-                if (lastTarget === '가슴' && userInfo.weak === '가슴') {
-                    if (userInfo.sex === '여자') {
-                        if ((freq.back - freq.chest > 2) | (freq.leg - freq.chest > 2)) {
-                            nextMain = '가슴';
-                        } else {
-                            if (freq.back < freq.chest && freq.leg < freq.chest) {
-                                if (freq.back < freq.leg) {
-                                    nextMain = '등';
-                                } else {
-                                    nextMain = '하체';
-                                }
-                            }
-                        }
-                    } else {
-                        //남자
-                        nextMain = '등';
-                    }
-                } else {
-                    nextMain = '가슴';
-                }
-            } else {
-                if (lastTarget === '등') {
-                    nextMain = '하체';
-                } else if (lastTarget === '하체') {
-                    nextMain = '가슴';
-                } else {
-                    nextMain = '등';
-                }
-            }
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
         } else {
             //최하 빈도 부위
             //최하 빈도 부위가 lastTarget면 그 다음 종목
@@ -306,7 +250,6 @@ function nextMainTarget() {
 }
 
 function getShoulderWeight() {
-<<<<<<< HEAD
   let weight = 0;
   switch (userInfo.sex) {
     case '남자':
@@ -415,117 +358,6 @@ function getArmWeight() {
       break;
   }
   return weight;
-=======
-    let weight = 0;
-    switch (userInfo.sex) {
-        case "남자":
-            //남자 기준
-            switch (userInfo.proficiency) {
-                case 1:
-                    if (userInfo.weight < 52) {
-                        weight = 20;
-                    } else if (userInfo.weight < 60) {
-                        weight = 25;
-                    } else if (userInfo.weight < 90) {
-                        weight = 30;
-                    } else {
-                        weight = 35;
-                    }
-                    break;
-                case 2:
-                    if (userInfo.weight < 52) {
-                        weight = 20;
-                    } else if (userInfo.weight < 60) {
-                        weight = 30;
-                    } else if (userInfo.weight < 90) {
-                        weight = 35;
-                    } else {
-                        weight = 40;
-                    }
-                    break;
-                case 3:
-                    if (userInfo.weight < 60) {
-                        weight = 40;
-                    } else if (userInfo.weight < 90) {
-                        weight = 50;
-                    } else {
-                        weight = 55;
-                    }
-                    break;
-            }
-            break;
-        case "여자":
-            // 여자 기준
-            switch (userInfo.proficiency) {
-                case 1:
-                    if (userInfo.weight < 52) {
-                        weight = 20;
-                    } else if (userInfo.weight < 60) {
-                        weight = 25;
-                    } else {
-                        weight = 30;
-                    }
-                    break;
-                case 2:
-                    if (userInfo.weight < 44) {
-                        weight = 20;
-                    } else if (userInfo.weight < 52) {
-                        weight = 25;
-                    } else if (userInfo.weight < 60) {
-                        weight = 30;
-                    } else {
-                        weight = 35;
-                    }
-                    break;
-                case 3:
-                    if (userInfo.weight < 52) {
-                        weight = 35;
-                    } else if (userInfo.weight < 60) {
-                        weight = 40;
-                    } else {
-                        weight = 45;
-                    }
-                    break;
-            }
-            break;
-    }
-
-    return weight;
-}
-
-function getArmWeight() {
-    let weight = 0;
-    switch (userInfo.sex) {
-        case "남자":
-            //남자 기준
-            switch (userInfo.proficiency) {
-                case 1:
-                    weight = 8;
-                    break;
-                case 2:
-                    weight = 12;
-                    break;
-                case 3:
-                    weight = 16;
-                    break;
-            }
-            break;
-        case "여자":
-            // 여자 기준
-            switch (userInfo.proficiency) {
-                case 1:
-                    weight = 5;
-                case 2:
-                    weight = 8;
-                    break;
-                case 3:
-                    weight = 10;
-                    break;
-            }
-            break;
-    }
-    return weight;
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
 }
 
 function getSets(nextTarget, targetIdx) {
@@ -697,7 +529,6 @@ function getSets(nextTarget, targetIdx) {
         weight = parseInt(weight)
         sets.push({ reps, weight });
     }
-<<<<<<< HEAD
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
 
@@ -706,10 +537,6 @@ function getSets(nextTarget, targetIdx) {
   }
   console.log('here is end of getSets - sets');
   return sets;
-=======
-    console.log('here is end of getSets - sets');
-    return sets;
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
 }
 
 /*function getWorkout(target, difficulty, proficiency) {
@@ -725,7 +552,6 @@ function getSets(nextTarget, targetIdx) {
 }*/
 
 function makeList() {
-<<<<<<< HEAD
   let maxNum;
   let nextMain = nextMainTarget();
   let list = [
@@ -766,52 +592,8 @@ function makeList() {
   for (i = 0; i < wlist.length; i++) {
     if (wlist[i].difficulty <= maxNum) {
       idxlist.push(i);
-=======
-    let maxNum;
-    let nextMain = nextMainTarget();
-    let list = [
-        // { 
-        //   target:null,
-        //   kinds:null,
-        //   sets:[
-        //     {weight:null, reps:null}
-        //   ]
-        // }
-    ];
-    let wlist = [];
-    let idxlist = [];
-    let nextidx = [];
-    var i;
-    let sets;
-    let target;
-    let kinds;
-    let kIdx;
-
-    //logic
-    maxNum = userInfo.proficiency + 2;
-
-    switch (nextMain) {
-        case '하체':
-            wlist = workouts[0].list;
-            kIdx = 0;
-            break;
-        case '가슴':
-            wlist = workouts[1].list;
-            kIdx = 1;
-            break;
-        case '등':
-            wlist = workouts[2].list;
-            kIdx = 2;
-            break;
-    }
-    for (i = 0; i < wlist.length; i++) {
-        if (wlist[i].difficulty <= maxNum) {
-            idxlist.push(i);
-        }
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
     }
 
-<<<<<<< HEAD
   let idx = Math.floor(Math.random() * idxlist.length);
   for (i = 0; i < 4; i++) {
     // do{
@@ -825,28 +607,12 @@ function makeList() {
         target = nextMain;
         kinds = workouts[kIdx].list[idx].name;
         list.push({ target: target, kinds: kinds, sets: sets });
-=======
-    let idx = Math.floor(Math.random() * idxlist.length);
-    for (i = 0; i < 4; i++) {
-        // do{
-        //
-        //     if(idxlist.includes(idx))
-        // }while(1)
-        while (1) {
-            if (!nextidx.includes(idx)) {
-                nextidx.push(idx);
-                sets = getSets(nextMain, idx);
-                target = nextMain;
-                kinds = workouts[kIdx].list[idx].name
-                list.push({ target, kinds, sets });
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
 
                 break;
             }
             idx = Math.floor(Math.random() * wlist.length);
         }
     }
-<<<<<<< HEAD
   }
   console.log('here');
   console.log(userInfo);
@@ -864,22 +630,6 @@ function makeList() {
   kinds = workouts[4].list[idx].name;
   list.push({ target: target, kinds: kinds, sets: sets });
   return list;
-=======
-    nextMain = '어깨';
-    idx = Math.floor(Math.random() * workouts[3].list.length);
-    sets = getSets(nextMain, idx);
-    target = nextMain;
-    kinds = workouts[3].list[idx].name
-    list.push({ target, kinds, sets });
-
-    nextMain = '팔';
-    idx = Math.floor(Math.random() * workouts[4].list.length);
-    sets = getSets(nextMain, idx);
-    target = nextMain;
-    kinds = workouts[4].list[idx].name
-    list.push({ target, kinds, sets });
-    return list;
->>>>>>> 770564baf6eba42e4098dc92b2030ad67d1496f9
 }
 export function recommend(workoutHistory) {
     history = workoutHistory;
