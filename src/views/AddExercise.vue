@@ -329,7 +329,7 @@ export default {
     eventBus.$on('selectDate', today => {
       this.date = today;
 
-      fetch(`http://115.85.183.157:3000/exercises/${this.date}`, {
+      fetch(`http://115.85.183.157:3000/exercises/${user.uID}/${this.date}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -518,10 +518,11 @@ export default {
     },
     saveExercise() {
       const req = {
+        uID: user.uID,
         dates: this.date,
         exercises: this.exercises,
       };
-      fetch('http://115.85.183.157:3000/exercises', {
+      fetch('http://115.85.183.157:3000/exercises/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -654,7 +655,7 @@ export default {
 
       eventBus.$emit('updatedDate', this.date);
 
-      fetch(`http://115.85.183.157:3000/exercises/${this.date}`, {
+      fetch(`http://115.85.183.157:3000/exercises/${user.uID}/${this.date}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

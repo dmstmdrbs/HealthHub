@@ -1,8 +1,8 @@
 import { userInfo } from '@/userInfo.js';
 
 export let user = {
-  uID: 123,
-  id: '',
+  uID: null,
+  id: null,
   userInfo: userInfo,
 };
 export function saveUser() {

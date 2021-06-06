@@ -139,9 +139,9 @@
                             <v-text-field v-model="userInfo.dead" label="데드리프트"></v-text-field>
                             <h2>숙련도</h2>
                             <v-radio-group mandatory v-model="userInfo.proficiency">
-                              <v-radio label="초급자" value="초급자"></v-radio>
-                              <v-radio label="중급자" value="중급자"></v-radio>
-                              <v-radio label="고급자" value="고급자"></v-radio>
+                              <v-radio label="초급자" value="1"></v-radio>
+                              <v-radio label="중급자" value="2"></v-radio>
+                              <v-radio label="고급자" value="3"></v-radio>
                             </v-radio-group>
                           </v-col>
                         </v-row>
@@ -163,16 +163,36 @@ import Header from '@/components/Header';
 import NaviBar from '@/components/NaviBar.vue';
 import Dialog from '@/components/Dialog.vue';
 import axios from 'axios';
-// import {user} from '@/main.js'
 import { user } from '@/user.js';
+import { userInfo } from '@/userInfo.js';
 user;
 export default {
+  created() {
+    fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        user.userInfo = res.userInfo;
+      })
+      .catch(err => {
+        console.error('error');
+      });
+  },
   mounted() {
     this.userInfo = user.userInfo;
     // this.getUserInfo();
     console.log(user.uID);
     console.log(user.userInfo);
   },
+  // watch:{
+  //   userInfo(){function(){
+
+  //   }}
+  // }
   components: {
     Header,
     NaviBar,
@@ -202,15 +222,9 @@ export default {
       //db에 저장
       this.user = this.userInfo;
       console.log(this.user);
-      var proficiency = 0;
-      if (this.userInfo.proficiency === '초급자') {
-        proficiency = 1;
-      } else if (this.userInfo.proficiency === '중급자') {
-        proficiency = 2;
-      } else {
-        proficiency = 3;
-      }
+      userInfo.proficiency = this.userInfo.proficiency;
       const req = {
+        uID: user.uID,
         uName: this.userInfo.name,
         age: parseInt(this.userInfo.age),
         sex: this.userInfo.sex,
@@ -222,8 +236,8 @@ export default {
         weak: this.userInfo.weak,
         proficiency: proficiency,
       };
-      fetch('http://115.85.183.157:3000/userInfo', {
-        method: 'PUT',
+      fetch('http://115.85.183.157:3000/register/userInfo', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -233,14 +247,11 @@ export default {
         .then(res => {
           if (res.success) {
             alert('성공');
-          } else {
-            alert(res.msg);
           }
         })
         .catch(err => {
-          console.error('error');
+          console.error('정보 저장 중 에러 발생');
         });
-
       this.hideSetDialog();
     },
     getUserInfo() {

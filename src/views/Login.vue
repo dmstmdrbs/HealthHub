@@ -30,6 +30,7 @@
 
 <script>
 import { user } from '@/user.js';
+import { userInfo } from '@/userInfo.js';
 import VueRouter from '@/router/index.js';
 export default {
   name: 'Login',
@@ -76,19 +77,38 @@ export default {
                 'Content-Type': 'application/json',
               },
             })
-              .then(res2 => res2.json())
-              .then(res2 => {
-                user.uID = res2.uID;
+              .then(res => res.json())
+              .then(res => {
+                // console.log(`uID : ${res.uID}`);
+                user.uID = res.uID;
+                console.log(user.uID);
+                localStorage.setItem('uID', user.uID);
+                fetch(`http://115.85.183.157:3000/userInfo/getUserInfo/${user.uID}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                  .then(res => res.json())
+                  .then(res => {
+                    user.userInfo = res;
+                    VueRouter.push({ name: 'home' });
+                  })
+                  .catch(err => {
+                    console.error('로그인 중 에러 발생');
+                  });
+              })
+              .catch(err => {
+                alert('로그인 중 uID 불러오기 실패 ');
               });
 
-            VueRouter.push({ path: '/home' });
+            // localStorage.setItem('userInfo', user.userInfo);
           } else {
-            alert(res.msg);
             console.log(res.msg);
           }
         })
         .catch(err => {
-          console.error('로그인 중 에러 발생');
+          alert('로그인 중 에러 발생');
         });
     },
   },
