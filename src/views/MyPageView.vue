@@ -239,7 +239,7 @@ export default {
         bench: parseInt(this.userInfo.bench),
         dead: parseInt(this.userInfo.dead),
         weak: this.userInfo.weak,
-        proficiency: this.userInfo.proficiency,
+        proficiency: parseInt(this.userInfo.proficiency),
       };
       fetch('http://115.85.183.157:3000/register/userInfo', {
         method: 'POST',
@@ -275,7 +275,7 @@ export default {
           this.userInfo.bench = res.bench;
           this.userInfo.dead = res.dead;
           this.userInfo.weak = res.weak;
-          this.userInfo.proficiency = res.proficiency;
+          this.userInfo.proficiency = parseInt(res.proficiency);
         })
         .catch(err => {
           console.error('error');
