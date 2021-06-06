@@ -1,7 +1,9 @@
 import { user } from '@/user.js';
+import { workoutHistory } from '@/views/Home';
+
 export let recommendedList = [];
 let userInfo = user.userInfo;
-export let workoutHistory = [{}];
+export let workoutHistory = workoutHistory;
 let workouts = [
   {
     target: '하체',
@@ -83,6 +85,27 @@ let workouts = [
   },
 ];
 
+function getMainTarget(workoutList) {
+  targetList = {
+    chest: 0,
+    back: 0,
+    leg: 0,
+  };
+  for (var i = 0; i < workoutList.length; i++) {
+    let exerciseList = workoutList[i].exercises;
+    for (var j = 0; j < exerciseList.length; j++) {
+      let exercise = exerciseList[j];
+      if (exercise.target === '가슴') {
+        targetList.chest++;
+      } else if (exercise.target === '등') {
+        targetList.back++;
+      } else {
+        targetList.leg++;
+      }
+    }
+  }
+  return targetList;
+}
 function nextMainTarget() {
   let nextMain = '등';
 
@@ -106,7 +129,6 @@ function nextMainTarget() {
   let lastweek = lastWeek();
 
   const reversedHistory = workoutHistory.reverse();
-  let idx = 0;
   let count = 0;
   let lastTarget = '';
   let freq = {
@@ -114,25 +136,26 @@ function nextMainTarget() {
     leg: 0,
     back: 0,
   };
-  reversedHistory.forEach(history => {
-    if (idx > 7 && count === 0) {
-      return false;
-    }
-    if (history.date < today && history.date > lastweek) {
-      count++;
-      if (count === 1) {
-        lastTarget = history.mainTarget;
-      }
-      if (history.mainTarget === '가슴') {
-        freq.chest++;
-      } else if (history.mainTarget === '등') {
-        freq.back++;
-      } else if (history.mainTarget === '하체') {
-        freq.leg++;
-      }
-    }
-    idx++;
-  });
+  // reversedHistory.forEach(history => {
+  //   if (idx > 7 && count === 0) {
+  //     return false;
+  //   }
+  //   if (history.date < today && history.date > lastweek) {
+  //     count++;
+  //     if (count === 1) {
+  //       lastTarget = history.mainTarget;
+  //     }
+  //     if (history.mainTarget === '가슴') {
+  //       freq.chest++;
+  //     } else if (history.mainTarget === '등') {
+  //       freq.back++;
+  //     } else if (history.mainTarget === '하체') {
+  //       freq.leg++;
+  //     }
+  //   }
+  //   idx++;
+  // });
+  freq = getMainTarget(reversedHistory);
   //가슴->등->하체 순서
   //가장 많이한 것 제외
   //case 1: 최근 일주일 내에 운동을 하지 않았을 때

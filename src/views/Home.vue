@@ -16,6 +16,8 @@ import AddExercise from './AddExercise.vue';
 import Calendar from '@/components/Calendar';
 import NaviBar from '@/components/NaviBar.vue';
 import { user } from '@/user.js';
+
+export let workoutHistory = [];
 export default {
   created() {
     console.log(user.id);
@@ -30,9 +32,7 @@ export default {
     NaviBar,
   },
   data() {
-    return {
-      workoutHistory: [],
-    };
+    return {};
   },
   methods: {
     getHistory() {
