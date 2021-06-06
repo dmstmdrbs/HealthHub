@@ -19,16 +19,3 @@ new Vue({
   vuetify,
   render: h => h(App),
 }).$mount('#app');
-
-export let user = {
-  name: '은승균',
-  age: '24',
-  sex: '남자',
-  height: '',
-  weight: '',
-  sqrt: '',
-  bench: '',
-  dead: '',
-  weak: '',
-  proficiency: '중급자',
-};

@@ -6,11 +6,15 @@
           <v-card class="mx-auto scroll" width="100%" height="600px">
             <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
             <v-spacer></v-spacer>
+
             <v-card-actions>
               <v-btn icon @click="show = !show">
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
               </v-btn>
+              <v-divider vertical></v-divider>
               <v-btn text @click="show = !show">전체 세트 보기</v-btn>
+              <v-divider vertical></v-divider>
+              <v-btn text @click="getRecommend">추천 목록 생성</v-btn>
             </v-card-actions>
             <template>
               <v-divider></v-divider>
@@ -291,7 +295,6 @@ import Dialog from '@/components/Dialog.vue';
 import { eventBus } from '@/main';
 import { user } from '@/user.js';
 import { recommendedList, recommend } from '@/recommend.js';
-export let History = [];
 
 function detailedSets(reps, weight, checked) {
   this.reps = reps;
@@ -329,7 +332,7 @@ export default {
       });
 
     this.getHistory();
-    History = this.workoutHistory;
+
     eventBus.$on('selectDate', today => {
       this.date = today;
 
@@ -375,13 +378,8 @@ export default {
   },
   mounted() {
     this.todayExercise();
-    this.recommended = recommend();
   },
-  watch: {
-    recommended: function(newVal) {
-      this.recommended = newVal;
-    },
-  },
+  watch: {},
   data() {
     return {
       RPE: {
@@ -410,7 +408,7 @@ export default {
       exercises: [],
       userProficiency: '초급자',
       userWeakness: '등',
-      recommended: recommendedList,
+      recommended: [],
       workoutHistory: [],
       workoutList: [],
       customs: [
@@ -501,6 +499,10 @@ export default {
     };
   },
   methods: {
+    getRecommend() {
+      console.log(this.workoutHistory);
+      this.recommended = recommend(this.workoutHistory);
+    },
     getHistory() {
       console.log('getHistory() start');
       function getFormatDate(date) {
@@ -541,7 +543,7 @@ export default {
             var prev = '';
             var kindIdx = -1;
             for (var i = 0; i < res.length; i++) {
-              console.log(prev !== res[i].kinds);
+              // console.log(prev !== res[i].kinds);
               if (prev !== res[i].kinds) {
                 prev = res[i].kinds;
                 kindIdx += 1;
@@ -553,8 +555,9 @@ export default {
                 checked: res[i].checked,
               });
             }
-
-            this.workoutHistory.push(exercises);
+            if (exercises.length !== 0) {
+              this.workoutHistory.push({ exercises: exercises });
+            }
           })
           .catch(err => {
             console.error('error');
@@ -736,7 +739,7 @@ export default {
           var prev = '';
           var kindIdx = -1;
           for (var i = 0; i < res.length; i++) {
-            console.log(prev !== res[i].kinds);
+            // console.log(prev !== res[i].kinds);
             if (prev !== res[i].kinds) {
               prev = res[i].kinds;
               kindIdx += 1;

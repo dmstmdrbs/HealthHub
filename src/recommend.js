@@ -1,9 +1,8 @@
 import { user } from '@/user.js';
-import { History } from '@/views/AddExercise';
 
 export let recommendedList = [];
 let userInfo = user.userInfo;
-export let history = History;
+let history = [];
 let workouts = [
   {
     target: '하체',
@@ -86,13 +85,17 @@ let workouts = [
 ];
 
 function getMainTarget(workoutList) {
-  targetList = {
+  console.log(`here is getMainTarget`);
+  let length = workoutList.length;
+  let targetList = {
     chest: 0,
     back: 0,
     leg: 0,
   };
-  for (var i = 0; i < workoutList.length; i++) {
+
+  for (var i = 0; i < length; i++) {
     let exerciseList = workoutList[i].exercises;
+    console.log(exerciseList);
     for (var j = 0; j < exerciseList.length; j++) {
       let exercise = exerciseList[j];
       if (exercise.target === '가슴') {
@@ -104,31 +107,14 @@ function getMainTarget(workoutList) {
       }
     }
   }
+  console.log(`here is end of getMainTarget`);
   return targetList;
 }
 function nextMainTarget() {
-  let nextMain = '등';
-
-  function getFormatDate() {
-    var date = new Date();
-    var year = date.getFullYear();
-    var month = 1 + date.getMonth();
-    month = month >= 10 ? month : '0' + month;
-    var day = date.getDate();
-    day = day >= 10 ? day : '0' + day;
-    return year + '-' + month + '-' + day;
-  }
-
-  function lastWeek() {
-    var date = new Date();
-    date.setDate(date.getDate() - 7);
-    return date;
-  }
-  //최근 일주일 내에 운동을 했는지 체크
-  let today = getFormatDate();
-  let lastweek = lastWeek();
-
+  let nextMain = '';
+  console.log(`here is nextMainTarget()`);
   const reversedHistory = history.reverse();
+  console.log(reversedHistory);
   let count = 0;
   let lastTarget = '';
   let freq = {
@@ -136,25 +122,7 @@ function nextMainTarget() {
     leg: 0,
     back: 0,
   };
-  // reversedHistory.forEach(history => {
-  //   if (idx > 7 && count === 0) {
-  //     return false;
-  //   }
-  //   if (history.date < today && history.date > lastweek) {
-  //     count++;
-  //     if (count === 1) {
-  //       lastTarget = history.mainTarget;
-  //     }
-  //     if (history.mainTarget === '가슴') {
-  //       freq.chest++;
-  //     } else if (history.mainTarget === '등') {
-  //       freq.back++;
-  //     } else if (history.mainTarget === '하체') {
-  //       freq.leg++;
-  //     }
-  //   }
-  //   idx++;
-  // });
+
   freq = getMainTarget(reversedHistory);
   //가슴->등->하체 순서
   //가장 많이한 것 제외
@@ -244,7 +212,7 @@ function nextMainTarget() {
       }
     }
   }
-
+  console.log('here is end of nextMainTarget');
   return nextMain;
 }
 function getShoulderWeight() {
@@ -359,6 +327,8 @@ function getArmWeight() {
   return weight;
 }
 function getSets(nextTarget, targetIdx) {
+  console.log('here is getSets');
+  console.log(user.userInfo);
   let sets = [];
   const max_set = 5;
   let weight = 0;
@@ -368,8 +338,7 @@ function getSets(nextTarget, targetIdx) {
   for (var i = 0; i < max_set; i++) {
     switch (nextTarget) {
       case '하체':
-        console.log('하체');
-        oneRM = userInfo.oneRM.squat;
+        oneRM = userInfo.squat;
 
         switch (targetIdx) {
           case 0:
@@ -402,8 +371,8 @@ function getSets(nextTarget, targetIdx) {
         }
         break;
       case '가슴':
-        console.log('가슴');
-        oneRM = userInfo.oneRM[1];
+        oneRM = userInfo.bench;
+
         switch (targetIdx) {
           case 0:
             weight = oneRM;
@@ -437,8 +406,7 @@ function getSets(nextTarget, targetIdx) {
         }
         break;
       case '등':
-        console.log('등');
-        oneRM = userInfo.oneRM[2];
+        oneRM = userInfo.dead;
         switch (targetIdx) {
           case 0:
           case 6:
@@ -468,7 +436,6 @@ function getSets(nextTarget, targetIdx) {
         switch (targetIdx) {
           case 0:
             // 바벨
-            console.log(11111111);
             if (i < 2) weight = weight * (0.7 + 0.1 * i);
             else if (i < 4) weight = weight * 0.8;
             else weight = weight * 0.7;
@@ -479,12 +446,9 @@ function getSets(nextTarget, targetIdx) {
           case 3:
           case 7:
             // 덤벨
-            console.log(weight);
             if (i < 2) weight = weight * (0.5 + 0.2 * i);
             else if (i < 4) weight = weight * 0.8;
             else weight = weight * 0.7;
-
-            console.log(weight);
             break;
           case 4:
           case 5:
@@ -492,7 +456,6 @@ function getSets(nextTarget, targetIdx) {
           case 8:
           case 9:
             // 머신
-            console.log(333333);
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
@@ -529,6 +492,7 @@ function getSets(nextTarget, targetIdx) {
     if (i == 4) reps = 7;
     sets.push({ reps, weight });
   }
+  console.log('here is end of getSets - sets');
   return sets;
 }
 
@@ -579,6 +543,7 @@ function makeList() {
       if (!nextidx.includes(idx)) {
         nextidx.push(idx);
         list.push(getSets(nextMain, idx));
+
         break;
       }
       idx = Math.floor(Math.random() * wlist.length);
@@ -592,8 +557,11 @@ function makeList() {
   list.push(getSets(nextMain, idx));
   return list;
 }
-export function recommend() {
+export function recommend(workoutHistory) {
+  history = workoutHistory;
+  console.log('here is recommend.js');
+  console.log(history);
   recommendedList = makeList();
-  console.log(recommendedList);
+
   return recommendedList;
 }
