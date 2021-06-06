@@ -306,6 +306,32 @@ function WorkoutDetail(target, workout, sets) {
 export default {
   name: 'AddExercise',
   created() {
+    console.log(user.uID);
+    fetch(`http://115.85.183.157:3000/register/userInfo/getUID/${user.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        user.user.uID = res.uID;
+      });
+
+    fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        user.userInfo = res.userInfo;
+      })
+      .catch(err => {
+        console.error('error');
+      });
+
     eventBus.$on('selectDate', today => {
       this.date = today;
 

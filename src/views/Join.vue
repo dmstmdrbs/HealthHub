@@ -14,7 +14,6 @@
             :counter="5"
             label="Name"
             required
-            @input="searchChangeFunc($event)"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -31,6 +30,7 @@
             label="ID"
             :counter="20"
             required
+            @input="searchChangeFunc($event)"
           ></v-text-field>
         </v-col>
         <v-col>

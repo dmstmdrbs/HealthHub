@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       input: {
-        uid: '',
+        id: '',
         password: '',
       },
     };
@@ -55,7 +55,7 @@ export default {
     onSubmit() {
       //id:test  pw:1234
       const req = {
-        id: this.input.uid,
+        id: this.input.id,
         psword: this.input.password,
       };
 
@@ -69,7 +69,8 @@ export default {
         .then(res => res.json())
         .then(res => {
           if (res.success) {
-            user.uid = VueRouter.push({ path: '/home' });
+            user.id = this.input.id;
+            VueRouter.push({ path: '/home' });
           } else {
             alert(res.msg);
             console.log(res.msg);
