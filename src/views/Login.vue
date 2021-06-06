@@ -95,16 +95,16 @@ export default {
                     VueRouter.push({ name: 'home' });
                   })
                   .catch(err => {
-                    console.error('로그인 중 에러 발생');
+                    alert('로그인 중 에러 발생');
                   });
               })
               .catch(err => {
-                alert('로그인 중 uID 불러오기 실패 ');
+                alert('로그인 실패 ');
               });
 
             // localStorage.setItem('userInfo', user.userInfo);
           } else {
-            console.log(res.msg);
+            alert(res.msg);
           }
         })
         .catch(err => {
