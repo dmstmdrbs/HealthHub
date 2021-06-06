@@ -112,7 +112,56 @@ function getMainTarget(workoutList) {
   console.log(`here is end of getMainTarget`);
   return targetList;
 }
+function getLastTarget(workoutList) {
+  console.log(`here is getLastTarget`);
+  let length = workoutList.length;
+  let targetList = {
+    chest: 0,
+    back: 0,
+    leg: 0,
+  };
+  let lastTarget = '';
+  if (length == 0) {
+    return '가슴';
+  }
+  for (var i = 0; i < length; i++) {
+    let exerciseList = workoutList[i].exercises;
+    console.log(exerciseList);
+    for (var j = 0; j < exerciseList.length; j++) {
+      let exercise = exerciseList[j];
+      if (exercise.target === '가슴') {
+        targetList.chest++;
+      } else if (exercise.target === '등') {
+        targetList.back++;
+      } else {
+        targetList.leg++;
+      }
+      if (j == 0) {
+        if (targetList.chest > targetList.back && targetList.leg > targetList.back) {
+          if (targetList.chest > targetList.leg) {
+            lastTarget = '가슴';
+          } else {
+            lastTarget = '하체';
+          }
+        } else if (targetList.chest > targetList.leg && targetList.back > targetList.leg) {
+          if (targetList.chest > targetList.back) {
+            lastTarget = '가슴';
+          } else {
+            lastTarget = '등';
+          }
+        } else if (targetList.back > targetList.chest && targetList.leg > targetList.chest) {
+          if (targetList.leg > targetList.back) {
+            lastTarget = '하체';
+          } else {
+            lastTarget = '등';
+          }
+        }
+      }
+    }
+  }
 
+  return lastTarget;
+}
 function nextMainTarget() {
   let nextMain = '';
   console.log(`here is nextMainTarget()`);
@@ -127,7 +176,8 @@ function nextMainTarget() {
   };
 
   freq = getMainTarget(reversedHistory);
-  count = freq.chest + freq.leg + freq.back;
+  lastTarget = getLastTarget(history);
+  count = history.length;
   //가슴->등->하체 순서
   //가장 많이한 것 제외
   //case 1: 최근 일주일 내에 운동을 하지 않았을 때
@@ -146,43 +196,13 @@ function nextMainTarget() {
     //case 2: 빈도가 다를 때 -> 최하 빈도 부위
     if (freq.back === freq.chest && freq.back == freq.chest) {
       //빈도가 모두 같을 때
-      if (lastTarget === userInfo.weak) {
-        if (lastTarget === '가슴') {
-          if (userInfo.sex === '여자') {
-            if (userInfo.weak === '가슴') {
-              nextMain = '등';
-            } else {
-              nextMain = '하체';
-            }
-          } else {
-            //남자
-            nextMain = '등';
-          }
-        } else if (lastTarget === '등') {
-          if (userInfo.sex == '여자') {
-            if (userInfo.weak === '가슴') {
-              nextMain = '가슴';
-            } else {
-              nextMain = '하체';
-            }
-          } else {
-            nextMain = '하체';
-          }
-        } else {
-          if (userInfo.weak === '등') {
-            nextMain = '등';
-          } else {
-            nextMain = '가슴';
-          }
-        }
+
+      if (lastTarget === '등') {
+        nextMain = '하체';
+      } else if (lastTarget === '하체') {
+        nextMain = '가슴';
       } else {
-        if (lastTarget === '등') {
-          nextMain = '하체';
-        } else if (lastTarget === '하체') {
-          nextMain = '가슴';
-        } else {
-          nextMain = '등';
-        }
+        nextMain = '등';
       }
     } else {
       //최하 빈도 부위
