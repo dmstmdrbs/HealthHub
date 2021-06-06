@@ -290,7 +290,8 @@ import NaviBar from '@/components/NaviBar.vue';
 import Dialog from '@/components/Dialog.vue';
 import { eventBus } from '@/main';
 import { user } from '@/user.js';
-import { recommendedList } from '@/recommend.js';
+import { recommendedList, recommend } from '@/recommend.js';
+export let History = [];
 
 function detailedSets(reps, weight, checked) {
   this.reps = reps;
@@ -305,6 +306,7 @@ function WorkoutDetail(target, workout, sets) {
     this.sets.push(set);
   };
 }
+
 export default {
   name: 'AddExercise',
   created() {
@@ -326,6 +328,8 @@ export default {
         console.error('error');
       });
 
+    this.getHistory();
+    History = this.workoutHistory;
     eventBus.$on('selectDate', today => {
       this.date = today;
 
@@ -337,12 +341,12 @@ export default {
       })
         .then(res => res.json())
         .then(res => {
-          console.log(res);
+          // console.log(res);
           var exercises = [];
           var prev = '';
           var kindIdx = -1;
           for (var i = 0; i < res.length; i++) {
-            console.log(prev !== res[i].kinds);
+            // console.log(prev !== res[i].kinds);
             if (prev !== res[i].kinds) {
               prev = res[i].kinds;
               kindIdx += 1;
@@ -355,7 +359,7 @@ export default {
             });
           }
 
-          console.log(exercises);
+          // console.log(exercises);
           this.exercises = exercises;
         })
         .catch(err => {
@@ -371,6 +375,7 @@ export default {
   },
   mounted() {
     this.todayExercise();
+    this.recommended = recommend();
   },
   watch: {
     recommended: function(newVal) {
@@ -406,6 +411,7 @@ export default {
       userProficiency: '초급자',
       userWeakness: '등',
       recommended: recommendedList,
+      workoutHistory: [],
       workoutList: [],
       customs: [
         {
@@ -495,6 +501,68 @@ export default {
     };
   },
   methods: {
+    getHistory() {
+      console.log('getHistory() start');
+      function getFormatDate(date) {
+        // var date = new Date();
+        var year = date.getFullYear();
+        var month = 1 + date.getMonth();
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        return year + '-' + month + '-' + day;
+      }
+      function getYesterDay(i) {
+        var date = new Date();
+        date.setDate(date.getDate() - i);
+        return date;
+      }
+      // var today = new Date();
+      let dateForHistory = [];
+      for (var i = 0; i < 7; i++) {
+        dateForHistory.push(getYesterDay(i));
+      }
+      dateForHistory.forEach(function(date, idx, arr) {
+        arr[idx] = getFormatDate(date);
+      });
+
+      for (var i = 0; i < dateForHistory.length; i++) {
+        console.log(dateForHistory[i]);
+        fetch(`http://115.85.183.157:3000/exercises/${user.uID}/${dateForHistory[i]}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(res => res.json())
+          .then(res => {
+            // console.log(res);
+            var exercises = [];
+            var prev = '';
+            var kindIdx = -1;
+            for (var i = 0; i < res.length; i++) {
+              console.log(prev !== res[i].kinds);
+              if (prev !== res[i].kinds) {
+                prev = res[i].kinds;
+                kindIdx += 1;
+                exercises.push({ target: res[i].target, kinds: res[i].kinds, sets: [] });
+              }
+              exercises[kindIdx].sets.push({
+                reps: parseInt(res[i].reps),
+                weight: res[i].weight,
+                checked: res[i].checked,
+              });
+            }
+
+            this.workoutHistory.push(exercises);
+          })
+          .catch(err => {
+            console.error('error');
+          });
+      }
+      console.log(this.workoutHistory);
+      console.log('getHistory() end');
+    },
     refreshAll() {
       // 새로고침
       this.$router.go();
@@ -563,7 +631,7 @@ export default {
       } else {
         this.exercises[exIdx].sets[setIdx].checked = false;
       }
-      console.log(this.exercises[exIdx].sets[setIdx].checked);
+      // console.log(this.exercises[exIdx].sets[setIdx].checked);
     },
     addSet() {
       console.log(this.exercises);
@@ -600,7 +668,7 @@ export default {
           sets: [],
         });
       }
-      console.log(this.workoutList[0]);
+      // console.log(this.workoutList[0]);
       this.selected = [];
       this.hideExDialog();
     },
@@ -625,7 +693,7 @@ export default {
       if ((this.reps > 0) & (this.weight !== null)) {
         this.addSet();
         this.hideSetDialog();
-        console.log(this.selected);
+        // console.log(this.selected);
       }
     },
     addChip(targetName, item) {
@@ -681,7 +749,7 @@ export default {
             });
           }
 
-          console.log(exercises);
+          // console.log(exercises);
           this.exercises = exercises;
         })
         .catch(err => {

@@ -1,9 +1,9 @@
 import { user } from '@/user.js';
-import { workoutHistory } from '@/views/Home';
+import { History } from '@/views/AddExercise';
 
 export let recommendedList = [];
 let userInfo = user.userInfo;
-export let workoutHistory = workoutHistory;
+export let history = History;
 let workouts = [
   {
     target: '하체',
@@ -128,7 +128,7 @@ function nextMainTarget() {
   let today = getFormatDate();
   let lastweek = lastWeek();
 
-  const reversedHistory = workoutHistory.reverse();
+  const reversedHistory = history.reverse();
   let count = 0;
   let lastTarget = '';
   let freq = {
@@ -592,7 +592,7 @@ function makeList() {
   list.push(getSets(nextMain, idx));
   return list;
 }
-export function recommend(value) {
+export function recommend() {
   recommendedList = makeList();
   console.log(recommendedList);
   return recommendedList;
