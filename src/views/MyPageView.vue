@@ -230,7 +230,7 @@ export default {
 
       const req = {
         uID: user.uID,
-        uName: this.userInfo.name,
+        uName: this.userInfo.uName,
         age: parseInt(this.userInfo.age),
         sex: this.userInfo.sex,
         height: parseInt(this.userInfo.height),
