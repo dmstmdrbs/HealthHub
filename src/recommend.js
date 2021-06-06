@@ -130,11 +130,11 @@ function nextMainTarget() {
   if (count === 0) {
     //가슴 등 하체
     if (
-      userInfo.weakness === '가슴' ||
-      userInfo.weakness === '등' ||
-      userInfo.weakness === '하체'
+      userInfo.weak === '가슴' ||
+      userInfo.weak === '등' ||
+      userInfo.weak === '하체'
     ) {
-      nextMain = userInfo.weakness;
+      nextMain = userInfo.weak;
     } else {
       nextMain = '가슴';
     }
@@ -146,8 +146,8 @@ function nextMainTarget() {
     //case 2: 빈도가 다를 때 -> 최하 빈도 부위
     if (freq.back === freq.chest && freq.back == freq.chest) {
       //빈도가 모두 같을 때
-      if (lastTarget === userInfo.weakness) {
-        if (lastTarget === '가슴' && userInfo.weakness === '가슴') {
+      if (lastTarget === userInfo.weak) {
+        if (lastTarget === '가슴' && userInfo.weak === '가슴') {
           if (userInfo.sex === '여자') {
             if ((freq.back - freq.chest > 2) | (freq.leg - freq.chest > 2)) {
               nextMain = '가슴';
@@ -329,6 +329,7 @@ function getArmWeight() {
 function getSets(nextTarget, targetIdx) {
   console.log('here is getSets');
   console.log(user.userInfo);
+  // console.log(nextTarget, targetIdx);
   let sets = [];
   const max_set = 5;
   let weight = 0;
@@ -511,21 +512,40 @@ function getSets(nextTarget, targetIdx) {
 function makeList() {
   let maxNum;
   let nextMain = nextMainTarget();
-  let list = [];
+  let list = [
+    // { 
+    //   target:null,
+    //   kinds:null,
+    //   sets:[
+    //     {weight:null, reps:null}
+    //   ]
+    // }
+  ];
   let wlist = [];
   let idxlist = [];
   let nextidx = [];
   var i;
+  let sets;
+  let target;
+  let kinds;
+  let kIdx;
+
   //logic
   maxNum = userInfo.proficiency + 2;
 
   switch (nextMain) {
     case '하체':
       wlist = workouts[0].list;
+      kIdx=0;
+      break;
     case '가슴':
       wlist = workouts[1].list;
+      kIdx=1;
+      break;
     case '등':
       wlist = workouts[2].list;
+      kIdx=2;
+      break;
   }
   for (i = 0; i < wlist.length; i++) {
     if (wlist[i].difficulty <= maxNum) {
@@ -542,7 +562,10 @@ function makeList() {
     while (1) {
       if (!nextidx.includes(idx)) {
         nextidx.push(idx);
-        list.push(getSets(nextMain, idx));
+        sets = getSets(nextMain, idx);
+        target = nextMain;
+        kinds = workouts[kIdx].list[idx].name
+        list.push({target, kinds, sets});
 
         break;
       }
@@ -551,10 +574,17 @@ function makeList() {
   }
   nextMain = '어깨';
   idx = Math.floor(Math.random() * workouts[3].list.length);
-  list.push(getSets(nextMain, idx));
+  sets = getSets(nextMain, idx);
+  target = nextMain;
+  kinds = workouts[3].list[idx].name
+  list.push({target, kinds, sets});
+
   nextMain = '팔';
   idx = Math.floor(Math.random() * workouts[4].list.length);
-  list.push(getSets(nextMain, idx));
+  sets = getSets(nextMain, idx);
+  target = nextMain;
+  kinds = workouts[4].list[idx].name
+  list.push({target, kinds, sets});
   return list;
 }
 export function recommend(workoutHistory) {
@@ -562,6 +592,5 @@ export function recommend(workoutHistory) {
   console.log('here is recommend.js');
   console.log(history);
   recommendedList = makeList();
-
   return recommendedList;
 }
