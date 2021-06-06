@@ -21,6 +21,7 @@
 </template>
 <script>
 import VueRouter from '@/router/index.js';
+import { saveUser } from '@/user.js';
 export default {
   //초기값 0번째 : 기록
   data: () => ({}),
@@ -32,7 +33,16 @@ export default {
     },
   },
   methods: {
+    record() {
+      saveUser();
+      VueRouter.push({ name: 'home' });
+    },
+    mypage() {
+      saveUser();
+      VueRouter.push({ name: 'mypage' });
+    },
     logout() {
+      // saveUser();
       localStorage.clear();
       VueRouter.push({ name: 'login' });
     },
