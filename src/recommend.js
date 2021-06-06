@@ -2,6 +2,8 @@ import { user } from '@/user.js';
 
 export let recommendedList = [];
 let userInfo = user.userInfo;
+console.log(111111111111111);
+console.log(userInfo);
 let history = [];
 let workouts = [
   {
@@ -218,7 +220,7 @@ function nextMainTarget() {
 function getShoulderWeight() {
   let weight = 0;
   switch (userInfo.sex) {
-    case 1:
+    case "남자":
       //남자 기준
       switch (userInfo.proficiency) {
         case 1:
@@ -254,7 +256,7 @@ function getShoulderWeight() {
           break;
       }
       break;
-    case 2:
+    case "여자":
       // 여자 기준
       switch (userInfo.proficiency) {
         case 1:
@@ -296,7 +298,7 @@ function getShoulderWeight() {
 function getArmWeight() {
   let weight = 0;
   switch (userInfo.sex) {
-    case 1:
+    case "남자":
       //남자 기준
       switch (userInfo.proficiency) {
         case 1:
@@ -310,7 +312,7 @@ function getArmWeight() {
           break;
       }
       break;
-    case 2:
+    case "여자":
       // 여자 기준
       switch (userInfo.proficiency) {
         case 1:
