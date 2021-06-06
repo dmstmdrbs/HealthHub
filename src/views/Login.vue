@@ -10,7 +10,7 @@
       <v-card>
         <h2 id="login-title">LOGIN</h2>
         <div class="login-form2">
-          <v-text-field v-model="input.uid" label="아이디"></v-text-field>
+          <v-text-field v-model="input.id" label="아이디"></v-text-field>
           <v-text-field v-model="input.password" label="패스워드" type="password"></v-text-field>
           <v-btn class="login-button" depressed block large v-on:click="onSubmit">
             LOGIN
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     updateID(event) {
-      this.input.uid = event.target.value;
+      this.input.id = event.target.value;
     },
     updatePW(event) {
       this.input.password = event.target.value;
@@ -70,6 +70,17 @@ export default {
         .then(res => {
           if (res.success) {
             user.id = this.input.id;
+            fetch(`http://115.85.183.157:3000/register/userInfo/getUID/${req.id}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then(res2 => res2.json())
+              .then(res2 => {
+                user.uID = res2.uID;
+              });
+
             VueRouter.push({ path: '/home' });
           } else {
             alert(res.msg);

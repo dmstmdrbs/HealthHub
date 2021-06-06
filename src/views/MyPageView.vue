@@ -202,6 +202,14 @@ export default {
       //db에 저장
       this.user = this.userInfo;
       console.log(this.user);
+      var proficiency = 0;
+      if (this.userInfo.proficiency === '초급자') {
+        proficiency = 1;
+      } else if (this.userInfo.proficiency === '중급자') {
+        proficiency = 2;
+      } else {
+        proficiency = 3;
+      }
       const req = {
         uName: this.userInfo.name,
         age: parseInt(this.userInfo.age),
@@ -212,6 +220,7 @@ export default {
         bench: parseInt(this.userInfo.bench),
         dead: parseInt(this.userInfo.dead),
         weak: this.userInfo.weak,
+        proficiency: proficiency,
       };
       fetch('http://115.85.183.157:3000/userInfo', {
         method: 'PUT',
@@ -250,6 +259,13 @@ export default {
           this.userInfo.bench = res.bench;
           this.userInfo.dead = res.dead;
           this.userInfo.weak = res.weak;
+          if (res.proficiency === 1) {
+            this.userInfo.proficiency = '초급자';
+          } else if (res.proficiency === 2) {
+            this.userInfo.proficiency = '중급자';
+          } else {
+            this.userInfo.proficiency = '고급자';
+          }
         })
         .catch(err => {
           console.error('error');

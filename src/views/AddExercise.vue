@@ -290,6 +290,8 @@ import NaviBar from '@/components/NaviBar.vue';
 import Dialog from '@/components/Dialog.vue';
 import { eventBus } from '@/main';
 import { user } from '@/user.js';
+import { recommendedList } from '@/recommend.js';
+
 function detailedSets(reps, weight, checked) {
   this.reps = reps;
   this.weight = weight;
@@ -306,17 +308,9 @@ function WorkoutDetail(target, workout, sets) {
 export default {
   name: 'AddExercise',
   created() {
+    console.log(user.id);
     console.log(user.uID);
-    fetch(`http://115.85.183.157:3000/register/userInfo/getUID/${user.id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        user.user.uID = res.uID;
-      });
+    console.log('---------');
 
     fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
       method: 'GET',
@@ -378,6 +372,11 @@ export default {
   mounted() {
     this.todayExercise();
   },
+  watch: {
+    recommended: function(newVal) {
+      this.recommended = newVal;
+    },
+  },
   data() {
     return {
       RPE: {
@@ -406,74 +405,7 @@ export default {
       exercises: [],
       userProficiency: '초급자',
       userWeakness: '등',
-      recommended: [
-        {
-          target: '등',
-          kinds: '랫 풀 다운',
-          sets: [
-            { reps: 15, weight: 25 },
-            { reps: 12, weight: 30 },
-            { reps: 10, weight: 35 },
-            { reps: 10, weight: 35 },
-            { reps: 10, weight: 35 },
-          ],
-        },
-        {
-          target: '어깨',
-          kinds: '덤벨 숄더 프레스',
-          sets: [
-            { reps: 15, weight: 8 },
-            { reps: 12, weight: 10 },
-            { reps: 10, weight: 12 },
-            { reps: 10, weight: 12 },
-            { reps: 10, weight: 12 },
-          ],
-        },
-        {
-          target: '등',
-          kinds: '루마니안 데드리프트',
-          sets: [
-            { reps: 15, weight: 20 },
-            { reps: 12, weight: 30 },
-            { reps: 10, weight: 40 },
-            { reps: 10, weight: 40 },
-            { reps: 10, weight: 40 },
-          ],
-        },
-        {
-          target: '어깨',
-          kinds: '사이드 레터럴 레이즈',
-          sets: [
-            { reps: 20, weight: 5 },
-            { reps: 20, weight: 5 },
-            { reps: 20, weight: 5 },
-            { reps: 20, weight: 5 },
-            { reps: 20, weight: 5 },
-          ],
-        },
-        {
-          target: '어깨',
-          kinds: '벤트오버 레터럴 레이즈',
-          sets: [
-            { reps: 12, weight: 4 },
-            { reps: 12, weight: 4 },
-            { reps: 12, weight: 4 },
-            { reps: 12, weight: 4 },
-            { reps: 12, weight: 4 },
-          ],
-        },
-        {
-          target: '등',
-          kinds: '원 암 덤벨 로우',
-          sets: [
-            { reps: 10, weight: 12 },
-            { reps: 12, weight: 12 },
-            { reps: 14, weight: 10 },
-            { reps: 14, weight: 10 },
-            { reps: 14, weight: 10 },
-          ],
-        },
-      ],
+      recommended: recommendedList,
       workoutList: [],
       customs: [
         {
