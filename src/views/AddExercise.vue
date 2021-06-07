@@ -317,6 +317,7 @@ export default {
     console.log(user.id);
     console.log(user.uID);
     console.log('---------');
+
     const req = {
       uID: user.uID,
       uName: userInfo.uName,
@@ -349,9 +350,9 @@ export default {
         console.error('정보 저장 중 에러 발생');
       });
 
-    this.date = today;
-
     eventBus.$on('selectDate', today => {
+      this.date = today;
+
       fetch(`http://115.85.183.157:3000/exercises/${user.uID}/${this.date}`, {
         method: 'GET',
         headers: {
