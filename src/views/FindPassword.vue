@@ -18,6 +18,7 @@ export default {
         get(){
             this.list = recommend(1);
             
+            
         }
     }
 }
