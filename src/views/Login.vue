@@ -91,7 +91,18 @@ export default {
                 })
                   .then(res => res.json())
                   .then(res => {
-                    user.userInfo = res;
+                    // user.userInfo = res;
+                    userInfo.uName = res.uName;
+                    userInfo.age = res.age;
+                    userInfo.sex = res.sex;
+                    userInfo.height = res.height;
+                    userInfo.weight = res.weight;
+                    userInfo.squat = res.squat;
+                    userInfo.bench = res.bench;
+                    userInfo.dead = res.dead;
+                    userInfo.weak = res.weak;
+                    userInfo.proficiency = res.proficiency;
+                    user.userInfo = userInfo;
                     VueRouter.push({ name: 'home' });
                   })
                   .catch(err => {

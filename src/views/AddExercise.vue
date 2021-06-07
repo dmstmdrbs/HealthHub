@@ -294,6 +294,7 @@ import NaviBar from '@/components/NaviBar.vue';
 import Dialog from '@/components/Dialog.vue';
 import { eventBus } from '@/main';
 import { user } from '@/user.js';
+import { userInfo } from '@/userInfo.js';
 import { recommendedList, recommend } from '@/recommend.js';
 
 function detailedSets(reps, weight, checked) {
@@ -316,26 +317,41 @@ export default {
     console.log(user.id);
     console.log(user.uID);
     console.log('---------');
-
-    fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
-      method: 'GET',
+    const req = {
+      uID: user.uID,
+      uName: userInfo.uName,
+      age: parseInt(userInfo.age),
+      sex: userInfo.sex,
+      height: parseInt(userInfo.height),
+      weight: parseInt(userInfo.weight),
+      squat: parseInt(userInfo.squat),
+      bench: parseInt(userInfo.bench),
+      dead: parseInt(userInfo.dead),
+      weak: userInfo.weak,
+      proficiency: parseInt(userInfo.proficiency),
+    };
+    fetch('http://115.85.183.157:3000/register/userInfo', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(req),
     })
       .then(res => res.json())
       .then(res => {
-        user.userInfo = res.userInfo;
+        if (res.success) {
+          console.log('성공');
+          this.getUserInfo();
+          this.getHistory();
+        }
       })
       .catch(err => {
-        console.error('error');
+        console.error('정보 저장 중 에러 발생');
       });
 
-    this.getHistory();
+    this.date = today;
 
     eventBus.$on('selectDate', today => {
-      this.date = today;
-
       fetch(`http://115.85.183.157:3000/exercises/${user.uID}/${this.date}`, {
         method: 'GET',
         headers: {
@@ -499,6 +515,33 @@ export default {
     };
   },
   methods: {
+    getUserInfo() {
+      fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => res.json())
+        .then(res => {
+          userInfo.uName = res.uName;
+          userInfo.age = res.age;
+          userInfo.sex = res.sex;
+          userInfo.height = res.height;
+          userInfo.weight = res.weight;
+          userInfo.squat = res.squat;
+          userInfo.bench = res.bench;
+          userInfo.dead = res.dead;
+          userInfo.weak = res.weak;
+          userInfo.proficiency = res.proficiency;
+          user.userInfo = userInfo;
+          console.log(user);
+          console.log(userInfo);
+        })
+        .catch(err => {
+          console.error('error');
+        });
+    },
     getRecommend() {
       console.log(this.workoutHistory);
       this.recommended = recommend(this.workoutHistory);

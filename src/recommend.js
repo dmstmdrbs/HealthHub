@@ -178,6 +178,9 @@ function nextMainTarget() {
 
   freq = getMainTarget(reversedHistory);
   lastTarget = getLastTarget(history);
+  if (lastTarget === null) {
+    lastTarget = userInfo.weak;
+  }
   count = history.length;
 
   if (lastTarget === '가슴') {
@@ -231,13 +234,17 @@ function getShoulderWeight() {
   console.log('here is get Shoulder weight');
   console.log(userInfo);
   console.log(userInfo.weight);
-  let bodyWeight = userInfo.weight;
+  let bodyWeight = parseInt(userInfo.weight);
+  console.log(`bodyWeight : ${bodyWeight}`);
   let weight = 0;
-  switch (userInfo.sex) {
+  let proficiency = userInfo.proficiency;
+  let sex = userInfo.sex;
+  switch (sex) {
     case '남자':
       //남자 기준
-      switch (userInfo.proficiency) {
-        case '1':
+      switch (proficiency) {
+        case 1:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 52) {
             weight = 20;
           } else if (bodyWeight < 60) {
@@ -247,8 +254,10 @@ function getShoulderWeight() {
           } else {
             weight = 35;
           }
+          console.log(`get weight : ${weight}`);
           break;
-        case '2':
+        case 2:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 52) {
             weight = 20;
           } else if (bodyWeight < 60) {
@@ -258,8 +267,10 @@ function getShoulderWeight() {
           } else {
             weight = 40;
           }
+          console.log(`get weight : ${weight}`);
           break;
-        case '3':
+        case 3:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 60) {
             weight = 40;
           } else if (bodyWeight < 90) {
@@ -267,13 +278,15 @@ function getShoulderWeight() {
           } else {
             weight = 55;
           }
+          console.log(`get weight : ${weight}`);
           break;
       }
       break;
     case '여자':
       // 여자 기준
-      switch (userInfo.proficiency) {
-        case '1':
+      switch (proficiency) {
+        case 1:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 52) {
             weight = 20;
           } else if (bodyWeight < 60) {
@@ -282,7 +295,8 @@ function getShoulderWeight() {
             weight = 30;
           }
           break;
-        case '2':
+        case 2:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 44) {
             weight = 20;
           } else if (bodyWeight < 52) {
@@ -293,7 +307,8 @@ function getShoulderWeight() {
             weight = 35;
           }
           break;
-        case '3':
+        case 3:
+          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
           if (bodyWeight < 52) {
             weight = 35;
           } else if (bodyWeight < 60) {
@@ -311,17 +326,18 @@ function getShoulderWeight() {
 
 function getArmWeight() {
   let weight = 0;
+  let proficiency = userInfo.proficiency;
   switch (userInfo.sex) {
     case '남자':
       //남자 기준
       switch (userInfo.proficiency) {
-        case '1':
+        case 1:
           weight = 8;
           break;
-        case '2':
+        case 2:
           weight = 12;
           break;
-        case '3':
+        case 3:
           weight = 16;
           break;
       }
@@ -329,12 +345,12 @@ function getArmWeight() {
     case '여자':
       // 여자 기준
       switch (userInfo.proficiency) {
-        case '1':
+        case 1:
           weight = 5;
-        case '2':
+        case 2:
           weight = 8;
           break;
-        case '3':
+        case 3:
           weight = 10;
           break;
       }

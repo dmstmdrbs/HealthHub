@@ -16,8 +16,6 @@
           <v-radio label="하체" value="하체"></v-radio>
           <v-radio label="등" value="등"></v-radio>
           <v-radio label="가슴" value="가슴"></v-radio>
-          <v-radio label="팔" value="팔"></v-radio>
-          <v-radio label="어깨" value="어꺠"></v-radio>
         </v-radio-group>
       </v-col>
       <v-divider vertical></v-divider>
