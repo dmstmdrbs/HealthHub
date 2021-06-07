@@ -140,10 +140,10 @@
                             ></v-text-field>
                             <v-text-field v-model="userInfo.dead" label="데드리프트"></v-text-field>
                             <h2>숙련도</h2>
-                            <v-radio-group mandatory v-model="userInfo.proficiency">
-                              <v-radio label="초급자" value="1"></v-radio>
-                              <v-radio label="중급자" value="2"></v-radio>
-                              <v-radio label="고급자" value="3"></v-radio>
+                            <v-radio-group mandatory v-model="proficiency">
+                              <v-radio name="proficiency" label="초급자" value="1"></v-radio>
+                              <v-radio name="proficiency" label="중급자" value="2"></v-radio>
+                              <v-radio name="proficiency" label="고급자" value="3"></v-radio>
                             </v-radio-group>
                           </v-col>
                         </v-row>
@@ -181,6 +181,7 @@ export default {
       .then(res => res.json())
       .then(res => {
         userInfo = res.userInfo;
+
         user.userInfo = userInfo;
         console.log(userInfo);
       })
@@ -191,9 +192,12 @@ export default {
   mounted() {
     console.log('here is mounted');
     this.userInfo = user.userInfo;
+
     // this.getUserInfo();
     console.log(user.uID);
     console.log(user.userInfo);
+    this.proficiency = user.userInfo.proficiency;
+    console.log(`proficiency = ${this.proficiency}`);
   },
   // watch:{
   //   userInfo(){function(){
@@ -210,6 +214,7 @@ export default {
     return {
       userInfo: '',
       setDialog: false,
+      proficiency: undefined,
     };
   },
   methods: {
@@ -227,7 +232,7 @@ export default {
     },
     saveUserInfo() {
       //db에 저장
-
+      user.userInfo.proficiency = this.proficiency;
       const req = {
         uID: user.uID,
         uName: this.userInfo.uName,
@@ -239,7 +244,7 @@ export default {
         bench: parseInt(this.userInfo.bench),
         dead: parseInt(this.userInfo.dead),
         weak: this.userInfo.weak,
-        proficiency: parseInt(this.userInfo.proficiency),
+        proficiency: parseInt(this.proficiency),
       };
       fetch('http://115.85.183.157:3000/register/userInfo', {
         method: 'POST',
