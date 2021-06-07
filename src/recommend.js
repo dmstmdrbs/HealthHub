@@ -1,9 +1,7 @@
 import { user } from '@/user.js';
 
 export let recommendedList = [];
-let userInfo = user.userInfo;
-console.log(111111111111111);
-console.log(userInfo);
+let userInfo = '';
 let history = [];
 let workouts = [
   {
@@ -115,48 +113,47 @@ function getMainTarget(workoutList) {
 function getLastTarget(workoutList) {
   console.log(`here is getLastTarget`);
   let length = workoutList.length;
+  if (length == 0) {
+    return null;
+  }
+  console.log(workoutList);
   let targetList = {
     chest: 0,
     back: 0,
     leg: 0,
+    armShoulder: 0,
   };
+  let exercises = workoutList[0].exercises;
   let lastTarget = '';
-  if (length == 0) {
-    return '가슴';
+
+  for (exercise in exercises) {
+    if (exercise.target === '가슴') {
+      targetList.chest++;
+    } else if (exercise.target === '등') {
+      targetList.back++;
+    } else if (exercise.target === '하체') {
+      targetList.leg++;
+    } else {
+      armShoulder++;
+    }
   }
-  for (var i = 0; i < length; i++) {
-    let exerciseList = workoutList[i].exercises;
-    console.log(exerciseList);
-    for (var j = 0; j < exerciseList.length; j++) {
-      let exercise = exerciseList[j];
-      if (exercise.target === '가슴') {
-        targetList.chest++;
-      } else if (exercise.target === '등') {
-        targetList.back++;
-      } else {
-        targetList.leg++;
-      }
-      if (j == 0) {
-        if (targetList.chest > targetList.back && targetList.leg > targetList.back) {
-          if (targetList.chest > targetList.leg) {
-            lastTarget = '가슴';
-          } else {
-            lastTarget = '하체';
-          }
-        } else if (targetList.chest > targetList.leg && targetList.back > targetList.leg) {
-          if (targetList.chest > targetList.back) {
-            lastTarget = '가슴';
-          } else {
-            lastTarget = '등';
-          }
-        } else if (targetList.back > targetList.chest && targetList.leg > targetList.chest) {
-          if (targetList.leg > targetList.back) {
-            lastTarget = '하체';
-          } else {
-            lastTarget = '등';
-          }
-        }
-      }
+  if (targetList.chest > targetList.back && targetList.leg > targetList.back) {
+    if (targetList.chest > targetList.leg) {
+      lastTarget = '가슴';
+    } else {
+      lastTarget = '하체';
+    }
+  } else if (targetList.chest > targetList.leg && targetList.back > targetList.leg) {
+    if (targetList.chest > targetList.back) {
+      lastTarget = '가슴';
+    } else {
+      lastTarget = '등';
+    }
+  } else if (targetList.back > targetList.chest && targetList.leg > targetList.chest) {
+    if (targetList.leg > targetList.back) {
+      lastTarget = '하체';
+    } else {
+      lastTarget = '등';
     }
   }
 
@@ -174,70 +171,56 @@ function nextMainTarget() {
     leg: 0,
     back: 0,
   };
+  if (count == 0) {
+    nextMain = userInfo.weak;
+    return nextMain;
+  }
 
   freq = getMainTarget(reversedHistory);
   lastTarget = getLastTarget(history);
   count = history.length;
-  //가슴->등->하체 순서
-  //가장 많이한 것 제외
-  //case 1: 최근 일주일 내에 운동을 하지 않았을 때
-  if (count === 0) {
-    //가슴 등 하체
-    if (userInfo.weak === '가슴' || userInfo.weak === '등' || userInfo.weak === '하체') {
-      nextMain = userInfo.weak;
-    } else {
-      nextMain = '가슴';
-    }
-  }
-  //case 2: 최근 일주일 내에 운동을 했을 때
-  else {
-    //최근 운동이 있을 때
-    //case 1: 빈도가 같을 때 -> case 1-1: 전날 했던 것 제외하고 다음 것 or 약점 부위
-    //case 2: 빈도가 다를 때 -> 최하 빈도 부위
-    if (freq.back === freq.chest && freq.back == freq.chest) {
-      //빈도가 모두 같을 때
 
-      if (lastTarget === '등') {
+  if (lastTarget === '가슴') {
+    if (freq.chest > freq.back) {
+      if (freq.chest > freq.leg) {
+        nextMain = '등';
+      } else {
+        if (userInfo.weak !== '가슴') {
+          nextMain = userInfo.weak;
+        } else {
+          nextMain = '가슴';
+        }
+      }
+    } else {
+      nextMain = '등';
+    }
+  } else if (lastTarget === '등') {
+    if (freq.back > freq.leg) {
+      if (freq.back > freq.chest) {
         nextMain = '하체';
-      } else if (lastTarget === '하체') {
+      } else {
+        if (userInfo.weak !== '등') {
+          nextMain = userInfo.weak;
+        } else {
+          nextMain = '등';
+        }
+      }
+    } else {
+      nextMain = '하체';
+    }
+  } else {
+    if (freq.leg > freq.chest) {
+      if (freq.leg > freq.back) {
         nextMain = '가슴';
       } else {
-        nextMain = '등';
+        if (userInfo.weak !== '하체') {
+          nextMain = userInfo.weak;
+        } else {
+          nextMain = '하체';
+        }
       }
     } else {
-      //최하 빈도 부위
-      //최하 빈도 부위가 lastTarget면 그 다음 종목
-      if (freq.back < freq.chest) {
-        if (freq.back < freq.leg) {
-          if (lastTarget === '등') {
-            nextMain = '하체';
-          } else nextMain = '등';
-        } else {
-          if (lastTarget === '하체') {
-            nextMain = '등';
-          } else nextMain = '하체';
-        }
-      } else if (freq.chest < freq.back) {
-        if (freq.chest < freq.leg) {
-          if (lastTarget === '가슴') {
-            nextMain = '등';
-          } else nextMain = '가슴';
-        } else {
-          if (lastTarget === '하체') {
-            nextMain = '가슴';
-          } else nextMain = '하체';
-        }
-      } else if (freq.leg < freq.back) {
-        if (freq.leg < freq.chest) {
-          if (lastTarget === '하체') {
-            nextMain = '가슴';
-          } else nextMain = '하체';
-        } else {
-          if (lastTarget === '가슴') {
-            nextMain = '등';
-          } else nextMain = '가슴';
-        }
-      }
+      nextMain = '가슴';
     }
   }
   console.log('here is end of nextMainTarget');
@@ -245,6 +228,8 @@ function nextMainTarget() {
 }
 
 function getShoulderWeight() {
+  console.log('here is get Shoulder weight');
+  console.log(userInfo);
   let weight = 0;
   switch (userInfo.sex) {
     case '남자':
@@ -618,6 +603,7 @@ function makeList() {
   return list;
 }
 export function recommend(workoutHistory) {
+  userInfo = user.userInfo;
   history = workoutHistory;
   console.log('here is recommend.js');
   console.log(history);
