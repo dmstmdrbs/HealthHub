@@ -242,81 +242,64 @@ function getShoulderWeight() {
   switch (sex) {
     case '남자':
       //남자 기준
-      switch (proficiency) {
-        case 1:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 52) {
-            weight = 20;
-          } else if (bodyWeight < 60) {
-            weight = 25;
-          } else if (bodyWeight < 90) {
-            weight = 30;
-          } else {
-            weight = 35;
-          }
-          console.log(`get weight : ${weight}`);
-          break;
-        case 2:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 52) {
-            weight = 20;
-          } else if (bodyWeight < 60) {
-            weight = 30;
-          } else if (bodyWeight < 90) {
-            weight = 35;
-          } else {
-            weight = 40;
-          }
-          console.log(`get weight : ${weight}`);
-          break;
-        case 3:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 60) {
-            weight = 40;
-          } else if (bodyWeight < 90) {
-            weight = 50;
-          } else {
-            weight = 55;
-          }
-          console.log(`get weight : ${weight}`);
-          break;
+      if (proficiency == 1) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 25;
+        } else if (bodyWeight < 90) {
+          weight = 30;
+        } else {
+          weight = 35;
+        }
+      } else if (proficiency == 2) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 30;
+        } else if (bodyWeight < 90) {
+          weight = 35;
+        } else {
+          weight = 40;
+        }
+      } else {
+        if (bodyWeight < 60) {
+          weight = 40;
+        } else if (bodyWeight < 90) {
+          weight = 50;
+        } else {
+          weight = 55;
+        }
       }
       break;
     case '여자':
       // 여자 기준
-      switch (proficiency) {
-        case 1:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 52) {
-            weight = 20;
-          } else if (bodyWeight < 60) {
-            weight = 25;
-          } else {
-            weight = 30;
-          }
-          break;
-        case 2:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 44) {
-            weight = 20;
-          } else if (bodyWeight < 52) {
-            weight = 25;
-          } else if (bodyWeight < 60) {
-            weight = 30;
-          } else {
-            weight = 35;
-          }
-          break;
-        case 3:
-          console.log(`proficiency : ${proficiency} get weight : ${weight}`);
-          if (bodyWeight < 52) {
-            weight = 35;
-          } else if (bodyWeight < 60) {
-            weight = 40;
-          } else {
-            weight = 45;
-          }
-          break;
+      if (proficiency == 1) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 25;
+        } else {
+          weight = 30;
+        }
+      } else if (proficiency == 2) {
+        if (bodyWeight < 44) {
+          weight = 20;
+        } else if (bodyWeight < 52) {
+          weight = 25;
+        } else if (bodyWeight < 60) {
+          weight = 30;
+        } else {
+          weight = 35;
+        }
+      } else {
+        if (bodyWeight < 52) {
+          weight = 35;
+        } else if (bodyWeight < 60) {
+          weight = 40;
+        } else {
+          weight = 45;
+        }
       }
       break;
   }
@@ -326,33 +309,25 @@ function getShoulderWeight() {
 
 function getArmWeight() {
   let weight = 0;
-  let proficiency = userInfo.proficiency;
   switch (userInfo.sex) {
     case '남자':
       //남자 기준
-      switch (userInfo.proficiency) {
-        case 1:
-          weight = 8;
-          break;
-        case 2:
-          weight = 12;
-          break;
-        case 3:
-          weight = 16;
-          break;
+      if (userInfo.proficiency == 1) {
+        weight = 8;
+      } else if (userInfo.proficiency == 2) {
+        weight = 12;
+      } else {
+        weight = 16;
       }
       break;
     case '여자':
       // 여자 기준
-      switch (userInfo.proficiency) {
-        case 1:
-          weight = 5;
-        case 2:
-          weight = 8;
-          break;
-        case 3:
-          weight = 10;
-          break;
+      if (userInfo.proficiency == 1) {
+        weight = 5;
+      } else if (userInfo.proficiency == 2) {
+        weight = 8;
+      } else {
+        weight = 10;
       }
       break;
   }
