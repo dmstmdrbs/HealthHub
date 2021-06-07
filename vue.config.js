@@ -1,5 +1,8 @@
 module.exports = {
-  transpileDependencies: [
-    'vuetify'
-  ]
+    publicPath: process.env.NODE_ENV === 'production' ?
+        '/HealthHub/' : '/',
+    outputDir: 'docs',
+    transpileDependencies: [
+        'vuetify'
+    ]
 }
