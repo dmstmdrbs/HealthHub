@@ -4,9 +4,51 @@
       <v-row>
         <v-col cols="12" sm="4">
           <v-card class="mx-auto scroll" width="100%" height="600px">
-            <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
-            <v-spacer></v-spacer>
+            <v-card-title class="white--text orange darken-1"
+              >추천 운동 리스트
+              <v-spacer></v-spacer>
+              <v-btn icon @click="showGuide">
+                <v-icon>far fa-question-circle</v-icon>
+              </v-btn>
+              <v-dialog v-model="guideDiaglog" width="600">
+                <v-card>
+                  <v-card-title class="white--text blue darken-1">
+                    추천 운동 도움말
+                  </v-card-title>
+                  <v-card-text>
+                    <div>
+                      최근 일주일간의 운동기록을 참고합니다.
+                    </div>
+                    <div>
+                      운동 기록이 없을 시에는 사용자의 약점 부위의 영향을 많이 받습니다.
+                    </div>
+                    <div>
+                      사용자의 키와 몸무게, 약점 부위, 그리고 숙련도에 따라 운동을 추천해줍니다.
+                    </div>
+                    <div>
+                      절대적인 기준은 아니며, 시스템이 추정한 수치입니다.
+                    </div>
+                    <div>부정확한 정보는 피드백을 통해 개선될 수 있습니다.</div>
+                    <p></p>
+                    <div>
+                      무리한 고중량 운동은 관절에 좋지 않습니다. 본인의 수행능력에 맞는 운동을
+                      진행하세요.
+                    </div>
+                    <p>운동에 있어서 계획, 기록보다 중요한 것은 '꾸준함' 입니다.</p>
+                  </v-card-text>
 
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="hideGuide">
+                      닫기
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-card-title>
+            <v-spacer></v-spacer>
             <v-card-actions>
               <v-btn icon @click="show = !show">
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
@@ -399,6 +441,7 @@ export default {
   watch: {},
   data() {
     return {
+      guideDiaglog: false,
       RPE: {
         LOW: false,
         MID: false,
@@ -516,6 +559,12 @@ export default {
     };
   },
   methods: {
+    showGuide() {
+      this.guideDiaglog = true;
+    },
+    hideGuide() {
+      this.guideDiaglog = false;
+    },
     getUserInfo() {
       fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
         method: 'GET',
