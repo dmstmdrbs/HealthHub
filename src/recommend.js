@@ -425,17 +425,21 @@ function getSets(nextTarget, targetIdx) {
             else weight = weight * 0.7;
             break;
           case 1:
-          case 3:
           case 4:
           case 5:
-          case 7:
           case 8:
-          case 9:
           case 10:
             weight = oneRM * 0.7;
-            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
+            if (targetIdx == 4 || targetIdx == 5 || targetIdx == 8) weight = weight / 2;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
+            break;
+          case 3:
+          case 7:
+          case 9:
+            weight = userInfo.weight;
+            if(i < 4)weight = weight * (0.35 + 0.05*i);
+            else weight = weight * 0.45;
             break;
         }
         break;
@@ -484,7 +488,9 @@ function getSets(nextTarget, targetIdx) {
           case 4:
           case 5:
             // 바벨
-            weight = weight * 2;
+            if(targetIdx === 5) weight = weight * 2.5;
+            else weight = weight * 2;
+            
             if (i < 2) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
@@ -500,6 +506,10 @@ function getSets(nextTarget, targetIdx) {
     }
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
+    if(nextTarget === '어깨' && (targetIdx === 1 || targetIdx === 2)) {
+      if(i < 3) reps = 18 - i;
+      else reps = 17;
+    }
     weight = parseInt(weight);
     sets.push({ reps, weight });
   }
