@@ -82,64 +82,37 @@ export default {
     name: '',
     sexGroup: 1,
     age: '',
-    idRules: [v => !!v || 'ID is required'],
+    idRules: [
+      v => !!v || 'ID is required',
+      v => v.length > 3 || 'ID must be longer than 3 characters.',
+    ],
     pwRules: [
       v => !!v || 'Password is required',
       v => v.length <= 20 || 'Password must be less than 20 characters',
+      v => v.length > 2 || 'Password must be longer than 2 characters',
     ],
     pwCheckRules: [v => !!v || 'Rewrite the password'],
     nameRules: [
       v => !!v || 'Name is required',
       v => v.length <= 10 || 'Name must be less than 10 characters',
+      v => v.length > 1 || 'Name must be longer than 1 characters',
     ],
     email: '',
     emailRules: [v => !!v || 'E-mail is required', v => /.+@.+/.test(v) || 'E-mail must be valid'],
   }),
   methods: {
     searchChangeFunc(event) {
-      console.log('id changed!');
       this.checkId = false;
-      console.log(this.cehckId);
     },
     checkID: function() {
-      const req = {
-        id: this.id,
-      };
-      //db에서 아이디 중복 확인
-      fetch('http://115.85.183.157:3000/checkID', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(req),
-      })
-        .then(res => res.json())
-        .then(res => {
-          if (res.success) {
-            alert('중복된 아이디 입니다. 다시 입력해주세요.');
-          }
-        })
-        .catch(err => {
-          alert('사용 가능한 아이디 입니다.');
-          this.checkId = true;
-        });
-    },
-    checkForm: function() {
-      if (this.checkId === false) {
-        alert('아이디 중복 체크를 해주세요.');
+      if (this.id.length < 4) {
+        alert('아이디는 4글자 이상입니다.');
       } else {
         const req = {
           id: this.id,
-          psword: this.pw,
         };
-        console.log(req);
-        console.log(this.sexGroup);
-        localStorage.setItem('id', this.id);
-        localStorage.setItem('uName', this.name);
-        localStorage.setItem('sex', this.sexGroup);
-        localStorage.setItem('email', this.email);
         //db에서 아이디 중복 확인
-        fetch('http://115.85.183.157:3000/register', {
+        fetch('http://115.85.183.157:3000/checkID', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -149,16 +122,58 @@ export default {
           .then(res => res.json())
           .then(res => {
             if (res.success) {
-              alert('성공');
-
-              VueRouter.push({ path: '/join/userinfo' });
-            } else {
-              alert('중복된 아이디 입니다.');
+              alert('중복된 아이디 입니다. 다시 입력해주세요.');
             }
           })
           .catch(err => {
-            console.error('회원가입 중 에러 발생');
+            alert('사용 가능한 아이디 입니다.');
+            this.checkId = true;
           });
+      }
+    },
+    checkForm: function() {
+      if (this.checkId === false) {
+        alert('아이디 중복 체크를 해주세요.');
+      } else {
+        if (this.name.length < 2) {
+          alert('이름은 2글자 이상입니다.');
+        }
+        if (this.pw.length <= 2) {
+          alert('비밀번호는 2글자 이상입니다.');
+        } else {
+          const req = {
+            id: this.id,
+            psword: this.pw,
+          };
+
+          console.log(req);
+          console.log(this.sexGroup);
+          localStorage.setItem('id', this.id);
+          localStorage.setItem('uName', this.name);
+          localStorage.setItem('sex', this.sexGroup);
+          localStorage.setItem('email', this.email);
+          //db에서 아이디 중복 확인
+          fetch('http://115.85.183.157:3000/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(req),
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.success) {
+                alert('성공');
+
+                VueRouter.push({ path: '/join/userinfo' });
+              } else {
+                alert('중복된 아이디 입니다.');
+              }
+            })
+            .catch(err => {
+              console.error('회원가입 중 에러 발생');
+            });
+        }
       }
     },
   },

@@ -40,6 +40,7 @@ export default {
         id: '',
         password: '',
       },
+      valid: false,
     };
   },
   methods: {
@@ -106,11 +107,11 @@ export default {
                     VueRouter.push({ name: 'home' });
                   })
                   .catch(err => {
-                    alert('로그인 중 에러 발생');
+                    alert('로그인 실패. 다시 시도해주세요.');
                   });
               })
               .catch(err => {
-                alert('로그인 실패 ');
+                alert('로그인 실패. 잠시 후 다시 시도해주세요.');
               });
 
             // localStorage.setItem('userInfo', user.userInfo);
@@ -119,7 +120,7 @@ export default {
           }
         })
         .catch(err => {
-          alert('로그인 중 에러 발생');
+          alert('아이디와 비밀번호를 확인해주세요.');
         });
     },
   },
