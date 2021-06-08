@@ -468,7 +468,7 @@ function getSets(nextTarget, targetIdx) {
           case 6:
           case 8:
           case 9:
-            // 머신      { name: '오버 헤드 프레스', difficulty: 3 },
+            // 머신
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
