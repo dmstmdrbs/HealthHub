@@ -731,13 +731,13 @@ export default {
     },
     submitSetDialog() {
       //무게 유효성 검사 - 입력 안했을 때, 몸무게 5배 이상 입력했을 때
-      if (this.weight == null) {
+      if (this.weight == null || this.weight >= userInfo.weight * 5) {
         alert('무게를 제대로 입력해주세요.');
       }
       if ((this.reps <= 0) | (this.reps === null)) {
         alert('횟수를 확인해주세요.');
       }
-      if ((this.reps > 0) & (this.weight !== null)) {
+      if ((this.reps > 0) & (this.weight !== null) & (this.weight < userInfo.weight * 5)) {
         this.addSet();
         this.hideSetDialog();
         // console.log(this.selected);
