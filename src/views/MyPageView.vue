@@ -114,12 +114,24 @@
                               v-model="userInfo.sex"
                               label="성별"
                             ></v-text-field>
-                            <v-text-field v-model="userInfo.age" label="나이"></v-text-field>
+                            <v-text-field
+                              type="number"
+                              v-model="userInfo.age"
+                              label="나이"
+                            ></v-text-field>
                           </v-col>
                           <v-col cols="12" sm="6">
                             <h2>신체정보</h2>
-                            <v-text-field v-model="userInfo.height" label="키"></v-text-field>
-                            <v-text-field v-model="userInfo.weight" label="몸무게"></v-text-field>
+                            <v-text-field
+                              type="number"
+                              v-model="userInfo.height"
+                              label="키"
+                            ></v-text-field>
+                            <v-text-field
+                              type="number"
+                              v-model="userInfo.weight"
+                              label="몸무게"
+                            ></v-text-field>
                             <h2>약점 부위</h2>
                             <v-radio-group v-model="userInfo.weak">
                               <v-radio label="하체" value="하체"></v-radio>
@@ -131,12 +143,21 @@
 
                           <v-col cols="12" sm="6">
                             <h2>1RM</h2>
-                            <v-text-field v-model="userInfo.squat" label="스쿼트"></v-text-field>
                             <v-text-field
+                              type="number"
+                              v-model="userInfo.squat"
+                              label="스쿼트"
+                            ></v-text-field>
+                            <v-text-field
+                              type="number"
                               v-model="userInfo.bench"
                               label="벤치프레스"
                             ></v-text-field>
-                            <v-text-field v-model="userInfo.dead" label="데드리프트"></v-text-field>
+                            <v-text-field
+                              type="number"
+                              v-model="userInfo.dead"
+                              label="데드리프트"
+                            ></v-text-field>
                             <h2>숙련도</h2>
                             <v-radio-group mandatory v-model="proficiency">
                               <v-radio name="proficiency" label="초급자" value="1"></v-radio>
