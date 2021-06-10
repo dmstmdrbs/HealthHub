@@ -84,31 +84,32 @@ let workouts = [{
 ];
 
 function getMainTarget(workoutList) {
-    console.log(`here is getMainTarget`);
-    let length = workoutList.length;
-    let targetList = {
-        chest: 0,
-        back: 0,
-        leg: 0,
-    };
-    console.log(workoutList[0]);
-    for (var i = 0; i < length; i++) {
-        let exerciseList = workoutList[i].exercises;
-        let exercise;
-        for (var j = 0; j < exerciseList.length; j++) {
-            exercise = exerciseList[j];
-            console.log(`for문 안에 exercise : ${exercise}`);
-            if (exercise.target === '가슴') {
-                targetList.chest++;
-            } else if (exercise.target === '등') {
-                targetList.back++;
-            } else {
-                targetList.leg++;
-            }
-        }
+  console.log(`here is getMainTarget`);
+  let length = workoutList.length;
+  let targetList = {
+    chest: 0,
+    back: 0,
+    leg: 0,
+  };
+  console.log(workoutList[0]);
+  for (var i = 0; i < length; i++) {
+    let exerciseList = workoutList[i].exercises;
+    let exercise;
+    for (var j = 0; j < exerciseList.length; j++) {
+      exercise = exerciseList[j];
+      console.log(`for문 안에 exercise : ${exercise}`);
+      if (exercise.target === '가슴') {
+        targetList.chest++;
+      } else if (exercise.target === '등') {
+        targetList.back++;
+      } else if (exercise.target === '하체') {
+        targetList.leg++;
+      }
     }
-    console.log(`here is end of getMainTarget`);
-    return targetList;
+  }
+  console.log(targetList);
+  console.log(`here is end of getMainTarget`);
+  return targetList;
 }
 
 function getLastTarget(workoutList) {
@@ -130,6 +131,7 @@ function getLastTarget(workoutList) {
     return lastTarget;
 }
 
+
 function nextMainTarget() {
     let nextMain = '';
     console.log(`here is nextMainTarget()`);
@@ -145,7 +147,7 @@ function nextMainTarget() {
     if (count == 0) {
         nextMain = userInfo.weak;
         return nextMain;
-    }
+
 
     freq = getMainTarget(reversedHistory);
     lastTarget = getLastTarget(reversedHistory);
@@ -223,80 +225,79 @@ function nextMainTarget() {
 }
 
 function getShoulderWeight() {
-    console.log('here is get Shoulder weight');
-    console.log(userInfo);
-    console.log(userInfo.weight);
-    let bodyWeight = parseInt(userInfo.weight);
-    console.log(`bodyWeight : ${bodyWeight}`);
-    let weight = 0;
-    let proficiency = userInfo.proficiency;
-    let sex = userInfo.sex;
-    switch (sex) {
-        case '남자':
-            //남자 기준
-            if (proficiency == 1) {
-                if (bodyWeight < 52) {
-                    weight = 20;
-                } else if (bodyWeight < 60) {
-                    weight = 25;
-                } else if (bodyWeight < 90) {
-                    weight = 30;
-                } else {
-                    weight = 35;
-                }
-            } else if (proficiency == 2) {
-                if (bodyWeight < 52) {
-                    weight = 20;
-                } else if (bodyWeight < 60) {
-                    weight = 30;
-                } else if (bodyWeight < 90) {
-                    weight = 35;
-                } else {
-                    weight = 40;
-                }
-            } else {
-                if (bodyWeight < 60) {
-                    weight = 40;
-                } else if (bodyWeight < 90) {
-                    weight = 50;
-                } else {
-                    weight = 55;
-                }
-            }
-            break;
-        case '여자':
-            // 여자 기준
-            if (proficiency == 1) {
-                if (bodyWeight < 52) {
-                    weight = 20;
-                } else if (bodyWeight < 60) {
-                    weight = 25;
-                } else {
-                    weight = 30;
-                }
-            } else if (proficiency == 2) {
-                if (bodyWeight < 44) {
-                    weight = 20;
-                } else if (bodyWeight < 52) {
-                    weight = 25;
-                } else if (bodyWeight < 60) {
-                    weight = 30;
-                } else {
-                    weight = 35;
-                }
-            } else {
-                if (bodyWeight < 52) {
-                    weight = 35;
-                } else if (bodyWeight < 60) {
-                    weight = 40;
-                } else {
-                    weight = 45;
-                }
-            }
-            break;
-    }
-    console.log(`어깨 중량 리턴 : ${weight}`);
-    return weight;
+  console.log('here is get Shoulder weight');
+
+  let bodyWeight = parseInt(userInfo.weight);
+  console.log(`bodyWeight : ${bodyWeight}`);
+  let weight = 0;
+  let proficiency = userInfo.proficiency;
+  let sex = userInfo.sex;
+  switch (sex) {
+    case '남자':
+      //남자 기준
+      if (proficiency == 1) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 25;
+        } else if (bodyWeight < 90) {
+          weight = 30;
+        } else {
+          weight = 35;
+        }
+      } else if (proficiency == 2) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 30;
+        } else if (bodyWeight < 90) {
+          weight = 35;
+        } else {
+          weight = 40;
+        }
+      } else {
+        if (bodyWeight < 60) {
+          weight = 40;
+        } else if (bodyWeight < 90) {
+          weight = 50;
+        } else {
+          weight = 55;
+        }
+      }
+      break;
+    case '여자':
+      // 여자 기준
+      if (proficiency == 1) {
+        if (bodyWeight < 52) {
+          weight = 20;
+        } else if (bodyWeight < 60) {
+          weight = 25;
+        } else {
+          weight = 30;
+        }
+      } else if (proficiency == 2) {
+        if (bodyWeight < 44) {
+          weight = 20;
+        } else if (bodyWeight < 52) {
+          weight = 25;
+        } else if (bodyWeight < 60) {
+          weight = 30;
+        } else {
+          weight = 35;
+        }
+      } else {
+        if (bodyWeight < 52) {
+          weight = 35;
+        } else if (bodyWeight < 60) {
+          weight = 40;
+        } else {
+          weight = 45;
+        }
+      }
+      break;
+  }
+  console.log(`어깨 중량 리턴 : ${weight}`);
+  return weight;
 }
 
 function getArmWeight() {
@@ -327,14 +328,14 @@ function getArmWeight() {
 }
 
 function getSets(nextTarget, targetIdx) {
-    console.log('here is getSets');
-    console.log(user.userInfo);
-    // console.log(nextTarget, targetIdx);
-    let sets = [];
-    const max_set = 5;
-    let weight = 0;
-    let reps = 0;
-    let oneRM = 0;
+  console.log('here is getSets');
+
+  // console.log(nextTarget, targetIdx);
+  let sets = [];
+  const max_set = 5;
+  let weight = 0;
+  let reps = 0;
+  let oneRM = 0;
 
     for (var i = 0; i < max_set; i++) {
         switch (nextTarget) {
@@ -494,6 +495,7 @@ function getSets(nextTarget, targetIdx) {
                 }
                 console.log(weight);
         }
+
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
         if (nextTarget === '어깨') {
@@ -507,6 +509,7 @@ function getSets(nextTarget, targetIdx) {
         }
         weight = parseInt(weight);
         sets.push({ reps, weight });
+ 
     }
     console.log('here is end of getSets - sets');
     return sets;
