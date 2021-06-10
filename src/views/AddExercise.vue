@@ -341,7 +341,7 @@ import Dialog from '@/components/Dialog.vue';
 import { eventBus } from '@/main';
 import { user } from '@/user.js';
 import { userInfo } from '@/userInfo.js';
-import { recommendedList, recommend } from '@/recommend.js';
+import { workoutHistory, recommendedList, recommend } from '@/recommend.js';
 
 function detailedSets(reps, weight, checked) {
   this.reps = reps;
@@ -473,7 +473,7 @@ export default {
       userProficiency: '초급자',
       userWeakness: '등',
       recommended: [],
-      workoutHistory: [],
+
       workoutList: [],
       customs: [
         {
@@ -600,8 +600,8 @@ export default {
         });
     },
     getRecommend() {
-      console.log(this.workoutHistory);
-      this.recommended = recommend(this.workoutHistory);
+      // console.log(`운동 기록 : ${this.workoutHistory[0].exercises[0].target}`);
+      this.recommended = recommend();
     },
     getHistory() {
       console.log('getHistory() start');
@@ -656,14 +656,15 @@ export default {
               });
             }
             if (exercises.length !== 0) {
-              this.workoutHistory.push({ exercises: exercises });
+              console.log(exercises);
+              workoutHistory.push({ exercises: exercises });
             }
           })
           .catch(err => {
             console.error('error');
           });
       }
-      console.log(this.workoutHistory);
+      console.log(workoutHistory);
       console.log('getHistory() end');
     },
     refreshAll() {
