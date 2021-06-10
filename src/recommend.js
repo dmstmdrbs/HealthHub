@@ -2,7 +2,7 @@ import { user } from '@/user.js';
 
 export let recommendedList = [];
 let userInfo = '';
-let history = [];
+export let workoutHistory = [];
 let workouts = [
   {
     target: '하체',
@@ -92,12 +92,13 @@ function getMainTarget(workoutList) {
     back: 0,
     leg: 0,
   };
-
+  console.log(workoutList[0]);
   for (var i = 0; i < length; i++) {
     let exerciseList = workoutList[i].exercises;
-    console.log(exerciseList);
+    let exercise;
     for (var j = 0; j < exerciseList.length; j++) {
-      let exercise = exerciseList[j];
+      exercise = exerciseList[j];
+      console.log(`for문 안에 exercise : ${exercise}`);
       if (exercise.target === '가슴') {
         targetList.chest++;
       } else if (exercise.target === '등') {
@@ -125,8 +126,9 @@ function getLastTarget(workoutList) {
   };
   let exercises = workoutList[0].exercises;
   let lastTarget = '';
-
-  for (exercise in exercises) {
+  console.log('for문 전');
+  for (var exercise in exercises) {
+    console.log(`exercise.target = ${exercise.target}`);
     if (exercise.target === '가슴') {
       targetList.chest++;
     } else if (exercise.target === '등') {
@@ -134,9 +136,10 @@ function getLastTarget(workoutList) {
     } else if (exercise.target === '하체') {
       targetList.leg++;
     } else {
-      armShoulder++;
+      targetList.armShoulder++;
     }
   }
+  console.log(`min target : ${targetList.chest} ${targetList.back} ${targetList.leg}`);
   if (targetList.chest > targetList.back && targetList.leg > targetList.back) {
     if (targetList.chest > targetList.leg) {
       lastTarget = '가슴';
@@ -162,9 +165,9 @@ function getLastTarget(workoutList) {
 function nextMainTarget() {
   let nextMain = '';
   console.log(`here is nextMainTarget()`);
-  const reversedHistory = history.reverse();
+  const reversedHistory = workoutHistory.reverse();
   console.log(reversedHistory);
-  let count = 0;
+  let count = reversedHistory.length;
   let lastTarget = '';
   let freq = {
     chest: 0,
@@ -177,11 +180,12 @@ function nextMainTarget() {
   }
 
   freq = getMainTarget(reversedHistory);
-  lastTarget = getLastTarget(history);
+  lastTarget = getLastTarget(workoutHistory);
+  console.log(`lastTarget : ${lastTarget}`);
   if (lastTarget === null) {
     lastTarget = userInfo.weak;
   }
-  count = history.length;
+  count = workoutHistory.length;
 
   if (lastTarget === '가슴') {
     if (freq.chest > freq.back) {
@@ -438,7 +442,7 @@ function getSets(nextTarget, targetIdx) {
           case 7:
           case 9:
             weight = userInfo.weight;
-            if(i < 4)weight = weight * (0.35 + 0.05*i);
+            if (i < 4) weight = weight * (0.35 + 0.05 * i);
             else weight = weight * 0.45;
             break;
         }
@@ -488,9 +492,9 @@ function getSets(nextTarget, targetIdx) {
           case 4:
           case 5:
             // 바벨
-            if(targetIdx === 5) weight = weight * 2.5;
+            if (targetIdx === 5) weight = weight * 2.5;
             else weight = weight * 2;
-            
+
             if (i < 2) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
@@ -506,8 +510,8 @@ function getSets(nextTarget, targetIdx) {
     }
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
-    if(nextTarget === '어깨' && (targetIdx === 1 || targetIdx === 2)) {
-      if(i < 3) reps = 18 - i;
+    if (nextTarget === '어깨' && (targetIdx === 1 || targetIdx === 2)) {
+      if (i < 3) reps = 18 - i;
       else reps = 17;
     }
     weight = parseInt(weight);
@@ -605,11 +609,11 @@ function makeList() {
   list.push({ target, kinds, sets });
   return list;
 }
-export function recommend(workoutHistory) {
+export function recommend() {
   userInfo = user.userInfo;
-  history = workoutHistory;
-  console.log('here is recommend.js');
-  console.log(history);
+  console.log(workoutHistory[0].exercises[0].target);
+
+  console.log(`타겟 : ${workoutHistory[0].exercises[0].target}`);
   recommendedList = makeList();
   return recommendedList;
 }
