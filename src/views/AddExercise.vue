@@ -474,7 +474,6 @@ export default {
       userWeakness: '등',
       recommended: [],
 
-      workoutList: [],
       customs: [
         {
           category: '하체',
@@ -764,8 +763,8 @@ export default {
     },
     submitExDialog() {
       for (let i = 0; i < this.selected.length; i++) {
-        var workout = new WorkoutDetail(this.selected[i].target, this.selected[i].kinds, []);
-        this.workoutList.push(workout);
+        // var workout = new WorkoutDetail(this.selected[i].target, this.selected[i].kinds, []);
+        // this.workoutList.push(workout);
         this.exercises.push({
           target: this.selected[i].target,
           kinds: this.selected[i].kinds,
