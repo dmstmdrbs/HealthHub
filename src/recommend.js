@@ -516,6 +516,7 @@ function getSets(nextTarget, targetIdx) {
         } else if (nextTarget === '가슴' && (targetIdx === 11)) {
             reps += 10;
             if (i === 3) reps = 18;
+
         }
         weight = parseInt(weight);
         sets.push({ reps, weight });
