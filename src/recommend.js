@@ -103,14 +103,16 @@ function getMainTarget(workoutList) {
         targetList.chest++;
       } else if (exercise.target === '등') {
         targetList.back++;
-      } else {
+      } else if (exercise.target === '하체') {
         targetList.leg++;
       }
     }
   }
+  console.log(targetList);
   console.log(`here is end of getMainTarget`);
   return targetList;
 }
+
 function getLastTarget(workoutList) {
   console.log(`here is getLastTarget`);
   let length = workoutList.length;
@@ -126,45 +128,10 @@ function getLastTarget(workoutList) {
   };
   let exercises = workoutList[0].exercises;
   console.log(exercises);
-  let lastTarget = '';
-  console.log('for문 전');
-  for (var i = 0; i < exercises.length; i++) {
-    console.log(`exercise.target = ${exercises[i].target}`);
-    if (exercises[i].target === '가슴') {
-      targetList.chest++;
-    } else if (exercises[i].target === '등') {
-      targetList.back++;
-    } else if (exercises[i].target === '하체') {
-      targetList.leg++;
-    } else {
-      targetList.armShoulder++;
-    }
-  }
-
-  console.log(`min target : ${targetList.chest} ${targetList.back} ${targetList.leg}`);
-
-  if (targetList.chest >= targetList.back && targetList.leg >= targetList.back) {
-    if (targetList.chest >= targetList.leg) {
-      return '가슴';
-    } else {
-      return '하체';
-    }
-  } else if (targetList.chest >= targetList.leg && targetList.back >= targetList.leg) {
-    if (targetList.chest >= targetList.back) {
-      return '가슴';
-    } else {
-      return '등';
-    }
-  } else if (targetList.back >= targetList.chest && targetList.leg >= targetList.chest) {
-    if (targetList.leg > targetList.back) {
-      return '하체';
-    } else {
-      return '등';
-    }
-  }
-
-  return '가슴';
+  let lastTarget = exercises[0].target;
+  return lastTarget;
 }
+
 function nextMainTarget() {
   let nextMain = '';
   console.log(`here is nextMainTarget()`);
@@ -181,55 +148,84 @@ function nextMainTarget() {
     nextMain = userInfo.weak;
     return nextMain;
   }
-
   freq = getMainTarget(reversedHistory);
   lastTarget = getLastTarget(reversedHistory);
-  console.log(`lastTarget : ${lastTarget}`);
-  if (lastTarget === null) {
-    lastTarget = userInfo.weak;
-  }
-  count = workoutHistory.length;
-  console.log(`last Target : ${lastTarget}`);
-  console.log(`${freq.chest} ${freq.back} ${freq.leg}`);
   if (lastTarget === '가슴') {
-    if (userInfo.weak !== '가슴') {
-      if (freq.leg > freq.back) {
-        nextMain = '등';
-      } else {
-        nextMain = '하체';
-      }
-    } else {
-      nextMain = '등';
-    }
-  } else if (lastTarget === '등') {
-    if (userInfo.weak !== '등') {
-      if (freq.chest > freq.leg) {
-        nextMain = '하체';
-      } else {
-        nextMain = '가슴';
-      }
-    } else {
+    nextMain = '등';
+    if (freq.back > freq.chest && freq.back > freq.leg) {
       nextMain = '하체';
     }
-  } else {
-    if (userInfo.weak !== '하체') {
-      if (freq.chest > freq.back) {
-        nextMain = '등';
-      } else {
-        nextMain = '가슴';
-      }
-    } else {
+    return nextMain;
+  } else if (lastTarget === '등') {
+    nextMain = '하체';
+    if (freq.leg > freq.back && freq.leg > freq.chest) {
       nextMain = '가슴';
     }
+    return nextMain;
+  } else if (lastTarget === '하체') {
+    nextMain = '가슴';
+    if (freq.chest > freq.back && freq.chest > freq.leg) {
+      nextMain = '등';
+    }
+    return nextMain;
   }
-  console.log('here is end of nextMainTarget');
+  // console.log(`lastTarget : ${lastTarget}`);
+  // if (lastTarget === null) {
+  //   lastTarget = userInfo.weak;
+  // }
+  // count = workoutHistory.length;
+  // console.log(`last Target : ${lastTarget}`);
+  // console.log(`${freq.chest} ${freq.back} ${freq.leg}`);
+  // var minimum = Math.min(freq.chest, freq.back, freq.leg);
+  // var maximum = Math.max(freq.chest, freq.back, freq.leg);
+
+  // if (maximum - minimum > 4) {
+  //   if (minimum === freq.chest) {
+  //     return '가슴';
+  //   } else if (minimum === freq.back) {
+  //     return '등';
+  //   } else {
+  //     return '하체';
+  //   }
+  // }
+  // if (lastTarget === '가슴') {
+  //   if (userInfo.weak !== '가슴') {
+  //     if (freq.leg > freq.back) {
+  //       nextMain = '등';
+  //     } else {
+  //       nextMain = '하체';
+  //     }
+  //   } else {
+  //     nextMain = '등';
+  //   }
+  // } else if (lastTarget === '등') {
+  //   if (userInfo.weak !== '등') {
+  //     if (freq.chest > freq.leg) {
+  //       nextMain = '하체';
+  //     } else {
+  //       nextMain = '가슴';
+  //     }
+  //   } else {
+  //     nextMain = '하체';
+  //   }
+  // } else {
+  //   if (userInfo.weak !== '하체') {
+  //     if (freq.chest > freq.back) {
+  //       nextMain = '등';
+  //     } else {
+  //       nextMain = '가슴';
+  //     }
+  //   } else {
+  //     nextMain = '가슴';
+  //   }
+  // }
+  // console.log('here is end of nextMainTarget');
   return nextMain;
 }
 
 function getShoulderWeight() {
   console.log('here is get Shoulder weight');
-  console.log(userInfo);
-  console.log(userInfo.weight);
+
   let bodyWeight = parseInt(userInfo.weight);
   console.log(`bodyWeight : ${bodyWeight}`);
   let weight = 0;
@@ -332,7 +328,7 @@ function getArmWeight() {
 
 function getSets(nextTarget, targetIdx) {
   console.log('here is getSets');
-  console.log(user.userInfo);
+
   // console.log(nextTarget, targetIdx);
   let sets = [];
   const max_set = 5;
@@ -377,7 +373,6 @@ function getSets(nextTarget, targetIdx) {
         break;
       case '가슴':
         oneRM = userInfo.bench;
-
         switch (targetIdx) {
           case 0:
             weight = oneRM;
@@ -392,22 +387,22 @@ function getSets(nextTarget, targetIdx) {
           case 5:
           case 6:
           case 9:
-          case 10:
             weight = oneRM * 0.7;
-            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
+            if (targetIdx === 1 || targetIdx == 2) weight = -6.6 + 0.82 * oneRM;
+            if (targetIdx == 3 || targetIdx == 4 || targetIdx == 9) weight = weight / 2;
+            if (i < 3) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 10:
+            weitght = oneRM / 3;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
           case 8:
-          case 11:
-            weight = oneRM * 0.4;
-            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
-            if (i < 3) weight = weight * (0.7 + 0.1 * i);
-            else if (i == 4) weight = weight * 0.8;
-            break;
           case 7:
             if (oneRM > 100) weight = 10;
             else weight = 5;
+            break;
         }
         break;
       case '등':
@@ -426,16 +421,16 @@ function getSets(nextTarget, targetIdx) {
           case 8:
           case 10:
             weight = oneRM * 0.7;
-            if (targetIdx == 4 || targetIdx == 5 || targetIdx == 8) weight = weight / 2;
             if (i < 3) weight = weight * (0.7 + 0.1 * i);
             else if (i == 4) weight = weight * 0.8;
             break;
           case 3:
           case 7:
           case 9:
-            weight = userInfo.weight;
-            if (i < 4) weight = weight * (0.35 + 0.05 * i);
-            else weight = weight * 0.45;
+            weight = oneRM * 0.5;
+            if (targetIdx == 3 || targetIdx == 9) weight = weight / 2;
+            if (i < 3) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
             break;
         }
         break;
@@ -510,21 +505,22 @@ function getSets(nextTarget, targetIdx) {
         }
         console.log(weight);
     }
+
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
-    if(nextTarget === '어깨') {
-      if(targetIdx === 2){
-        if(i < 3) reps = 18 - i;
+    if (nextTarget === '어깨') {
+      if (targetIdx === 2) {
+        if (i < 3) reps = 18 - i;
         else reps = 17;
-      }
-      else if(targetIdx === 0 || targetIdx === 1){
-        if(i < 2) reps = 8 + i;
+      } else if (targetIdx === 0 || targetIdx === 1) {
+        if (i < 2) reps = 8 + i;
         else reps = 10;
       }
     }
     weight = parseInt(weight);
     sets.push({ reps, weight });
   }
+
   console.log('here is end of getSets - sets');
   return sets;
 }
