@@ -454,7 +454,9 @@ function getSets(nextTarget, targetIdx) {
           case 0:
           case 1:
             // 프레스
-            weight = weight * (0.7 + 0.1 * i);
+            weight = weight * (0.6 + 0.05);
+            console.log(1111111111);
+            console.log(weight);
             break;
           case 2:
           case 3:
@@ -512,8 +514,9 @@ function getSets(nextTarget, targetIdx) {
         if(i < 3) reps = 18 - i;
         else reps = 17;
       }
-      else if(targetIdx === 1){
-        reps = 10;
+      else if(targetIdx === 0 || targetIdx === 1){
+        if(i < 2) reps = 8 + i;
+        else reps = 10;
       }
     }
     weight = parseInt(weight);
