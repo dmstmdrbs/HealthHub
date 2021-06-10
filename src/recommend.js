@@ -439,13 +439,12 @@ function getSets(nextTarget, targetIdx) {
         console.log(`어깨 중량 : ${weight}`);
         switch (targetIdx) {
           case 0:
-            // 바벨
-            if (i < 2) weight = weight * (0.7 + 0.1 * i);
-            else if (i < 4) weight = weight * 0.8;
-            else weight = weight * 0.7;
-            break;
-
           case 1:
+            // 프레스
+            weight = weight * (0.6 + 0.05);
+            console.log(1111111111);
+            console.log(weight);
+            break;
           case 2:
           case 3:
           case 7:
@@ -497,9 +496,15 @@ function getSets(nextTarget, targetIdx) {
     }
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
-    if (nextTarget === '어깨' && (targetIdx === 1 || targetIdx === 2)) {
-      if (i < 3) reps = 18 - i;
-      else reps = 17;
+    if(nextTarget === '어깨') {
+      if(targetIdx === 2){
+        if(i < 3) reps = 18 - i;
+        else reps = 17;
+      }
+      else if(targetIdx === 0 || targetIdx === 1){
+        if(i < 2) reps = 8 + i;
+        else reps = 10;
+      }
     }
     weight = parseInt(weight);
     sets.push({ reps, weight });
