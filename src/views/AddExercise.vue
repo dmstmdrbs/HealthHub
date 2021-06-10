@@ -57,6 +57,8 @@
               <v-btn text @click="show = !show">전체 세트 보기</v-btn>
               <v-divider vertical></v-divider>
               <v-btn text @click="getRecommend">추천 목록 생성</v-btn>
+              <v-divider vertical></v-divider>
+              <v-btn text @click="acceptRecommend">추천 목록 적용</v-btn>
             </v-card-actions>
             <template>
               <v-divider></v-divider>
@@ -559,6 +561,9 @@ export default {
     };
   },
   methods: {
+    acceptRecommend() {
+      this.exercises = this.recommended;
+    },
     showGuide() {
       this.guideDiaglog = true;
     },
