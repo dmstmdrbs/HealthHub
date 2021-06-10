@@ -4,9 +4,53 @@
       <v-row>
         <v-col cols="12" sm="4">
           <v-card class="mx-auto scroll" width="100%" height="600px">
-            <v-card-title class="white--text orange darken-1">추천 운동 리스트</v-card-title>
-            <v-spacer></v-spacer>
+            <v-card-title class="white--text orange darken-1"
+              >추천 운동 리스트
+              <v-spacer></v-spacer>
+              <v-btn icon @click="showGuide">
+                <v-icon>far fa-question-circle</v-icon>
+              </v-btn>
+              <v-dialog v-model="guideDiaglog" width="600">
+                <v-card>
+                  <v-card-title class="white--text blue darken-1">
+                    추천 운동 도움말
+                  </v-card-title>
+                  <v-card-text>
+                    <div>
+                      주요 운동 기본 로직 : 1RM = Weight + Weight x 0.025 x Reps
+                    </div>
+                    <div>Reps = weight + weight * 0025 x reps</div>
+                    <div>덤벨 메인 운동 : 위의 식을 이용한 바벨 운동 무게 / 2</div>
+                    <br />
+                    <div>
+                      최근 일주일간의 운동기록을 참고합니다.
+                    </div>
+                    <div>
+                      운동 기록이 없을 시에는 사용자의 약점 부위의 영향을 많이 받습니다.
+                    </div>
+                    <div>
+                      사용자의 키와 몸무게, 약점 부위, 그리고 숙련도에 따라 운동을 추천해줍니다.
+                    </div>
+                    <div>
+                      절대적인 기준은 아니며, 시스템이 추정한 수치입니다.
+                    </div>
+                    <div>부정확한 정보는 피드백을 통해 개선될 수 있습니다.</div>
+                    <br />
+                    <div>주기화 프로그램 제작중</div>
+                  </v-card-text>
 
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="hideGuide">
+                      닫기
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-card-title>
+            <v-spacer></v-spacer>
             <v-card-actions>
               <v-btn icon @click="show = !show">
                 <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
@@ -15,6 +59,8 @@
               <v-btn text @click="show = !show">전체 세트 보기</v-btn>
               <v-divider vertical></v-divider>
               <v-btn text @click="getRecommend">추천 목록 생성</v-btn>
+              <v-divider vertical></v-divider>
+              <v-btn text @click="acceptRecommend">추천 목록 적용</v-btn>
             </v-card-actions>
             <template>
               <v-divider></v-divider>
@@ -399,6 +445,7 @@ export default {
   watch: {},
   data() {
     return {
+      guideDiaglog: false,
       RPE: {
         LOW: false,
         MID: false,
@@ -516,6 +563,15 @@ export default {
     };
   },
   methods: {
+    acceptRecommend() {
+      this.exercises = this.recommended;
+    },
+    showGuide() {
+      this.guideDiaglog = true;
+    },
+    hideGuide() {
+      this.guideDiaglog = false;
+    },
     getUserInfo() {
       fetch(`http://115.85.183.157:3000/userInfo/${user.uID}`, {
         method: 'GET',
@@ -731,13 +787,13 @@ export default {
     },
     submitSetDialog() {
       //무게 유효성 검사 - 입력 안했을 때, 몸무게 5배 이상 입력했을 때
-      if (this.weight == null) {
+      if (this.weight == null || this.weight >= userInfo.weight * 5) {
         alert('무게를 제대로 입력해주세요.');
       }
       if ((this.reps <= 0) | (this.reps === null)) {
         alert('횟수를 확인해주세요.');
       }
-      if ((this.reps > 0) & (this.weight !== null)) {
+      if ((this.reps > 0) & (this.weight !== null) & (this.weight < userInfo.weight * 5)) {
         this.addSet();
         this.hideSetDialog();
         // console.log(this.selected);

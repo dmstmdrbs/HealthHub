@@ -383,6 +383,7 @@ function getSets(nextTarget, targetIdx) {
             case '가슴':
                 oneRM = userInfo.bench;
 
+<<<<<<< HEAD
                 switch (targetIdx) {
                     case 0:
                         weight = oneRM;
@@ -450,6 +451,79 @@ function getSets(nextTarget, targetIdx) {
                         else if (i < 4) weight = weight * 0.8;
                         else weight = weight * 0.7;
                         break;
+=======
+        switch (targetIdx) {
+          case 0:
+            weight = oneRM;
+            if (i < 2) weight = weight * (0.5 + 0.2 * i);
+            else if (i < 4) weight = weight * 0.8;
+            else weight = weight * 0.7;
+            break;
+          case 1:
+          case 2:
+          case 3:
+          case 4:
+          case 5:
+          case 6:
+          case 9:
+          case 10:
+            weight = oneRM * 0.7;
+            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
+            if (i < 3) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 8:
+          case 11:
+            weight = oneRM * 0.4;
+            if (targetIdx == 4 || targetIdx == 5) weight = weight / 2;
+            if (i < 3) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 7:
+            if (oneRM > 100) weight = 10;
+            else weight = 5;
+        }
+        break;
+      case '등':
+        oneRM = userInfo.dead;
+        switch (targetIdx) {
+          case 0:
+          case 6:
+            weight = oneRM;
+            if (i < 2) weight = weight * (0.5 + 0.2 * i);
+            else if (i < 4) weight = weight * 0.8;
+            else weight = weight * 0.7;
+            break;
+          case 1:
+          case 4:
+          case 5:
+          case 8:
+          case 10:
+            weight = oneRM * 0.7;
+            if (targetIdx == 4 || targetIdx == 5 || targetIdx == 8) weight = weight / 2;
+            if (i < 3) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 3:
+          case 7:
+          case 9:
+            weight = userInfo.weight;
+            if(i < 4)weight = weight * (0.35 + 0.05*i);
+            else weight = weight * 0.45;
+            break;
+        }
+        break;
+      case '어깨':
+        weight = getShoulderWeight();
+        console.log(`어깨 중량 : ${weight}`);
+        switch (targetIdx) {
+          case 0:
+            // 바벨
+            if (i < 2) weight = weight * (0.7 + 0.1 * i);
+            else if (i < 4) weight = weight * 0.8;
+            else weight = weight * 0.7;
+            break;
+>>>>>>> 3d055a7f8413eb9f8ced77f00b0ba1710c714663
 
                     case 1:
                     case 2:
@@ -499,6 +573,7 @@ function getSets(nextTarget, targetIdx) {
                 }
                 console.log(weight);
         }
+<<<<<<< HEAD
         if (i < 3) reps = 10 - 2 * i;
         if (i == 4) reps = 7;
         weight = parseInt(weight);
@@ -506,6 +581,50 @@ function getSets(nextTarget, targetIdx) {
     }
     console.log('here is end of getSets - sets');
     return sets;
+=======
+        break;
+      case '팔':
+        weight = getArmWeight();
+        switch (targetIdx) {
+          case 0:
+          case 6:
+            // 덤벨
+            if (i < 2) weight = weight * (0.7 + 0.2 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 1:
+          case 3:
+          case 4:
+          case 5:
+            // 바벨
+            if(targetIdx === 5) weight = weight * 2.5;
+            else weight = weight * 2;
+            
+            if (i < 2) weight = weight * (0.7 + 0.1 * i);
+            else if (i == 4) weight = weight * 0.8;
+            break;
+          case 2:
+            // 케이블
+            weight = weight * 6;
+            if (i < 2) weight = weight * (0.7 + 0.1 * i);
+            else if (i < 4) weight = weight * 0.85;
+            else weight = weight * 0.8;
+            break;
+        }
+        console.log(weight);
+    }
+    if (i < 3) reps = 10 - 2 * i;
+    if (i == 4) reps = 7;
+    if(nextTarget === '어깨' && (targetIdx === 1 || targetIdx === 2)) {
+      if(i < 3) reps = 18 - i;
+      else reps = 17;
+    }
+    weight = parseInt(weight);
+    sets.push({ reps, weight });
+  }
+  console.log('here is end of getSets - sets');
+  return sets;
+>>>>>>> 3d055a7f8413eb9f8ced77f00b0ba1710c714663
 }
 
 /*function getWorkout(target, difficulty, proficiency) {
