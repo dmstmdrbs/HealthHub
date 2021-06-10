@@ -103,11 +103,12 @@ function getMainTarget(workoutList) {
         targetList.chest++;
       } else if (exercise.target === '등') {
         targetList.back++;
-      } else {
+      } else if (exercise.target === '하체') {
         targetList.leg++;
       }
     }
   }
+  console.log(targetList);
   console.log(`here is end of getMainTarget`);
   return targetList;
 }
@@ -148,6 +149,7 @@ function nextMainTarget() {
 
   freq = getMainTarget(reversedHistory);
   lastTarget = getLastTarget(reversedHistory);
+  console.log(`last : ${lastTarget}`);
   if (lastTarget === '가슴') {
     nextMain = '등';
     if (freq.back > freq.chest && freq.back > freq.leg) {
@@ -223,8 +225,7 @@ function nextMainTarget() {
 
 function getShoulderWeight() {
   console.log('here is get Shoulder weight');
-  console.log(userInfo);
-  console.log(userInfo.weight);
+
   let bodyWeight = parseInt(userInfo.weight);
   console.log(`bodyWeight : ${bodyWeight}`);
   let weight = 0;
@@ -327,7 +328,7 @@ function getArmWeight() {
 
 function getSets(nextTarget, targetIdx) {
   console.log('here is getSets');
-  console.log(user.userInfo);
+
   // console.log(nextTarget, targetIdx);
   let sets = [];
   const max_set = 5;
@@ -436,14 +437,13 @@ function getSets(nextTarget, targetIdx) {
         break;
       case '어깨':
         weight = getShoulderWeight();
-        console.log(`어깨 중량 : ${weight}`);
+
         switch (targetIdx) {
           case 0:
           case 1:
             // 프레스
             weight = weight * (0.6 + 0.05);
-            console.log(1111111111);
-            console.log(weight);
+
             break;
           case 2:
           case 3:
@@ -492,17 +492,15 @@ function getSets(nextTarget, targetIdx) {
             else weight = weight * 0.8;
             break;
         }
-        console.log(weight);
     }
     if (i < 3) reps = 10 - 2 * i;
     if (i == 4) reps = 7;
-    if(nextTarget === '어깨') {
-      if(targetIdx === 2){
-        if(i < 3) reps = 18 - i;
+    if (nextTarget === '어깨') {
+      if (targetIdx === 2) {
+        if (i < 3) reps = 18 - i;
         else reps = 17;
-      }
-      else if(targetIdx === 0 || targetIdx === 1){
-        if(i < 2) reps = 8 + i;
+      } else if (targetIdx === 0 || targetIdx === 1) {
+        if (i < 2) reps = 8 + i;
         else reps = 10;
       }
     }
