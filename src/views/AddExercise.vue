@@ -17,6 +17,12 @@
                   </v-card-title>
                   <v-card-text>
                     <div>
+                      주요 운동 기본 로직 : 1RM = Weight + Weight x 0.025 x Reps
+                    </div>
+                    <div>Reps = weight + weight * 0025 x reps</div>
+                    <div>덤벨 메인 운동 : 위의 식을 이용한 바벨 운동 무게 / 2</div>
+                    <br />
+                    <div>
                       최근 일주일간의 운동기록을 참고합니다.
                     </div>
                     <div>
@@ -30,11 +36,6 @@
                     </div>
                     <div>부정확한 정보는 피드백을 통해 개선될 수 있습니다.</div>
                     <p></p>
-                    <div>
-                      무리한 고중량 운동은 관절에 좋지 않습니다. 본인의 수행능력에 맞는 운동을
-                      진행하세요.
-                    </div>
-                    <p>운동에 있어서 계획, 기록보다 중요한 것은 '꾸준함' 입니다.</p>
                   </v-card-text>
 
                   <v-divider></v-divider>
