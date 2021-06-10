@@ -442,10 +442,19 @@ function getSets(nextTarget, targetIdx) {
           case 1:
             // 프레스
             weight = weight * (0.6 + 0.05);
-            console.log(1111111111);
-            console.log(weight);
             break;
           case 2:
+            // 사이드 레터럴 레이즈
+            if(userInfo.proficiency == 1){
+              weight = 5
+            }
+            else if(userInfo.proficiency == 2){
+              weight = 8;
+            }
+            else{
+              weight = 10;
+            }
+            break;
           case 3:
           case 7:
             // 덤벨
